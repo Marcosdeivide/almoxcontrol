@@ -1,0 +1,125 @@
+<!doctype html>
+<html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Ferramentas | AlmoxControl</title>
+
+    <link rel="stylesheet" href="css/style.css" />
+
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+    />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+
+  <body>
+    <div class="container">
+      <!-- Sidebar -->
+      <nav class="nav-container">
+        <h1 class="logo">
+          <i class="fa-solid fa-toolbox"></i>
+          AlmoxControl
+        </h1>
+
+        <ul class="menu">
+          <li>
+            <a href="dashboard.html">
+              <i class="fa-solid fa-house"></i>
+              Dashboard
+            </a>
+          </li>
+
+          <li>
+            <a class="active" href="ferramentas.html">
+              <i class="fa-solid fa-wrench"></i>
+              Ferramentas
+            </a>
+          </li>
+
+          <li>
+            <a href="movimentacoes.html">
+              <i class="fa-solid fa-arrow-right-arrow-left"></i>
+              Movimentações
+            </a>
+          </li>
+        </ul>
+      </nav>
+
+      <!-- Conteúdo -->
+      <div class="content">
+        <header class="container-topo">
+          <h2>Ferramentas</h2>
+        </header>
+
+        <main>
+          <section class="topo-ferramentas">
+            <input
+              type="text"
+              class="input-pesquisa"
+              placeholder="Buscar ferramenta..."
+            />
+
+            <button class="btn-ferramenta">
+              <i class="fa-solid fa-plus"></i>
+              Nova Ferramenta
+            </button>
+          </section>
+
+          <section class="tabela-ferramentas">
+            <table>
+              <thead>
+                <tr>
+                  <th>Código</th>
+                  <th>Ferramenta</th>
+                  <th>Categoria</th>
+                  <th>Status</th>
+                  <th>Ações</th>
+                </tr>
+              </thead>
+
+              <tbody>
+                <tr>
+                  <td>001</td>
+                  <td>Furadeira Bosch</td>
+                  <td>Elétrica</td>
+                  <td>Disponível</td>
+                  <td>
+                    <i class="fa-solid fa-pen"></i>
+                    <i class="fa-solid fa-trash"></i>
+                  </td>
+                </tr>
+
+                <tr>
+                  <td>002</td>
+                  <td>Martelete</td>
+                  <td>Elétrica</td>
+                  <td>Em Uso</td>
+                  <td>
+                    <i class="fa-solid fa-pen"></i>
+                    <i class="fa-solid fa-trash"></i>
+                  </td>
+                </tr>
+
+                <tr>
+                  <td>003</td>
+                  <td>Chave Combinada 13</td>
+                  <td>Manual</td>
+                  <td>Manutenção</td>
+                </tr>
+              </tbody>
+            </table>
+          </section>
+        </main>
+      </div>
+    </div>
+  </body>
+</html>
