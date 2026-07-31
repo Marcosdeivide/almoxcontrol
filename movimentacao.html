@@ -4,11 +4,11 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    <title>Ferramentas | AlmoxControl</title>
+    <title>Movimentações | AlmoxControl</title>
 
     <link rel="stylesheet" href="css/style.css" />
     <link rel="stylesheet" href="css/sidebar.css" />
-    <link rel="stylesheet" href="css/ferramenta.css" />
+    <link rel="stylesheet" href="css/movimentacao.css" />
 
     <link
       rel="stylesheet"
@@ -23,9 +23,7 @@
 
   <body>
     <div class="container">
-      <!-- =========================
-         SIDEBAR
-    ========================== -->
+      <!-- SIDEBAR -->
 
       <nav class="nav-container">
         <div class="sidebar-header">
@@ -46,14 +44,14 @@
           </li>
 
           <li>
-            <a class="active" href="ferramentas.html">
+            <a href="ferramentas.html">
               <i class="fa-solid fa-wrench"></i>
               Ferramentas
             </a>
           </li>
 
           <li>
-            <a href="movimentacao.html">
+            <a class="active" href="movimentacao.html">
               <i class="fa-solid fa-arrow-right-arrow-left"></i>
               Movimentações
             </a>
@@ -70,50 +68,59 @@
         </div>
       </nav>
 
-      <!-- =========================
-         CONTEÚDO
-    ========================== -->
+      <!-- CONTEÚDO -->
 
       <div class="content">
-        <header class="topo-ferramentas">
+        <header class="topo-movimentacao">
           <div>
-            <h2>Ferramentas</h2>
+            <h2>Movimentações</h2>
 
-            <p class="subtitulo">Gerencie todas as ferramentas cadastradas.</p>
+            <p class="subtitulo">
+              Histórico de empréstimos e devoluções de ferramentas.
+            </p>
           </div>
 
-          <button class="btn-ferramenta">
+          <button class="btn-nova">
             <i class="fa-solid fa-plus"></i>
 
-            Nova ferramenta
+            Nova movimentação
           </button>
         </header>
 
         <section class="card-tabela">
-          <!-- Barra superior -->
-
           <div class="barra-superior">
             <div class="pesquisa">
               <i class="fa-solid fa-magnifying-glass"></i>
 
-              <input type="text" placeholder="Pesquisar ferramenta..." />
+              <input
+                type="text"
+                placeholder="Pesquisar ferramenta ou colaborador..."
+              />
             </div>
 
-            <span class="contador">
-              Total:
-              <strong>3</strong>
-            </span>
-          </div>
+            <div class="filtros">
+              <select>
+                <option>Todos</option>
+                <option>Empréstimos</option>
+                <option>Devoluções</option>
+              </select>
 
-          <!-- Tabela -->
+              <span class="contador">
+                Total:
+                <strong>18</strong>
+              </span>
+            </div>
+          </div>
 
           <div class="table-responsive">
             <table>
               <thead>
                 <tr>
-                  <th>Código</th>
+                  <th>Data</th>
                   <th>Ferramenta</th>
-                  <th>Categoria</th>
+                  <th>Colaborador</th>
+                  <th>Tipo</th>
+                  <th>Devolução</th>
                   <th>Status</th>
                   <th>Ações</th>
                 </tr>
@@ -121,33 +128,17 @@
 
               <tbody>
                 <tr>
-                  <td>001</td>
+                  <td>30/07/2026 08:15</td>
 
-                  <td>Furadeira Bosch</td>
+                  <td>Furadeira Bosch GSB 550</td>
 
-                  <td>Elétrica</td>
+                  <td>José Silva</td>
 
                   <td>
-                    <span class="status disponivel"> Disponível </span>
+                    <span class="tipo emprestimo"> Empréstimo </span>
                   </td>
 
-                  <td class="acoes">
-                    <button title="Editar">
-                      <i class="fa-solid fa-pen"></i>
-                    </button>
-
-                    <button title="Excluir">
-                      <i class="fa-solid fa-trash"></i>
-                    </button>
-                  </td>
-                </tr>
-
-                <tr>
-                  <td>002</td>
-
-                  <td>Martelete</td>
-
-                  <td>Elétrica</td>
+                  <td>05/08/2026</td>
 
                   <td>
                     <span class="status uso"> Em uso </span>
@@ -165,14 +156,48 @@
                 </tr>
 
                 <tr>
-                  <td>003</td>
+                  <td>29/07/2026 15:40</td>
+
+                  <td>Martelete Bosch</td>
+
+                  <td>Carlos Souza</td>
+
+                  <td>
+                    <span class="tipo devolucao"> Devolução </span>
+                  </td>
+
+                  <td>-</td>
+
+                  <td>
+                    <span class="status disponivel"> Finalizado </span>
+                  </td>
+
+                  <td class="acoes">
+                    <button title="Editar">
+                      <i class="fa-solid fa-pen"></i>
+                    </button>
+
+                    <button title="Excluir">
+                      <i class="fa-solid fa-trash"></i>
+                    </button>
+                  </td>
+                </tr>
+
+                <tr>
+                  <td>28/07/2026 09:20</td>
 
                   <td>Chave Combinada 13</td>
 
-                  <td>Manual</td>
+                  <td>Pedro Henrique</td>
 
                   <td>
-                    <span class="status manutencao"> Manutenção </span>
+                    <span class="tipo emprestimo"> Empréstimo </span>
+                  </td>
+
+                  <td>02/08/2026</td>
+
+                  <td>
+                    <span class="status manutencao"> Atrasado </span>
                   </td>
 
                   <td class="acoes">
