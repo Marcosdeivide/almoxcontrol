@@ -1,19 +1,19 @@
 <!doctype html>
-<html lang="pt-br">
+<html lang="pt-BR">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
     <title>Ferramentas | AlmoxControl</title>
 
     <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="css/sidebar.css" />
+    <link rel="stylesheet" href="css/ferramenta.css" />
 
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
     />
-
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 
     <link
       href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
@@ -23,12 +23,19 @@
 
   <body>
     <div class="container">
-      <!-- Sidebar -->
+      <!-- =========================
+         SIDEBAR
+    ========================== -->
+
       <nav class="nav-container">
-        <h1 class="logo">
+        <div class="sidebar-header">
           <i class="fa-solid fa-toolbox"></i>
-          AlmoxControl
-        </h1>
+
+          <div>
+            <h1>AlmoxControl</h1>
+            <span>Sistema ERP</span>
+          </div>
+        </div>
 
         <ul class="menu">
           <li>
@@ -52,29 +59,55 @@
             </a>
           </li>
         </ul>
+
+        <div class="sidebar-footer">
+          <div class="avatar">M</div>
+
+          <div>
+            <strong>Marcos</strong>
+            <span>Administrador</span>
+          </div>
+        </div>
       </nav>
 
-      <!-- Conteúdo -->
+      <!-- =========================
+         CONTEÚDO
+    ========================== -->
+
       <div class="content">
-        <header class="container-topo">
-          <h2>Ferramentas</h2>
+        <header class="topo-ferramentas">
+          <div>
+            <h2>Ferramentas</h2>
+
+            <p class="subtitulo">Gerencie todas as ferramentas cadastradas.</p>
+          </div>
+
+          <button class="btn-ferramenta">
+            <i class="fa-solid fa-plus"></i>
+
+            Nova ferramenta
+          </button>
         </header>
 
-        <main>
-          <section class="topo-ferramentas">
-            <input
-              type="text"
-              class="input-pesquisa"
-              placeholder="Buscar ferramenta..."
-            />
+        <section class="card-tabela">
+          <!-- Barra superior -->
 
-            <button class="btn-ferramenta">
-              <i class="fa-solid fa-plus"></i>
-              Nova Ferramenta
-            </button>
-          </section>
+          <div class="barra-superior">
+            <div class="pesquisa">
+              <i class="fa-solid fa-magnifying-glass"></i>
 
-          <section class="tabela-ferramentas">
+              <input type="text" placeholder="Pesquisar ferramenta..." />
+            </div>
+
+            <span class="contador">
+              Total:
+              <strong>3</strong>
+            </span>
+          </div>
+
+          <!-- Tabela -->
+
+          <div class="table-responsive">
             <table>
               <thead>
                 <tr>
@@ -89,36 +122,73 @@
               <tbody>
                 <tr>
                   <td>001</td>
+
                   <td>Furadeira Bosch</td>
+
                   <td>Elétrica</td>
-                  <td>Disponível</td>
+
                   <td>
-                    <i class="fa-solid fa-pen"></i>
-                    <i class="fa-solid fa-trash"></i>
+                    <span class="status disponivel"> Disponível </span>
+                  </td>
+
+                  <td class="acoes">
+                    <button title="Editar">
+                      <i class="fa-solid fa-pen"></i>
+                    </button>
+
+                    <button title="Excluir">
+                      <i class="fa-solid fa-trash"></i>
+                    </button>
                   </td>
                 </tr>
 
                 <tr>
                   <td>002</td>
+
                   <td>Martelete</td>
+
                   <td>Elétrica</td>
-                  <td>Em Uso</td>
+
                   <td>
-                    <i class="fa-solid fa-pen"></i>
-                    <i class="fa-solid fa-trash"></i>
+                    <span class="status uso"> Em uso </span>
+                  </td>
+
+                  <td class="acoes">
+                    <button title="Editar">
+                      <i class="fa-solid fa-pen"></i>
+                    </button>
+
+                    <button title="Excluir">
+                      <i class="fa-solid fa-trash"></i>
+                    </button>
                   </td>
                 </tr>
 
                 <tr>
                   <td>003</td>
+
                   <td>Chave Combinada 13</td>
+
                   <td>Manual</td>
-                  <td>Manutenção</td>
+
+                  <td>
+                    <span class="status manutencao"> Manutenção </span>
+                  </td>
+
+                  <td class="acoes">
+                    <button title="Editar">
+                      <i class="fa-solid fa-pen"></i>
+                    </button>
+
+                    <button title="Excluir">
+                      <i class="fa-solid fa-trash"></i>
+                    </button>
+                  </td>
                 </tr>
               </tbody>
             </table>
-          </section>
-        </main>
+          </div>
+        </section>
       </div>
     </div>
   </body>

@@ -1,0 +1,164 @@
+/* ==========================
+   SIDEBAR
+========================== */
+
+.nav-container {
+  display: flex;
+  flex-direction: column;
+
+  width: 260px;
+  min-height: 100vh;
+
+  padding: 20px;
+
+  background: #111827;
+  border-right: 1px solid #1f2937;
+}
+
+/* ==========================
+   LOGO
+========================== */
+
+.sidebar-header {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+
+  margin-bottom: 40px;
+}
+
+.sidebar-header i {
+  width: 48px;
+  height: 48px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background: #fb923c;
+  color: white;
+
+  border-radius: 12px;
+
+  font-size: 22px;
+}
+
+.sidebar-header h1 {
+  color: white;
+  font-size: 22px;
+  font-weight: 600;
+}
+
+.sidebar-header span {
+  display: block;
+
+  color: #9ca3af;
+
+  font-size: 13px;
+}
+
+/* ==========================
+   MENU
+========================== */
+
+.menu {
+  list-style: none;
+
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+
+  flex: 1;
+}
+
+.menu li {
+  width: 100%;
+}
+
+.menu a {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+
+  padding: 14px 16px;
+
+  text-decoration: none;
+
+  color: #d1d5db;
+
+  border-radius: 10px;
+
+  transition: 0.25s;
+}
+
+.menu a i {
+  width: 22px;
+
+  text-align: center;
+
+  font-size: 18px;
+}
+
+.menu a:hover {
+  background: #1f2937;
+
+  color: white;
+
+  transform: translateX(5px);
+}
+
+.menu a.active {
+  background: #fb923c;
+
+  color: white;
+
+  font-weight: 600;
+}
+
+/* ==========================
+   FOOTER
+========================== */
+
+.sidebar-footer {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+
+  padding-top: 20px;
+
+  border-top: 1px solid #374151;
+}
+
+.avatar {
+  width: 46px;
+  height: 46px;
+
+  border-radius: 50%;
+
+  background: #fb923c;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  color: white;
+
+  font-size: 18px;
+  font-weight: 700;
+}
+
+.sidebar-footer strong {
+  display: block;
+
+  color: white;
+
+  font-size: 15px;
+}
+
+.sidebar-footer span {
+  display: block;
+
+  color: #9ca3af;
+
+  font-size: 13px;
+}

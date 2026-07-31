@@ -1,0 +1,175 @@
+<!doctype html>
+<html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>Dashboard | AlmoxControl</title>
+
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="css/dashboard.css" />
+    <link rel="stylesheet" href="css/sidebar.css" />
+
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+    />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+
+  <body>
+    <div class="container">
+      <!-- SIDEBAR -->
+
+      <nav class="nav-container">
+        <div class="sidebar-header">
+          <i class="fa-solid fa-toolbox"></i>
+
+          <div>
+            <h1>AlmoxControl</h1>
+
+            <span>Sistema ERP</span>
+          </div>
+        </div>
+
+        <ul class="menu">
+          <li>
+            <a class="active" href="dashboard.html">
+              <i class="fa-solid fa-house"></i>
+              Dashboard
+            </a>
+          </li>
+
+          <li>
+            <a href="ferramentas.html">
+              <i class="fa-solid fa-wrench"></i>
+              Ferramentas
+            </a>
+          </li>
+
+          <li>
+            <a href="movimentacoes.html">
+              <i class="fa-solid fa-arrow-right-arrow-left"></i>
+              Movimentações
+            </a>
+          </li>
+        </ul>
+
+        <div class="sidebar-footer">
+          <div class="avatar">M</div>
+
+          <div>
+            <strong>Marcos</strong>
+
+            <span>Administrador</span>
+          </div>
+        </div>
+      </nav>
+
+      <!-- CONTEÚDO -->
+
+      <div class="content">
+        <header class="container-topo">
+          <h2>Dashboard</h2>
+        </header>
+
+        <main>
+          <section class="cards-dashboard">
+            <div class="card">
+              <h3>
+                <i class="fa-solid fa-users"></i>
+                Colaboradores
+              </h3>
+
+              <span id="colaboradores"> 0 </span>
+            </div>
+
+            <div class="card">
+              <h3>
+                <i class="fa-solid fa-wrench"></i>
+
+                Ferramentas
+              </h3>
+
+              <span id="ferramentas"> 0 </span>
+            </div>
+
+            <div class="card disponivel">
+              <h3>
+                <i class="fa-solid fa-circle-check"></i>
+
+                Disponível
+              </h3>
+
+              <span id="disponivel"> 0 </span>
+            </div>
+
+            <div class="card uso">
+              <h3>
+                <i class="fa-solid fa-clock"></i>
+
+                Em uso
+              </h3>
+
+              <span id="uso"> 0 </span>
+            </div>
+
+            <div class="card manutencao">
+              <h3>
+                <i class="fa-solid fa-triangle-exclamation"></i>
+
+                Manutenção
+              </h3>
+
+              <span id="manutencao"> 0 </span>
+            </div>
+          </section>
+
+          <section class="movimentacoes">
+            <div class="movimentacoes-header">
+              <h2>Últimas movimentações</h2>
+
+              <button>Ver todos</button>
+            </div>
+
+            <div class="movimento">
+              <div>
+                <h3>Furadeira Bosch</h3>
+
+                <p>João</p>
+              </div>
+
+              <span> Empréstimo </span>
+            </div>
+
+            <div class="movimento">
+              <div>
+                <h3>Martelete</h3>
+
+                <p>Carlos</p>
+              </div>
+
+              <span> Devolução </span>
+            </div>
+
+            <div class="movimento">
+              <div>
+                <h3>Chave combinada 13</h3>
+
+                <p>Pedro</p>
+              </div>
+
+              <span> Em uso </span>
+            </div>
+          </section>
+        </main>
+      </div>
+    </div>
+  </body>
+</html>
