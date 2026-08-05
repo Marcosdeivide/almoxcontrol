@@ -1,0 +1,217 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>Ferramentas | AlmoxControl</title>
+
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="css/sidebar.css" />
+    <link rel="stylesheet" href="css/ferramenta.css" />
+
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+    />
+
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+
+  <body>
+    <div class="container">
+      <!-- =========================
+         SIDEBAR
+    ========================== -->
+
+      <nav class="nav-container">
+        <div class="sidebar-header">
+          <i class="fa-solid fa-toolbox"></i>
+
+          <div>
+            <h1>AlmoxControl</h1>
+            <span>Sistema ERP</span>
+          </div>
+        </div>
+
+        <ul class="menu">
+          <li>
+            <a href="index.html">
+              <i class="fa-solid fa-house"></i>
+              Dashboard
+            </a>
+          </li>
+
+          <li>
+            <a class="active" href="ferramentas.html">
+              <i class="fa-solid fa-wrench"></i>
+              Ferramentas
+            </a>
+          </li>
+
+          <li>
+            <a href="movimentacao.html">
+              <i class="fa-solid fa-arrow-right-arrow-left"></i>
+              Movimentações
+            </a>
+          </li>
+        </ul>
+
+        <div class="sidebar-footer">
+          <div class="avatar">M</div>
+
+          <div>
+            <strong>Marcos</strong>
+            <span>Administrador</span>
+          </div>
+        </div>
+      </nav>
+
+      <!-- =========================
+         CONTEÚDO
+    ========================== -->
+
+      <div class="content">
+        <header class="topo-ferramentas">
+          <div>
+            <h2>Ferramentas</h2>
+
+            <p class="subtitulo">Gerencie todas as ferramentas cadastradas.</p>
+          </div>
+
+          <button id="btnAdicionarFerramenta" class="btn-ferramenta">
+            <i class="fa-solid fa-plus"></i>
+
+            Nova ferramenta
+          </button>
+        </header>
+
+        <section class="card-tabela">
+          <!-- Barra superior -->
+
+          <div class="barra-superior">
+            <div class="pesquisa">
+              <i class="fa-solid fa-magnifying-glass"></i>
+
+              <input
+                id="pesquisaFerramenta"
+                type="text"
+                placeholder="Pesquisar ferramenta..."
+              />
+            </div>
+
+            <span class="contador">
+              Total:
+              <strong id="totalFerramentas">0</strong>
+            </span>
+          </div>
+
+          <!-- Tabela -->
+
+          <div class="table-responsive">
+            <table id="tabelaFerramentas">
+              <thead>
+                <tr>
+                  <th>Código</th>
+                  <th>Ferramenta</th>
+                  <th>Categoria</th>
+                  <th>Status</th>
+                  <th>Ações</th>
+                </tr>
+              </thead>
+
+              <tbody id="listaFerramentas">
+                
+              </tbody>
+            </table>
+          </div>
+        </section>
+      </div>
+      <div id="modalFerramenta" class="modal">
+
+    <div class="modal-content">
+
+        <h2>Nova Ferramenta</h2>
+
+
+        <form id="formFerramenta">
+
+
+            <label>Nome</label>
+            <input 
+            id="nomeFerramenta"
+            type="text"
+            placeholder="Ex: Furadeira Bosch"
+            >
+
+
+            <label>Código</label>
+            <input 
+            id="codigoFerramenta"
+            type="text"
+            placeholder="Ex: 001"
+            >
+
+
+            <label>Categoria</label>
+            <input 
+            id="categoriaFerramenta"
+            type="text"
+            placeholder="Ex: Elétrica"
+            >
+
+
+            <label>Status</label>
+
+            <select id="statusFerramenta">
+
+                <option value="disponivel">
+                    Disponível
+                </option>
+
+                <option value="uso">
+                    Em uso
+                </option>
+
+                <option value="manutencao">
+                    Manutenção
+                </option>
+
+            </select>
+
+
+
+            <div class="botoes-modal">
+
+                <button 
+                type="button"
+                id="fecharModal">
+                    Cancelar
+                </button>
+
+
+                <button 
+                type="submit">
+                    Salvar
+                </button>
+
+            </div>
+
+
+        </form>
+
+
+    </div>
+
+</div>
+    </div>
+    <script src="js/config.js"></script>
+    <script src="js/storage.js"></script>
+    <script src="js/utils.js"></script>4
+    <script src="js/ferramentas.js"></script>
+    <script src="js/app.js"></script>
+  </body>
+</html>

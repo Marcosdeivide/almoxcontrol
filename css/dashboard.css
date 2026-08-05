@@ -1,0 +1,427 @@
+/* =========================
+   CARDS DASHBOARD
+========================= */
+
+
+.cards-dashboard {
+
+    display: grid;
+
+    grid-template-columns: repeat(5, 1fr);
+
+    gap: 20px;
+
+}
+
+
+
+
+
+.card {
+
+    position: relative;
+
+    background: linear-gradient(
+        145deg,
+        #1f2937,
+        #111827
+    );
+
+
+    padding: 22px;
+
+
+    border-radius: 16px;
+
+
+    color: white;
+
+
+    min-height: 140px;
+
+
+    overflow: hidden;
+
+
+    transition: .3s;
+
+
+    border: 1px solid #374151;
+
+}
+
+
+
+.card:hover {
+
+
+    transform: translateY(-8px);
+
+
+    border-color: #fb923c;
+
+
+}
+
+
+
+
+
+.card h3 {
+
+
+    display:flex;
+
+    align-items:center;
+
+    gap:12px;
+
+
+    font-size:15px;
+
+
+    font-weight:500;
+
+
+    color:#d1d5db;
+
+
+}
+
+
+
+
+
+.card h3 i {
+
+
+    font-size:24px;
+
+
+    background:#374151;
+
+
+    padding:12px;
+
+
+    border-radius:12px;
+
+
+    color:#fb923c;
+
+
+}
+
+
+
+
+
+.card span {
+
+
+    display:block;
+
+
+    margin-top:25px;
+
+
+    font-size:40px;
+
+
+    font-weight:700;
+
+
+}
+
+
+
+
+
+/* CORES DOS CARDS */
+
+
+.disponivel h3 i {
+
+
+    color:#22c55e;
+
+
+}
+
+
+
+.uso h3 i {
+
+
+    color:#facc15;
+
+
+}
+
+
+
+.manutencao h3 i {
+
+
+    color:#ef4444;
+
+
+}
+
+
+
+
+
+/* =========================
+   MOVIMENTAÇÕES
+========================= */
+
+
+.movimentacoes {
+
+
+    margin-top:35px;
+
+
+    background:#111827;
+
+
+    padding:25px;
+
+
+    border-radius:16px;
+
+
+    color:white;
+
+
+    border:1px solid #374151;
+
+
+}
+
+
+
+
+
+.movimentacoes-header {
+
+
+    display:flex;
+
+
+    justify-content:space-between;
+
+
+    align-items:center;
+
+
+    margin-bottom:25px;
+
+
+}
+
+
+
+
+
+.movimentacoes-header h2 {
+
+
+    font-size:20px;
+
+
+}
+
+
+
+
+
+.movimentacoes-header button {
+
+
+    background:#fb923c;
+
+
+    color:white;
+
+
+    border:none;
+
+
+    padding:10px 18px;
+
+
+    border-radius:8px;
+
+
+    cursor:pointer;
+
+
+    transition:.3s;
+
+
+}
+
+
+
+
+
+.movimentacoes-header button:hover {
+
+
+    background:#ea580c;
+
+
+}
+
+
+
+
+
+
+
+.movimento {
+
+
+    display:flex;
+
+
+    justify-content:space-between;
+
+
+    align-items:center;
+
+
+    padding:18px;
+
+
+    margin-bottom:12px;
+
+
+    background:#1f2937;
+
+
+    border-radius:12px;
+
+
+    transition:.3s;
+
+
+}
+
+
+
+
+
+.movimento:hover {
+
+
+    transform:translateX(5px);
+
+
+}
+
+
+
+
+
+
+.movimento h3 {
+
+
+    font-size:16px;
+
+
+}
+
+
+
+.movimento p {
+
+
+    color:#9ca3af;
+
+
+    font-size:14px;
+
+
+}
+
+
+
+
+
+.movimento span {
+
+
+    padding:8px 15px;
+
+
+    background:#374151;
+
+
+    border-radius:20px;
+
+
+    font-size:13px;
+
+
+}
+
+
+
+
+
+
+
+/* =========================
+   RESPONSIVO
+========================= */
+
+
+@media(max-width:1100px){
+
+
+.cards-dashboard {
+
+
+grid-template-columns:repeat(3,1fr);
+
+
+}
+
+
+}
+
+
+
+@media(max-width:700px){
+
+
+.cards-dashboard {
+
+
+grid-template-columns:1fr;
+
+
+}
+
+
+
+.movimento {
+
+
+flex-direction:column;
+
+
+align-items:flex-start;
+
+
+gap:10px;
+
+
+}
+
+
+}
