@@ -14,6 +14,7 @@ const lista = document.getElementById("listaColaboradores");
 
 const total = document.getElementById("totalDeColaboradores");
 
+const filtro = document.getElementById("filtroColaboradores");
 
 // INPUTS
 
@@ -29,6 +30,7 @@ const status = document.getElementById("statusColaborador");
 
 const observacao = document.getElementById("observacaoColaborador");
 
+const pesquisa = document.getElementById("pesquisaColaborador");
 
 // ===============================
 // DADOS
@@ -38,10 +40,7 @@ let colaboradores = JSON.parse(
     localStorage.getItem("colaboradores")
 ) || [];
 
-
-// controla edição
 let colaboradorEditando = null;
-
 
 // ===============================
 // MODAL
@@ -57,17 +56,15 @@ btnNovo.addEventListener("click", () => {
 
 });
 
-
 fechar.addEventListener("click", () => {
 
     modal.style.display = "none";
 
 });
 
-
 window.addEventListener("click", (e) => {
 
-    if(e.target === modal){
+    if (e.target === modal) {
 
         modal.style.display = "none";
 
@@ -75,17 +72,15 @@ window.addEventListener("click", (e) => {
 
 });
 
-
 // ===============================
-// CADASTRAR / SALVAR EDIÇÃO
+// SALVAR
 // ===============================
 
-form.addEventListener("submit", (e)=>{
+form.addEventListener("submit", (e) => {
 
     e.preventDefault();
 
-
-    let dados = {
+    const dados = {
 
         nome: nome.value,
 
@@ -101,11 +96,22 @@ form.addEventListener("submit", (e)=>{
 
     };
 
+    const matriculaExiste = colaboradores.some((colaborador, index) => {
 
-    // EDITAR EXISTENTE
+    return colaborador.matricula === matricula.value &&
+           index !== colaboradorEditando;
 
-    if(colaboradorEditando !== null){
+});
 
+if (matriculaExiste) {
+
+    alert("Já existe um colaborador com essa matrícula.");
+
+    return;
+
+}
+
+    if (colaboradorEditando !== null) {
 
         colaboradores[colaboradorEditando] = {
 
@@ -115,22 +121,13 @@ form.addEventListener("submit", (e)=>{
 
         };
 
-
-    }
-
-
-    // NOVO COLABORADOR
-
-    else{
-
+    } else {
 
         dados.ferramentas = 0;
 
         colaboradores.push(dados);
 
-
     }
-
 
     localStorage.setItem(
 
@@ -140,54 +137,66 @@ form.addEventListener("submit", (e)=>{
 
     );
 
-
     mostrarColaboradores();
-
 
     form.reset();
 
-
     colaboradorEditando = null;
-
 
     modal.style.display = "none";
 
-
 });
-
 
 // ===============================
 // LISTAR
 // ===============================
 
-function mostrarColaboradores(){
-
+function mostrarColaboradores() {
 
     lista.innerHTML = "";
 
+    const textoPesquisa = pesquisa.value
+        .toLowerCase()
+        .trim();
 
-    colaboradores.forEach((item,index)=>{
+    const setorSelecionado = filtro.value;
 
+    let totalExibidos = 0;
+
+    colaboradores.forEach((item, index) => {
+
+        // Pesquisa por nome
+        if (!item.nome.toLowerCase().includes(textoPesquisa)) {
+
+            return;
+
+        }
+
+        // Filtro por setor
+        if (
+            setorSelecionado !== "Todos os setores" &&
+            item.setor !== setorSelecionado
+        ) {
+
+            return;
+
+        }
+
+        totalExibidos++;
 
         lista.innerHTML += `
 
         <tr>
 
-
             <td>${item.nome}</td>
-
 
             <td>${item.matricula}</td>
 
-
             <td>${item.setor}</td>
-
 
             <td>${item.telefone}</td>
 
-
             <td>${item.ferramentas || 0}</td>
-
 
             <td>
 
@@ -199,11 +208,9 @@ function mostrarColaboradores(){
 
             </td>
 
-
             <td class="acoes">
 
-
-                <button 
+                <button
                     class="btn-editar"
                     onclick="editarColaborador(${index})"
                 >
@@ -212,8 +219,7 @@ function mostrarColaboradores(){
 
                 </button>
 
-
-                <button 
+                <button
                     class="btn-excluir"
                     onclick="excluirColaborador(${index})"
                 >
@@ -222,36 +228,43 @@ function mostrarColaboradores(){
 
                 </button>
 
-
             </td>
-
 
         </tr>
 
         `;
 
-
     });
 
-
-    total.innerHTML = colaboradores.length;
-
+    total.innerHTML = totalExibidos;
 
 }
 
+// ===============================
+// PESQUISA
+// ===============================
+
+pesquisa.addEventListener("input", () => {
+
+    mostrarColaboradores();
+
+});
+
+filtro.addEventListener("change", () => {
+
+    mostrarColaboradores();
+
+});
 
 // ===============================
 // EXCLUIR
 // ===============================
 
-function excluirColaborador(index){
+function excluirColaborador(index) {
 
+    if (confirm("Deseja excluir este colaborador?")) {
 
-    if(confirm("Deseja excluir este colaborador?")){
-
-
-        colaboradores.splice(index,1);
-
+        colaboradores.splice(index, 1);
 
         localStorage.setItem(
 
@@ -261,25 +274,19 @@ function excluirColaborador(index){
 
         );
 
-
         mostrarColaboradores();
-
 
     }
 
-
 }
-
 
 // ===============================
 // EDITAR
 // ===============================
 
-function editarColaborador(index){
-
+function editarColaborador(index) {
 
     const item = colaboradores[index];
-
 
     nome.value = item.nome;
 
@@ -293,15 +300,11 @@ function editarColaborador(index){
 
     observacao.value = item.observacao;
 
-
     colaboradorEditando = index;
-
 
     modal.style.display = "flex";
 
-
 }
-
 
 // ===============================
 // INICIAR

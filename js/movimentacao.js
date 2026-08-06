@@ -12,216 +12,219 @@ const lista = document.getElementById("listaMovimentacoes");
 
 const total = document.getElementById("totalMovimentacoes");
 
-const selectColaborador =
-    document.getElementById("colaboradorMovimentacao");
+const selectColaborador = document.getElementById("colaboradorMovimentacao");
 
-const selectFerramenta = document.getElementById(
-    "ferramentaMovimentacao"
-);
-
-
+const selectFerramenta = document.getElementById("ferramentaMovimentacao");
 
 // INPUTS
 
-const colaborador = document.getElementById(
-    "colaboradorMovimentacao"
-);
-
-const tipo = document.getElementById(
-    "tipoMovimentacao"
-);
-
-const devolucao = document.getElementById(
-    "dataDevolucao"
-);
-
-const observacao = document.getElementById(
-    "observacaoMovimentacao"
-);
 
 
+const tipo = document.getElementById("tipoMovimentacao");
+
+const devolucao = document.getElementById("dataDevolucao");
+
+const observacao = document.getElementById("observacaoMovimentacao");
 
 // PEGAR DADOS
 
-let ferramentas = JSON.parse(
-    localStorage.getItem("ferramentas")
-) || [];
+let ferramentas = JSON.parse(localStorage.getItem("ferramentas")) || [];
 
+let movimentacoes = JSON.parse(localStorage.getItem("movimentacoes")) || [];
 
-let movimentacoes = JSON.parse(
-    localStorage.getItem("movimentacoes")
-) || [];
-
-let colaboradores = JSON.parse(
-    localStorage.getItem("colaboradores")
-) || [];
-
-
-
-
-// ABRIR MODAL
-
-btnNova.addEventListener("click",()=>{
-
-    modal.style.display = "flex";
-
-    carregarFerramentas();
-
-});
-
-btnNova.addEventListener("click",()=>{
-
-    modal.style.display = "flex";
-
-    carregarFerramentas();
-
-    carregarColaboradores();
-
-});
-
-
-
+let colaboradores = JSON.parse(localStorage.getItem("colaboradores")) || [];
 
 // FECHAR MODAL
 
-fechar.addEventListener("click",()=>{
-
-    modal.style.display = "none";
-
+fechar.addEventListener("click", () => {
+  modal.style.display = "none";
 });
-
-
-
-
 
 // CARREGAR FERRAMENTAS NO SELECT
 
-function carregarFerramentas(){
+function carregarFerramentas() {
+  selectFerramenta.innerHTML = "";
 
+  ferramentas.forEach((item) => {
+    if (item.status === "Em uso") return;
 
-    selectFerramenta.innerHTML = "";
-
-
-    ferramentas.forEach((item)=>{
-
-
-        selectFerramenta.innerHTML += `
-
+    selectFerramenta.innerHTML += `
         <option value="${item.nome}">
             ${item.nome}
         </option>
-
-        `;
-
-
-    });
-
-
+    `;
+  });
 }
 
-function carregarColaboradores(){
+function carregarColaboradores() {
+  selectColaborador.innerHTML = "";
 
-    selectColaborador.innerHTML = "";
-
-    colaboradores.forEach((item)=>{
-
-        selectColaborador.innerHTML += `
+  colaboradores.forEach((item) => {
+    selectColaborador.innerHTML += `
             <option value="${item.nome}">
                 ${item.nome}
             </option>
         `;
-
-    });
-
+  });
 }
 
+btnNova.addEventListener("click", () => {
 
+  carregarFerramentas();
 
+  carregarColaboradores();
 
+  modal.style.display = "flex";
+
+});
 
 // SALVAR MOVIMENTAÇÃO
 
 
-form.addEventListener("submit",(e)=>{
+
+form.addEventListener("submit", (e) => {
+
+  e.preventDefault();
 
 
-    e.preventDefault();
+  // Procura a ferramenta escolhida
 
-
-
-    let novaMovimentacao = {
-
-
-        ferramenta:
-        selectFerramenta.value,
-
-
-        colaborador:
-        selectColaborador.value,
-
-
-        tipo:
-        tipo.value,
-
-
-        devolucao:
-        devolucao.value,
-
-
-        observacao:
-        observacao.value,
-
-
-        data:
-        new Date().toLocaleString()
-
-
-    };
+  const ferramenta = ferramentas.find(
+    (f) => f.nome === selectFerramenta.value
+  );
 
 
 
-    movimentacoes.push(novaMovimentacao);
+  // Procura o colaborador escolhido
+
+  const colaboradorSelecionado = colaboradores.find(
+    (c) => c.nome === selectColaborador.value
+  );
 
 
 
-    localStorage.setItem(
-        "movimentacoes",
-        JSON.stringify(movimentacoes)
-    );
+  // Verifica se encontrou
+
+  if (!ferramenta || !colaboradorSelecionado) {
+
+    alert("Selecione uma ferramenta e um colaborador.");
+
+    return;
+
+  }
 
 
 
-    mostrarMovimentacoes();
+  // Verifica se a ferramenta já está em uso
+
+  if (
+    tipo.value === "emprestimo" &&
+    ferramenta.status === "Em uso"
+  ) {
+
+    alert("Esta ferramenta já está emprestada.");
+
+    return;
+
+  }
 
 
 
-    form.reset();
+  // Criando movimentação
+
+  let novaMovimentacao = {
+
+
+    ferramenta: ferramenta.nome,
+
+
+    colaborador: colaboradorSelecionado.nome,
+
+
+    tipo: tipo.value,
+
+
+    devolucao: devolucao.value,
+
+
+    observacao: observacao.value,
+
+
+    data: new Date().toLocaleString()
+
+
+  };
 
 
 
-    modal.style.display="none";
+
+  // Atualiza ferramenta
+
+  if (tipo.value === "emprestimo") {
+
+
+    ferramenta.status = "Em uso";
+
+
+    ferramenta.colaborador = colaboradorSelecionado.nome;
+
+
+    colaboradorSelecionado.ferramentas =
+      (colaboradorSelecionado.ferramentas || 0) + 1;
+
+
+  }
+
+
+
+
+  // Salvar dados
+
+  movimentacoes.push(novaMovimentacao);
+
+
+
+  localStorage.setItem(
+    "ferramentas",
+    JSON.stringify(ferramentas)
+  );
+
+
+
+  localStorage.setItem(
+    "colaboradores",
+    JSON.stringify(colaboradores)
+  );
+
+
+
+  localStorage.setItem(
+    "movimentacoes",
+    JSON.stringify(movimentacoes)
+  );
+
+
+
+  mostrarMovimentacoes();
+
+
+
+  form.reset();
+
+
+
+  modal.style.display = "none";
 
 
 });
 
-
-
-
-
-
 // MOSTRAR NA TABELA
 
+function mostrarMovimentacoes() {
+  lista.innerHTML = "";
 
-function mostrarMovimentacoes(){
-
-
-    lista.innerHTML="";
-
-
-    movimentacoes.forEach((item,index)=>{
-
-
-        lista.innerHTML += `
+  movimentacoes.forEach((item, index) => {
+    lista.innerHTML += `
 
 
         <tr>
@@ -264,11 +267,11 @@ function mostrarMovimentacoes(){
 
         <td>
 
-        <span class="status uso">
+        <span class="status ${item.tipo === "emprestimo" ? "uso" : "disponivel"}">
 
-        Em uso
+${item.tipo === "emprestimo" ? "Em uso" : "Devolvida"}
 
-        </span>
+</span>
 
         </td>
 
@@ -302,65 +305,59 @@ onclick="excluirMovimentacao(${index})">
 
 
         `;
+  });
 
-
-    });
-
-
-
-    total.innerHTML = movimentacoes.length;
-
-
+  total.innerHTML = movimentacoes.length;
 }
-
-
-
-
 
 // EXCLUIR
 
+function excluirMovimentacao(index) {
+  movimentacoes.splice(index, 1);
 
-function excluirMovimentacao(index){
+  localStorage.setItem("movimentacoes", JSON.stringify(movimentacoes));
 
-
-    movimentacoes.splice(index,1);
-
-
-
-    localStorage.setItem(
-        "movimentacoes",
-        JSON.stringify(movimentacoes)
-    );
-
-
-
-    mostrarMovimentacoes();
-
-
+  mostrarMovimentacoes();
 }
-
-
-
-
 
 // DEVOLVER FERRAMENTA
 
-function devolverFerramenta(index){
+function devolverFerramenta(index) {
+  const mov = movimentacoes[index];
 
+  const ferramenta = ferramentas.find((f) => f.nome === mov.ferramenta);
 
-    movimentacoes[index].tipo = "devolucao";
+  const colaborador = colaboradores.find((c) => c.nome === mov.colaborador);
 
+  if (ferramenta) {
+    ferramenta.status = "Disponível";
 
-    localStorage.setItem(
-        "movimentacoes",
-        JSON.stringify(movimentacoes)
-    );
+    ferramenta.colaborador = "";
+  }
 
+  if (colaborador) {
+    colaborador.ferramentas = Math.max(
+  0,
+  (colaborador.ferramentas || 0) - 1
+);
+  }
 
-    mostrarMovimentacoes();
+  mov.tipo = "devolucao";
 
+  localStorage.setItem("ferramentas", JSON.stringify(ferramentas));
 
+  localStorage.setItem("colaboradores", JSON.stringify(colaboradores));
+
+  localStorage.setItem("movimentacoes", JSON.stringify(movimentacoes));
+
+  mostrarMovimentacoes();
 }
 // INICIAR
+
+// INICIAR
+
+carregarFerramentas();
+
+carregarColaboradores();
 
 mostrarMovimentacoes();
