@@ -12,9 +12,13 @@ const lista = document.getElementById("listaMovimentacoes");
 
 const total = document.getElementById("totalMovimentacoes");
 
+const selectColaborador =
+    document.getElementById("colaboradorMovimentacao");
+
 const selectFerramenta = document.getElementById(
     "ferramentaMovimentacao"
 );
+
 
 
 // INPUTS
@@ -48,6 +52,10 @@ let movimentacoes = JSON.parse(
     localStorage.getItem("movimentacoes")
 ) || [];
 
+let colaboradores = JSON.parse(
+    localStorage.getItem("colaboradores")
+) || [];
+
 
 
 
@@ -58,6 +66,16 @@ btnNova.addEventListener("click",()=>{
     modal.style.display = "flex";
 
     carregarFerramentas();
+
+});
+
+btnNova.addEventListener("click",()=>{
+
+    modal.style.display = "flex";
+
+    carregarFerramentas();
+
+    carregarColaboradores();
 
 });
 
@@ -101,6 +119,22 @@ function carregarFerramentas(){
 
 }
 
+function carregarColaboradores(){
+
+    selectColaborador.innerHTML = "";
+
+    colaboradores.forEach((item)=>{
+
+        selectColaborador.innerHTML += `
+            <option value="${item.nome}">
+                ${item.nome}
+            </option>
+        `;
+
+    });
+
+}
+
 
 
 
@@ -123,7 +157,7 @@ form.addEventListener("submit",(e)=>{
 
 
         colaborador:
-        colaborador.value,
+        selectColaborador.value,
 
 
         tipo:

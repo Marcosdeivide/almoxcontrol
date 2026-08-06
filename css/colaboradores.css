@@ -1,0 +1,345 @@
+/* ===================================
+   TOPO
+=================================== */
+
+.topo-colaborador{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:30px;
+}
+
+.topo-colaborador h2{
+    display:flex;
+    align-items:center;
+    gap:12px;
+    font-size:28px;
+    color:#111827;
+}
+
+.topo-colaborador h2 i{
+    color:#fb923c;
+}
+
+.subtitulo{
+    margin-top:8px;
+    font-size:15px;
+    color:#6b7280;
+}
+
+.btn-colaborador{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    padding:12px 20px;
+    border:none;
+    border-radius:10px;
+    background:#fb923c;
+    color:#fff;
+    font-size:15px;
+    font-weight:600;
+    cursor:pointer;
+    transition:.25s;
+}
+
+.btn-colaborador:hover{
+    background:#ea580c;
+    transform:translateY(-2px);
+}
+
+/* ===================================
+   CARD
+=================================== */
+
+.card-tabela{
+    background:#111827;
+    border:1px solid #374151;
+    border-radius:16px;
+    padding:25px;
+    color:#fff;
+}
+
+/* ===================================
+   BARRA SUPERIOR
+=================================== */
+
+.barra-superior{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:20px;
+    flex-wrap:wrap;
+    margin-bottom:25px;
+}
+
+.pesquisa{
+    position:relative;
+    flex:1;
+}
+
+.pesquisa i{
+    position:absolute;
+    left:15px;
+    top:50%;
+    transform:translateY(-50%);
+    color:#9ca3af;
+}
+
+.pesquisa input{
+    width:100%;
+    padding:12px 15px 12px 42px;
+    background:#1f2937;
+    color:#fff;
+    border:1px solid #374151;
+    border-radius:10px;
+    outline:none;
+    transition:.25s;
+}
+
+.pesquisa input::placeholder{
+    color:#9ca3af;
+}
+
+.pesquisa input:focus{
+    border-color:#fb923c;
+}
+
+.filtros{
+    display:flex;
+    align-items:center;
+    gap:15px;
+}
+
+.filtros select{
+    padding:10px 15px;
+    border:1px solid #374151;
+    border-radius:10px;
+    background:#1f2937;
+    color:#fff;
+    outline:none;
+}
+
+.contador{
+    color:#d1d5db;
+}
+
+/* ===================================
+   TABELA
+=================================== */
+
+.table-responsive{
+    overflow-x:auto;
+}
+
+table{
+    width:100%;
+    border-collapse:collapse;
+}
+
+thead{
+    background:#1f2937;
+}
+
+th{
+    padding:16px;
+    color:#fff;
+    text-align:left;
+}
+
+td{
+    padding:16px;
+    color:#d1d5db;
+    border-bottom:1px solid #374151;
+}
+
+tbody tr{
+    transition:.2s;
+}
+
+tbody tr:hover{
+    background:#1f2937;
+}
+
+/* ===================================
+   STATUS
+=================================== */
+
+.status{
+    display:inline-block;
+    padding:6px 12px;
+    border-radius:30px;
+    font-size:13px;
+    font-weight:600;
+}
+
+.status.ativo{
+    background:#14532d;
+    color:#86efac;
+}
+
+.status.inativo{
+    background:#7f1d1d;
+    color:#fca5a5;
+}
+
+/* ===================================
+   BOTÕES DA TABELA
+=================================== */
+
+.acoes{
+    display:flex;
+    gap:8px;
+}
+
+.acoes button{
+    width:36px;
+    height:36px;
+    border:none;
+    border-radius:8px;
+    cursor:pointer;
+    color:#fff;
+    transition:.25s;
+}
+
+.btn-editar{
+    background:#3b82f6;
+}
+
+.btn-editar:hover{
+    background:#2563eb;
+}
+
+.btn-excluir{
+    background:#ef4444;
+}
+
+.btn-excluir:hover{
+    background:#dc2626;
+}
+
+/* ===================================
+   MODAL
+=================================== */
+
+.modal{
+    display:none;
+    position:fixed;
+    inset:0;
+    justify-content:center;
+    align-items:center;
+    background:rgba(0,0,0,.6);
+    z-index:999;
+}
+
+.modal-content{
+    width:420px;
+    max-width:95%;
+    padding:30px;
+    border-radius:16px;
+    background:#111827;
+    border:1px solid #374151;
+    color:#fff;
+}
+
+.modal-content h2{
+    margin-bottom:25px;
+}
+
+.modal-content label{
+    display:block;
+    margin:15px 0 8px;
+    color:#d1d5db;
+    font-weight:600;
+}
+
+.modal-content input,
+.modal-content select,
+.modal-content textarea{
+    width:100%;
+    padding:12px;
+    border:1px solid #374151;
+    border-radius:10px;
+    background:#1f2937;
+    color:#fff;
+    outline:none;
+    transition:.25s;
+}
+
+.modal-content input:focus,
+.modal-content select:focus,
+.modal-content textarea:focus{
+    border-color:#fb923c;
+}
+
+.modal-content textarea{
+    resize:none;
+    height:90px;
+}
+
+/* ===================================
+   BOTÕES DO MODAL
+=================================== */
+
+.botoes-modal{
+    display:flex;
+    justify-content:flex-end;
+    gap:12px;
+    margin-top:25px;
+}
+
+.botoes-modal button{
+    padding:12px 22px;
+    border:none;
+    border-radius:10px;
+    font-weight:600;
+    cursor:pointer;
+    transition:.25s;
+}
+
+.botoes-modal button:first-child{
+    background:#374151;
+    color:#fff;
+}
+
+.botoes-modal button:first-child:hover{
+    background:#4b5563;
+}
+
+.botoes-modal button:last-child{
+    background:#fb923c;
+    color:#fff;
+}
+
+.botoes-modal button:last-child:hover{
+    background:#ea580c;
+    transform:translateY(-2px);
+}
+
+/* ===================================
+   RESPONSIVO
+=================================== */
+
+@media (max-width:768px){
+
+    .topo-colaborador{
+        flex-direction:column;
+        align-items:flex-start;
+        gap:20px;
+    }
+
+    .barra-superior{
+        flex-direction:column;
+        align-items:stretch;
+    }
+
+    .filtros{
+        flex-direction:column;
+        align-items:stretch;
+    }
+
+    .btn-colaborador{
+        width:100%;
+        justify-content:center;
+    }
+
+}

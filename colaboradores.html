@@ -1,0 +1,333 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Colaboradores | AlmoxControl</title>
+
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/sidebar.css">
+    <link rel="stylesheet" href="css/colaboradores.css">
+
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+</head>
+
+<body>
+
+<div class="container">
+
+    <!-- SIDEBAR -->
+
+    <nav class="nav-container">
+
+        <div class="sidebar-header">
+
+            <i class="fa-solid fa-toolbox"></i>
+
+            <div>
+
+                <h1>AlmoxControl</h1>
+
+                <span>Sistema ERP</span>
+
+            </div>
+
+        </div>
+
+        <ul class="menu">
+
+            <li>
+
+                <a href="index.html">
+
+                    <i class="fa-solid fa-house"></i>
+
+                    Dashboard
+
+                </a>
+
+            </li>
+
+            <li>
+
+                <a href="ferramentas.html">
+
+                    <i class="fa-solid fa-wrench"></i>
+
+                    Ferramentas
+
+                </a>
+
+            </li>
+
+            <li>
+
+                <a href="movimentacao.html">
+
+                    <i class="fa-solid fa-arrow-right-arrow-left"></i>
+
+                    Movimentações
+
+                </a>
+
+            </li>
+
+            <li>
+
+                <a class="active" href="colaboradores.html">
+
+                    <i class="fa-solid fa-user-group"></i>
+
+                    Colaboradores
+
+                </a>
+
+            </li>
+
+        </ul>
+
+        <div class="sidebar-footer">
+
+            <div class="avatar">M</div>
+
+            <div>
+
+                <strong>Marcos</strong>
+
+                <span>Administrador</span>
+
+            </div>
+
+        </div>
+
+    </nav>
+
+    <!-- CONTEÚDO -->
+
+    <main class="content">
+
+        <!-- TOPO -->
+
+        <header class="topo-colaborador">
+
+            <div>
+
+                <h2>
+
+                    <i class="fa-solid fa-user-group"></i>
+
+                    Colaboradores
+
+                </h2>
+
+                <p class="subtitulo">
+
+                    Gerencie todos os colaboradores que podem retirar ferramentas.
+
+                </p>
+
+            </div>
+
+            <button id="btnNovoColaborador" class="btn-colaborador">
+
+                <i class="fa-solid fa-plus"></i>
+
+                Novo colaborador
+
+            </button>
+
+        </header>
+
+        <!-- TABELA -->
+
+        <section class="card-tabela">
+
+            <div class="barra-superior">
+
+                <div class="pesquisa">
+
+                    <i class="fa-solid fa-magnifying-glass"></i>
+
+                    <input
+                        id="pesquisaColaborador"
+                        type="text"
+                        placeholder="Pesquisar colaborador..."
+                    >
+
+                </div>
+
+                <div class="filtros">
+
+                    <select id="filtroColaboradores">
+
+                        <option>Todos os setores</option>
+
+                        <option>Mecânica</option>
+
+                        <option>Elétrica</option>
+
+                        <option>Produção</option>
+
+                        <option>Almoxarifado</option>
+
+                    </select>
+
+                    <span class="contador">
+
+                        Total:
+                        <strong id="totalDeColaboradores">0</strong>
+
+                    </span>
+
+                </div>
+
+            </div>
+
+            <div class="table-responsive">
+
+                <table id="tabelaColaboradores">
+
+                    <thead>
+
+                        <tr>
+
+                            <th>Nome</th>
+
+                            <th>Matrícula</th>
+
+                            <th>Setor</th>
+
+                            <th>Telefone</th>
+
+                            <th>Ferramentas em uso</th>
+
+                            <th>Status</th>
+
+                            <th>Ações</th>
+
+                        </tr>
+
+                    </thead>
+
+                    <tbody id="listaColaboradores"></tbody>
+
+                </table>
+
+            </div>
+
+        </section>
+
+        <!-- MODAL -->
+
+        <div id="modalColaborador" class="modal">
+
+            <div class="modal-content">
+
+                <h2>Novo Colaborador</h2>
+
+                <form id="formColaborador">
+
+                    <label>Nome</label>
+
+                    <input
+                        id="nomeColaborador"
+                        type="text"
+                        placeholder="Digite o nome"
+                        required
+                    >
+
+                    <label>Matrícula</label>
+
+                    <input
+                        id="matriculaColaborador"
+                        type="text"
+                        placeholder="Digite a matrícula"
+                        required
+                    >
+
+                    <label>Setor</label>
+
+                    <select id="setorColaborador">
+
+                        <option value="">Selecione...</option>
+
+                        <option>Mecânica</option>
+
+                        <option>Elétrica</option>
+
+                        <option>Produção</option>
+
+                        <option>Almoxarifado</option>
+
+                    </select>
+
+                    <label>Telefone</label>
+
+                    <input
+                        id="telefoneColaborador"
+                        type="tel"
+                        placeholder="(11) 99999-9999"
+                    >
+
+                    <label>Status</label>
+
+                    <select id="statusColaborador">
+
+                        <option value="ativo">Ativo</option>
+
+                        <option value="inativo">Inativo</option>
+
+                    </select>
+
+                    <label>Observação</label>
+
+                    <textarea
+                        id="observacaoColaborador"
+                        placeholder="Observações..."
+                    ></textarea>
+
+                    <div class="botoes-modal">
+
+                        <button
+                            type="button"
+                            id="fecharModalColaborador"
+                        >
+
+                            Cancelar
+
+                        </button>
+
+                        <button type="submit">
+
+                            <i class="fa-solid fa-floppy-disk"></i>
+
+                            Salvar
+
+                        </button>
+
+                    </div>
+
+                </form>
+
+            </div>
+
+        </div>
+
+    </main>
+
+</div>
+
+<script src="js/config.js"></script>
+<script src="js/storage.js"></script>
+<script src="js/utils.js"></script>
+<script src="js/colaboradores.js"></script>
+<script src="js/app.js"></script>
+
+</body>
+</html>
