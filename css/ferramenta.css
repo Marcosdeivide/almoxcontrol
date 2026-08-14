@@ -3,346 +3,437 @@
 ======================================== */
 
 .topo-ferramentas {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-end;
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 20px;
 
-  margin-bottom: 30px;
+    margin-bottom: 30px;
 }
 
 .topo-ferramentas h2 {
-  color: var(--white);
-  font-size: 30px;
-  margin-bottom: 6px;
+    margin-bottom: 6px;
+
+    color: var(--white);
+    font-size: 30px;
+    font-weight: 600;
 }
 
-.subtitulo {
-  color: #9ca3af;
-  font-size: 15px;
+.topo-ferramentas .subtitulo {
+    color: #9ca3af;
+    font-size: 15px;
 }
+
 
 /* ========================================
-   BOTÃO
+   BOTÃO NOVA FERRAMENTA
 ======================================== */
 
 .btn-ferramenta {
-  display: flex;
-  align-items: center;
-  gap: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 
-  padding: 12px 18px;
+    gap: 10px;
 
-  background: var(--orange);
+    padding: 12px 18px;
 
-  color: white;
+    background: var(--orange);
+    color: var(--white);
 
-  border: none;
+    border: none;
+    border-radius: 10px;
 
-  border-radius: 10px;
+    cursor: pointer;
 
-  cursor: pointer;
+    font-weight: 600;
 
-  font-weight: 600;
-
-  transition: 0.25s;
+    transition: 0.25s ease;
 }
 
 .btn-ferramenta:hover {
-  background: var(--orange-dark);
-
-  transform: translateY(-3px);
+    background: var(--orange-dark);
+    transform: translateY(-2px);
 }
+
 
 /* ========================================
    CARD
 ======================================== */
 
 .card-tabela {
-  background: var(--card);
+    width: 100%;
 
-  border: 1px solid var(--border);
+    background: var(--card);
 
-  border-radius: 16px;
+    border: 1px solid var(--border);
+    border-radius: 16px;
 
-  overflow: hidden;
+    overflow: hidden;
 }
+
 
 /* ========================================
    BARRA SUPERIOR
 ======================================== */
 
 .barra-superior {
-  display: flex;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
 
-  justify-content: space-between;
+    gap: 20px;
 
-  align-items: center;
+    padding: 20px;
 
-  padding: 20px;
-
-  border-bottom: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
 }
+
 
 /* ========================================
    PESQUISA
 ======================================== */
 
 .pesquisa {
-  display: flex;
+    display: flex;
+    align-items: center;
 
-  align-items: center;
+    width: 340px;
 
-  width: 340px;
+    padding: 0 15px;
 
-  padding: 0 15px;
+    background: #111827;
 
-  background: #111827;
+    border: 1px solid var(--border);
+    border-radius: 10px;
 
-  border: 1px solid var(--border);
-
-  border-radius: 10px;
-
-  transition: 0.25s;
+    transition: 0.25s;
 }
 
 .pesquisa:focus-within {
-  border-color: var(--orange);
+    border-color: var(--orange);
 }
 
 .pesquisa i {
-  color: var(--orange);
+    color: var(--orange);
 }
 
 .pesquisa input {
-  width: 100%;
+    width: 100%;
 
-  padding: 12px;
+    padding: 12px;
 
-  background: transparent;
+    background: transparent;
 
-  border: none;
+    border: none;
+    outline: none;
 
-  outline: none;
+    color: white;
 
-  color: white;
-
-  font-family: inherit;
+    font-family: inherit;
 }
 
 .pesquisa input::placeholder {
-  color: #9ca3af;
+    color: #9ca3af;
 }
+
 
 /* ========================================
    CONTADOR
 ======================================== */
 
 .contador {
-  color: #d1d5db;
+    color: #d1d5db;
 
-  font-size: 14px;
+    font-size: 14px;
 }
 
 .contador strong {
-  color: white;
+    color: white;
 }
+
 
 /* ========================================
    TABELA
 ======================================== */
 
 .table-responsive {
-  width: 100%;
+    width: 100%;
 
-  overflow-x: auto;
+    overflow-x: auto;
 }
 
-table {
-  width: 100%;
 
-  min-width: 850px;
+/* IMPORTANTE:
+   Não usar table-layout: fixed.
+   Deixa o navegador distribuir
+   naturalmente as colunas.
+*/
 
-  border-collapse: collapse;
+#tabelaFerramentas {
+    width: 100%;
+
+    min-width: 700px;
+
+    border-collapse: collapse;
 }
 
-thead {
-  background: #111827;
+
+/* ========================================
+   CABEÇALHO
+======================================== */
+
+#tabelaFerramentas thead {
+    background: #111827;
 }
 
-thead th {
-  padding: 18px;
+#tabelaFerramentas th {
+    padding: 16px 18px;
 
-  color: white;
+    color: white;
 
-  text-align: left;
+    text-align: left;
 
-  font-size: 13px;
+    font-size: 13px;
+    font-weight: 600;
 
-  text-transform: uppercase;
+    text-transform: uppercase;
+    letter-spacing: 0.6px;
 
-  letter-spacing: 0.8px;
+    white-space: nowrap;
 }
 
-tbody td {
-  padding: 18px;
 
-  color: white;
+/* ========================================
+   LARGURA DAS COLUNAS
+======================================== */
 
-  border-bottom: 1px solid var(--border);
+/* Código */
+
+#tabelaFerramentas th:nth-child(1),
+#tabelaFerramentas td:nth-child(1) {
+    width: 130px;
 }
 
-tbody tr {
-  transition: 0.2s;
+
+/* Ferramenta */
+
+#tabelaFerramentas th:nth-child(2),
+#tabelaFerramentas td:nth-child(2) {
+    width: auto;
 }
 
-tbody tr:hover {
-  background: #273244;
+
+/* Categoria */
+
+#tabelaFerramentas th:nth-child(3),
+#tabelaFerramentas td:nth-child(3) {
+    width: 180px;
 }
+
+
+/* Status */
+
+#tabelaFerramentas th:nth-child(4),
+#tabelaFerramentas td:nth-child(4) {
+    width: 160px;
+}
+
+
+/* Ações */
+
+#tabelaFerramentas th:nth-child(5),
+#tabelaFerramentas td:nth-child(5) {
+    width: 130px;
+}
+
+
+/* ========================================
+   CORPO
+======================================== */
+
+#tabelaFerramentas tbody tr {
+    transition: background 0.2s ease;
+}
+
+#tabelaFerramentas tbody tr:hover {
+    background: #273244;
+}
+
+#tabelaFerramentas td {
+    padding: 16px 18px;
+
+    color: white;
+
+    font-size: 14px;
+
+    border-bottom: 1px solid var(--border);
+
+    vertical-align: middle;
+}
+
+
+/* Última linha */
+
+#tabelaFerramentas tbody tr:last-child td {
+    border-bottom: none;
+}
+
 
 /* ========================================
    STATUS
 ======================================== */
 
 .status {
-  display: inline-flex;
+    display: inline-flex;
 
-  align-items: center;
+    align-items: center;
+    justify-content: center;
 
-  justify-content: center;
+    min-width: 105px;
 
-  min-width: 110px;
+    padding: 7px 14px;
 
-  padding: 7px 14px;
+    border-radius: 999px;
 
-  border-radius: 999px;
+    font-size: 13px;
+    font-weight: 600;
 
-  font-size: 13px;
-
-  font-weight: 600;
+    white-space: nowrap;
 }
+
+
+/* Disponível */
 
 .disponivel {
-  background: rgba(34, 197, 94, 0.15);
+    background: rgba(34, 197, 94, 0.15);
 
-  color: #4ade80;
+    color: #4ade80;
 }
 
-.uso {
-  background: rgba(250, 204, 21, 0.15);
 
-  color: #fde047;
+/* Em uso */
+
+.em-uso {
+    background: rgba(250, 204, 21, 0.15);
+
+    color: #fde047;
 }
+
+
+/* Manutenção */
 
 .manutencao {
-  background: rgba(239, 68, 68, 0.15);
+    background: rgba(239, 68, 68, 0.15);
 
-  color: #f87171;
+    color: #f87171;
 }
+
 
 /* ========================================
    AÇÕES
 ======================================== */
 
 .acoes {
-  display: flex;
+    display: flex;
+    align-items: center;
 
-  gap: 12px;
+    gap: 8px;
 }
 
 .acoes button {
-  width: 38px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 
-  height: 38px;
+    width: 36px;
+    height: 36px;
 
-  border: none;
+    padding: 0;
 
-  border-radius: 8px;
+    background: #111827;
 
-  background: #111827;
+    border: none;
+    border-radius: 8px;
 
-  cursor: pointer;
+    cursor: pointer;
 
-  transition: 0.25s;
-}
-
-.acoes button:first-child {
-  color: #60a5fa;
-}
-
-.acoes button:last-child {
-  color: #f87171;
+    transition: 0.2s;
 }
 
 .acoes button:hover {
-  transform: translateY(-2px);
+    background: #374151;
 
-  background: #374151;
+    transform: translateY(-2px);
 }
 
-/* =========================
-   MODAL MOVIMENTAÇÃO
-========================= */
+.acoes button:first-child {
+    color: #60a5fa;
+}
 
-.modal {
+.acoes button:last-child {
+    color: #f87171;
+}
 
+
+/* ========================================
+   MODAL
+======================================== */
+
+#modalFerramenta {
     display: none;
 
     position: fixed;
 
     inset: 0;
 
-    background: rgba(0,0,0,0.65);
+    align-items: center;
+    justify-content: center;
+
+    padding: 20px;
+
+    background: rgba(0, 0, 0, 0.65);
 
     backdrop-filter: blur(5px);
 
-    align-items: center;
-
-    justify-content: center;
-
     z-index: 999;
-
 }
 
 
+/* ========================================
+   CAIXA DO MODAL
+======================================== */
 
-/* CAIXA DO MODAL */
+#modalFerramenta .modal-content {
+    width: 420px;
+    max-width: 100%;
 
-.modal-content {
+    padding: 30px;
 
     background: #111827;
 
     color: white;
 
-    width: 420px;
-
-    padding: 30px;
-
+    border: 1px solid #374151;
     border-radius: 18px;
 
-    border: 1px solid #374151;
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
 
-    box-shadow: 0 20px 50px rgba(0,0,0,.5);
-
-    animation: abrirModal .3s ease;
-
+    animation: abrirModal 0.3s ease;
 }
 
-
-
-.modal-content h2 {
-
+#modalFerramenta h2 {
     margin-bottom: 25px;
 
     font-size: 22px;
-
 }
 
 
+/* ========================================
+   CAMPOS
+======================================== */
 
-/* LABEL */
-
-.modal-content label {
-
+.campo-formulario label {
     display: block;
 
     margin-bottom: 6px;
@@ -350,210 +441,185 @@ tbody tr:hover {
     color: #d1d5db;
 
     font-size: 14px;
-
 }
 
-
-
-/* INPUTS */
-
-.modal-content input,
-.modal-content select,
-.modal-content textarea {
-
-
+.campo-formulario input,
+.campo-formulario select {
     width: 100%;
-
 
     padding: 12px;
 
-
     margin-bottom: 18px;
-
 
     background: #1f2937;
 
-
     color: white;
 
-
     border: 1px solid #374151;
-
-
     border-radius: 10px;
-
 
     outline: none;
 
-
     font-family: "Poppins", sans-serif;
+}
 
+.campo-formulario input:focus,
+.campo-formulario select:focus {
+    border-color: var(--orange);
+}
+
+.campo-formulario input::placeholder {
+    color: #6b7280;
 }
 
 
-
-.modal-content input:focus,
-.modal-content select:focus,
-.modal-content textarea:focus {
-
-
-    border-color: #fb923c;
-
-
-}
-
-
-
-/* TEXTAREA */
-
-.modal-content textarea {
-
-
-    height: 90px;
-
-    resize: none;
-
-}
-
-
-
-/* BOTÕES */
+/* ========================================
+   BOTÕES DO MODAL
+======================================== */
 
 .botoes-modal {
+    display: flex;
 
+    justify-content: flex-end;
 
-    display:flex;
+    gap: 12px;
 
-
-    justify-content:flex-end;
-
-
-    gap:12px;
-
-
-    margin-top:10px;
-
+    margin-top: 10px;
 }
-
-
 
 .botoes-modal button {
+    padding: 10px 20px;
 
+    border: none;
+    border-radius: 10px;
 
-    padding:10px 20px;
+    cursor: pointer;
 
+    font-family: inherit;
+    font-weight: 500;
 
-    border:none;
-
-
-    border-radius:10px;
-
-
-    cursor:pointer;
-
-
-    font-weight:500;
-
-
-    transition:.3s;
-
+    transition: 0.25s;
 }
 
 
+/* Cancelar */
 
-/* CANCELAR */
+#fecharModal {
+    background: #374151;
 
-#fecharModalMovimentacao {
+    color: white;
+}
 
-
-    background:#374151;
-
-
-    color:white;
-
+#fecharModal:hover {
+    background: #4b5563;
 }
 
 
-
-#fecharModalMovimentacao:hover {
-
-
-    background:#4b5563;
-
-}
-
-
-
-/* SALVAR */
+/* Salvar */
 
 .botoes-modal button[type="submit"] {
+    background: var(--orange);
 
-
-    background:#fb923c;
-
-
-    color:white;
-
+    color: white;
 }
-
-
 
 .botoes-modal button[type="submit"]:hover {
-
-
-    background:#ea580c;
-
+    background: var(--orange-dark);
 }
 
 
-
-/* ANIMAÇÃO */
+/* ========================================
+   ANIMAÇÃO
+======================================== */
 
 @keyframes abrirModal {
 
-
     from {
+        opacity: 0;
 
-        opacity:0;
-
-        transform:translateY(-20px) scale(.95);
-
+        transform:
+            translateY(-20px)
+            scale(0.95);
     }
-
 
     to {
+        opacity: 1;
 
-        opacity:1;
-
-        transform:translateY(0) scale(1);
-
+        transform:
+            translateY(0)
+            scale(1);
     }
-
-
 }
+
 
 /* ========================================
    RESPONSIVO
 ======================================== */
 
 @media (max-width: 900px) {
-  .topo-ferramentas {
-    flex-direction: column;
 
-    align-items: flex-start;
+    .topo-ferramentas {
+        flex-direction: column;
 
-    gap: 20px;
-  }
+        align-items: flex-start;
 
-  .barra-superior {
-    flex-direction: column;
+        gap: 20px;
+    }
 
-    align-items: stretch;
+    .barra-superior {
+        flex-direction: column;
 
-    gap: 15px;
-  }
+        align-items: stretch;
 
-  .pesquisa {
-    width: 100%;
-  }
+        gap: 15px;
+    }
+
+    .pesquisa {
+        width: 100%;
+    }
+}
+
+
+/* ========================================
+   CELULAR
+======================================== */
+
+@media (max-width: 600px) {
+
+    .topo-ferramentas h2 {
+        font-size: 25px;
+    }
+
+    .btn-ferramenta {
+        width: 100%;
+    }
+
+    .barra-superior {
+        padding: 15px;
+    }
+
+    #tabelaFerramentas {
+        min-width: 700px;
+    }
+
+    #tabelaFerramentas th,
+    #tabelaFerramentas td {
+        padding: 14px;
+    }
+
+    #modalFerramenta {
+        padding: 15px;
+    }
+
+    #modalFerramenta .modal-content {
+        padding: 22px;
+    }
+
+    .botoes-modal {
+        flex-direction: column-reverse;
+    }
+
+    .botoes-modal button {
+        width: 100%;
+    }
 }

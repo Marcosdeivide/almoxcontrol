@@ -1,285 +1,504 @@
-// PEGANDO ELEMENTOS
+/* ========================================
+   ELEMENTOS
+======================================== */
 
 const btnAdicionar = document.getElementById("btnAdicionarFerramenta");
-
 const modal = document.getElementById("modalFerramenta");
-
 const fecharModal = document.getElementById("fecharModal");
 
 const form = document.getElementById("formFerramenta");
-
 const lista = document.getElementById("listaFerramentas");
 
 const total = document.getElementById("totalFerramentas");
-
 const pesquisa = document.getElementById("pesquisaFerramenta");
 
 
-// BANCO
+/* ========================================
+   DADOS
+======================================== */
 
-let ferramentas = JSON.parse(localStorage.getItem("ferramentas")) || [];
+let ferramentas =
+    JSON.parse(localStorage.getItem("ferramentas")) || [];
 
 let editarId = null;
 
 
+/* ========================================
+   ABRIR MODAL
+======================================== */
 
-// ABRIR MODAL NOVO
-
-btnAdicionar.addEventListener("click",()=>{
+btnAdicionar.addEventListener("click", () => {
 
     editarId = null;
 
     form.reset();
 
-    modal.style.display="flex";
+    modal.style.display = "flex";
 
 });
 
 
+/* ========================================
+   FECHAR MODAL
+======================================== */
 
-// FECHAR MODAL
+fecharModal.addEventListener("click", () => {
 
-fecharModal.addEventListener("click",()=>{
-
-    modal.style.display="none";
+    modal.style.display = "none";
 
 });
 
 
+/* ========================================
+   SALVAR FERRAMENTA
+======================================== */
 
-
-// SALVAR
-
-form.addEventListener("submit",(e)=>{
+form.addEventListener("submit", (e) => {
 
     e.preventDefault();
 
 
-    let ferramenta = {
+    const nome =
+        document.getElementById("nomeFerramenta").value.trim();
 
-        nome: document.getElementById("nomeFerramenta").value,
+    const codigo =
+        document.getElementById("codigoFerramenta").value.trim();
 
-        codigo: document.getElementById("codigoFerramenta").value,
+    const categoria =
+        document.getElementById("categoriaFerramenta").value.trim();
 
-        categoria: document.getElementById("categoriaFerramenta").value,
+    const status =
+    normalizarStatus(
+        document.getElementById("statusFerramenta").value
+    );
 
-        status: document.getElementById("statusFerramenta").value
 
+    /* --------------------------------
+       VALIDAÇÃO
+    -------------------------------- */
+
+    if (!nome || !codigo || !categoria || !status) {
+
+        alert("Preencha todos os campos.");
+
+        return;
+    }
+
+
+    /* --------------------------------
+       OBJETO
+    -------------------------------- */
+
+    const ferramenta = {
+        nome: nome,
+        codigo: codigo,
+        categoria: categoria,
+        status: status
     };
 
 
+    /* --------------------------------
+       EDITAR
+    -------------------------------- */
 
-    // EDITAR
-
-    if(editarId !== null){
+    if (editarId !== null) {
 
         ferramentas[editarId] = ferramenta;
 
         editarId = null;
 
-
     }
 
-    // NOVO
 
-    else{
+    /* --------------------------------
+       NOVA
+    -------------------------------- */
+
+    else {
 
         ferramentas.push(ferramenta);
 
     }
 
 
-
-    salvar();
-
-    mostrar();
-
-
-    form.reset();
-
-    modal.style.display="none";
-
-
-});
-
-
-
-
-// MOSTRAR TABELA
-
-function mostrar(){
-
-
-    lista.innerHTML="";
-
-
-    ferramentas.forEach((item,index)=>{
-
-
-        lista.innerHTML += `
-
-
-        <tr>
-
-            <td>${item.codigo}</td>
-
-            <td>${item.nome}</td>
-
-            <td>${item.categoria}</td>
-
-
-            <td>
-
-                <span class="status ${item.status}">
-
-                ${item.status}
-
-                </span>
-
-            </td>
-
-
-            <td class="acoes">
-
-
-                <button onclick="editarFerramenta(${index})">
-
-                    <i class="fa-solid fa-pen"></i>
-
-                </button>
-
-
-
-                <button onclick="excluirFerramenta(${index})">
-
-                    <i class="fa-solid fa-trash"></i>
-
-                </button>
-
-
-            </td>
-
-
-        </tr>
-
-
-        `;
-
-
-    });
-
-
-    total.innerHTML = ferramentas.length;
-
-
-}
-
-
-
-
-
-// EDITAR
-
-function editarFerramenta(index){
-
-
-    let ferramenta = ferramentas[index];
-
-
-    editarId = index;
-
-
-    modal.style.display="flex";
-
-
-    document.getElementById("nomeFerramenta").value = ferramenta.nome;
-
-
-    document.getElementById("codigoFerramenta").value = ferramenta.codigo;
-
-
-    document.getElementById("categoriaFerramenta").value = ferramenta.categoria;
-
-
-    document.getElementById("statusFerramenta").value = ferramenta.status;
-
-
-}
-
-
-
-
-// EXCLUIR
-
-function excluirFerramenta(index){
-
-
-    let confirmar = confirm("Excluir ferramenta?");
-
-
-    if(confirmar){
-
-
-        ferramentas.splice(index,1);
-
-
-        salvar();
-
-
-        mostrar();
-
-    }
-
-
-}
-
-
-
-
-// PESQUISA
-
-pesquisa.addEventListener("input",()=>{
-
-
-    let texto = pesquisa.value.toLowerCase();
-
-
-    document.querySelectorAll("#listaFerramentas tr")
-    .forEach((linha)=>{
-
-
-        if(linha.textContent.toLowerCase().includes(texto)){
-
-            linha.style.display="";
-
-        }else{
-
-            linha.style.display="none";
-
-        }
-
-
-    });
-
-
-});
-
-
-
-
-// SALVAR
-
-function salvar(){
+    /* --------------------------------
+       SALVAR
+    -------------------------------- */
 
     localStorage.setItem(
         "ferramentas",
         JSON.stringify(ferramentas)
     );
 
+
+    /* --------------------------------
+       ATUALIZAR
+    -------------------------------- */
+
+    mostrar();
+
+    form.reset();
+
+    modal.style.display = "none";
+
+});
+
+
+/* ========================================
+   MOSTRAR FERRAMENTAS
+======================================== */
+
+function mostrar() {
+
+    lista.innerHTML = "";
+
+
+    ferramentas.forEach((item, index) => {
+
+        const linha = document.createElement("tr");
+
+
+        /* =================================
+           CÓDIGO
+        ================================= */
+
+        const codigo = document.createElement("td");
+
+        codigo.textContent = item.codigo || "-";
+
+
+        /* =================================
+           NOME
+        ================================= */
+
+        const nome = document.createElement("td");
+
+        nome.textContent = item.nome || "-";
+
+
+        /* =================================
+           CATEGORIA
+        ================================= */
+
+        const categoria = document.createElement("td");
+
+        categoria.textContent =
+            item.categoria || "-";
+
+
+        /* =================================
+           STATUS
+        ================================= */
+
+        const statusColuna =
+            document.createElement("td");
+
+        const status =
+            document.createElement("span");
+
+        const statusNormalizado =
+    normalizarStatus(item.status);
+
+status.classList.add(
+    "status",
+    statusNormalizado
+);
+        status.textContent =
+            formatarStatus(item.status);
+
+
+        statusColuna.appendChild(status);
+
+
+        /* =================================
+           AÇÕES
+        ================================= */
+
+        const acoesColuna =
+            document.createElement("td");
+
+        const acoes =
+            document.createElement("div");
+
+        acoes.classList.add("acoes");
+
+
+        /* ---------------------------------
+           EDITAR
+        --------------------------------- */
+
+        const btnEditar =
+            document.createElement("button");
+
+        btnEditar.type = "button";
+
+        btnEditar.title =
+            "Editar ferramenta";
+
+        btnEditar.innerHTML =
+            '<i class="fa-solid fa-pen"></i>';
+
+        btnEditar.addEventListener(
+            "click",
+            () => editarFerramenta(index)
+        );
+
+
+        /* ---------------------------------
+           EXCLUIR
+        --------------------------------- */
+
+        const btnExcluir =
+            document.createElement("button");
+
+        btnExcluir.type = "button";
+
+        btnExcluir.title =
+            "Excluir ferramenta";
+
+        btnExcluir.innerHTML =
+            '<i class="fa-solid fa-trash"></i>';
+
+        btnExcluir.addEventListener(
+            "click",
+            () => excluirFerramenta(index)
+        );
+
+
+        /* ---------------------------------
+           MONTAR AÇÕES
+        --------------------------------- */
+
+        acoes.appendChild(btnEditar);
+
+        acoes.appendChild(btnExcluir);
+
+        acoesColuna.appendChild(acoes);
+
+
+        /* =================================
+           MONTAR LINHA
+        ================================= */
+
+        linha.appendChild(codigo);
+
+        linha.appendChild(nome);
+
+        linha.appendChild(categoria);
+
+        linha.appendChild(statusColuna);
+
+        linha.appendChild(acoesColuna);
+
+
+        /* =================================
+           ADICIONAR NA TABELA
+        ================================= */
+
+        lista.appendChild(linha);
+
+    });
+
+
+    /* =================================
+       ATUALIZAR TOTAL
+    ================================= */
+
+    total.textContent = ferramentas.length;
+
+
+    /* =================================
+       PESQUISA ATUAL
+    ================================= */
+
+    filtrarFerramentas();
+
 }
 
 
+/* ========================================
+   NORMALIZAR STATUS
+======================================== */
 
-// INICIAR
+function normalizarStatus(status) {
+
+    const valor = String(status || "")
+        .trim()
+        .toLowerCase();
+
+    if (
+        valor === "disponivel" ||
+        valor === "disponível"
+    ) {
+        return "disponivel";
+    }
+
+    if (
+        valor === "em uso" ||
+        valor === "em-uso"
+    ) {
+        return "em-uso";
+    }
+
+    if (
+        valor === "manutencao" ||
+        valor === "manutenção"
+    ) {
+        return "manutencao";
+    }
+
+    return "disponivel";
+}
+
+
+/* ========================================
+   TEXTO DO STATUS
+======================================== */
+
+function formatarStatus(status) {
+
+    const statusNormalizado =
+        normalizarStatus(status);
+
+
+    if (statusNormalizado === "disponivel") {
+        return "Disponível";
+    }
+
+    if (statusNormalizado === "em-uso") {
+        return "Em uso";
+    }
+
+    if (statusNormalizado === "manutencao") {
+        return "Manutenção";
+    }
+
+    return "Disponível";
+}
+
+
+/* ========================================
+   EDITAR
+======================================== */
+
+function editarFerramenta(index) {
+
+    const ferramenta =
+        ferramentas[index];
+
+
+    if (!ferramenta) {
+        return;
+    }
+
+
+    editarId = index;
+
+
+    document.getElementById(
+        "nomeFerramenta"
+    ).value = ferramenta.nome || "";
+
+    document.getElementById(
+        "codigoFerramenta"
+    ).value = ferramenta.codigo || "";
+
+    document.getElementById(
+        "categoriaFerramenta"
+    ).value = ferramenta.categoria || "";
+
+    document.getElementById(
+        "statusFerramenta"
+    ).value =
+        ferramenta.status || "disponivel";
+
+
+    modal.style.display = "flex";
+
+}
+
+
+/* ========================================
+   EXCLUIR
+======================================== */
+
+function excluirFerramenta(index) {
+
+    const ferramenta =
+        ferramentas[index];
+
+
+    if (!ferramenta) {
+        return;
+    }
+
+
+    const confirmar =
+        confirm(
+            `Deseja excluir "${ferramenta.nome}"?`
+        );
+
+
+    if (!confirmar) {
+        return;
+    }
+
+
+    ferramentas.splice(index, 1);
+
+
+    localStorage.setItem(
+        "ferramentas",
+        JSON.stringify(ferramentas)
+    );
+
+
+    mostrar();
+
+}
+
+
+/* ========================================
+   PESQUISA
+======================================== */
+
+pesquisa.addEventListener(
+    "input",
+    filtrarFerramentas
+);
+
+
+function filtrarFerramentas() {
+
+    const texto =
+        pesquisa.value
+            .toLowerCase()
+            .trim();
+
+
+    const linhas =
+        lista.querySelectorAll("tr");
+
+
+    linhas.forEach((linha) => {
+
+        const conteudo =
+            linha.textContent
+                .toLowerCase();
+
+
+        linha.style.display =
+            conteudo.includes(texto)
+                ? ""
+                : "none";
+
+    });
+
+}
+
+
+/* ========================================
+   INICIAR
+======================================== */
 
 mostrar();
