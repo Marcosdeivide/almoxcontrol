@@ -1,505 +1,308 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
 
-<head>
-
-    <meta charset="UTF-8">
-
-    <meta
-        name="viewport"
-        content="width=device-width, initial-scale=1.0"
-    >
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
     <title>Dashboard | AlmoxControl</title>
-
 
     <!-- ========================================
          FONTES
     ========================================= -->
 
-    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 
     <link
-        rel="preconnect"
-        href="https://fonts.gstatic.com"
-        crossorigin
-    >
-
-    <link
-        href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
-        rel="stylesheet"
-    >
-
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
 
     <!-- ========================================
          ÍCONES
     ========================================= -->
 
     <link
-        rel="stylesheet"
-        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
-    >
-
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+    />
 
     <!-- ========================================
          ESTILOS
     ========================================= -->
 
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/style.css" />
 
-    <link rel="stylesheet" href="css/sidebar.css">
+    <link rel="stylesheet" href="css/sidebar.css" />
 
-    <link rel="stylesheet" href="css/dashboard.css">
-
+    <link rel="stylesheet" href="css/dashboard.css" />
 
     <!-- ========================================
          FAVICON
     ========================================= -->
 
-    <link
-        rel="icon"
-        type="image/jpeg"
-        href="./assets/img/icon.jpg"
-    >
+    <link rel="icon" type="image/jpeg" href="./assets/img/icon.jpg" />
+  </head>
 
-</head>
-
-
-<body>
-
-
+  <body>
     <!-- ========================================
          CONTAINER PRINCIPAL
     ========================================= -->
 
     <div class="container">
-
-
-        <!-- ========================================
+      <!-- ========================================
              SIDEBAR
         ========================================= -->
 
-        <nav class="nav-container">
+      <nav class="nav-container">
+        <!-- LOGO / CABEÇALHO -->
 
+        <div class="sidebar-header">
+          <i class="fa-solid fa-toolbox"></i>
 
-            <!-- LOGO / CABEÇALHO -->
+          <div>
+            <h1>AlmoxControl</h1>
 
-            <div class="sidebar-header">
+            <span> Sistema ERP </span>
+          </div>
+        </div>
 
-                <i class="fa-solid fa-toolbox"></i>
+        <!-- MENU -->
 
-                <div>
+        <ul class="menu">
+          <!-- DASHBOARD -->
 
-                    <h1>
-                        AlmoxControl
-                    </h1>
+          <li>
+            <a class="active" href="index.html">
+              <i class="fa-solid fa-house"></i>
 
-                    <span>
-                        Sistema ERP
-                    </span>
+              <span> Dashboard </span>
+            </a>
+          </li>
 
-                </div>
+          <!-- FERRAMENTAS -->
 
-            </div>
+          <li>
+            <a href="ferramentas.html">
+              <i class="fa-solid fa-wrench"></i>
 
+              <span> Ferramentas </span>
+            </a>
+          </li>
 
-            <!-- MENU -->
+          <!-- MOVIMENTAÇÕES -->
 
-            <ul class="menu">
+          <li>
+            <a href="movimentacao.html">
+              <i class="fa-solid fa-arrow-right-arrow-left"></i>
 
+              <span> Movimentações </span>
+            </a>
+          </li>
 
-                <!-- DASHBOARD -->
+          <!-- COLABORADORES -->
 
-                <li>
+          <li>
+            <a href="colaboradores.html">
+              <i class="fa-solid fa-user-group"></i>
 
-                    <a
-                        class="active"
-                        href="index.html"
-                    >
+              <span> Colaboradores </span>
+            </a>
+          </li>
+           <li>
+            <a  href="almoxarifado.html">
+              <i class="fa-solid fa-boxes-stacked"></i>
+              <span>Insumos</span>
+            </a>
+          </li>
+        </ul>
 
-                        <i class="fa-solid fa-house"></i>
+        <!-- USUÁRIO -->
 
-                        <span>
-                            Dashboard
-                        </span>
+        <div class="sidebar-footer">
+          <div class="avatar">M</div>
 
-                    </a>
+          <div>
+            <strong> Marcos </strong>
 
-                </li>
+            <span> Administrador </span>
+          </div>
+        </div>
+      </nav>
 
-
-                <!-- FERRAMENTAS -->
-
-                <li>
-
-                    <a href="ferramentas.html">
-
-                        <i class="fa-solid fa-wrench"></i>
-
-                        <span>
-                            Ferramentas
-                        </span>
-
-                    </a>
-
-                </li>
-
-
-                <!-- MOVIMENTAÇÕES -->
-
-                <li>
-
-                    <a href="movimentacao.html">
-
-                        <i class="fa-solid fa-arrow-right-arrow-left"></i>
-
-                        <span>
-                            Movimentações
-                        </span>
-
-                    </a>
-
-                </li>
-
-
-                <!-- COLABORADORES -->
-
-                <li>
-
-                    <a href="colaboradores.html">
-
-                        <i class="fa-solid fa-user-group"></i>
-
-                        <span>
-                            Colaboradores
-                        </span>
-
-                    </a>
-
-                </li>
-
-
-            </ul>
-
-
-            <!-- USUÁRIO -->
-
-            <div class="sidebar-footer">
-
-                <div class="avatar">
-                    M
-                </div>
-
-                <div>
-
-                    <strong>
-                        Marcos
-                    </strong>
-
-                    <span>
-                        Administrador
-                    </span>
-
-                </div>
-
-            </div>
-
-
-        </nav>
-
-
-        <!-- ========================================
+      <!-- ========================================
              CONTEÚDO PRINCIPAL
         ========================================= -->
 
-        <div class="content">
-
-
-            <!-- ========================================
+      <div class="content">
+        <!-- ========================================
                  CABEÇALHO DO DASHBOARD
             ========================================= -->
 
-            <header class="container-topo">
+        <header class="container-topo">
+          <!-- TÍTULO -->
 
+          <div class="titulo-dashboard">
+            <h2>Dashboard</h2>
 
-                <!-- TÍTULO -->
+            <p>Visão geral do almoxarifado</p>
+          </div>
 
-                <div class="titulo-dashboard">
-
-                    <h2>
-                        Dashboard
-                    </h2>
-
-                    <p>
-                        Visão geral do almoxarifado
-                    </p>
-
-                </div>
-
-
-                <!-- ========================================
+          <!-- ========================================
                      NOTIFICAÇÕES
                 ========================================= -->
 
-                <div class="area-notificacao">
+          <div class="area-notificacao">
+            <!-- BOTÃO -->
 
+            <button
+              type="button"
+              id="btnNotificacao"
+              class="btn-notificacao"
+              aria-label="Abrir notificações"
+            >
+              <i class="fa-solid fa-bell"></i>
 
-                    <!-- BOTÃO -->
+              <span id="contadorNotificacao"> 0 </span>
+            </button>
 
-                    <button
-                        type="button"
-                        id="btnNotificacao"
-                        class="btn-notificacao"
-                        aria-label="Abrir notificações"
-                    >
+            <!-- PAINEL -->
 
-                        <i class="fa-solid fa-bell"></i>
+            <div id="painelNotificacao" class="painel-notificacao">
+              <!-- CABEÇALHO DO PAINEL -->
 
-                        <span id="contadorNotificacao">
-                            0
-                        </span>
+              <div class="notificacao-header">
+                <h3>Notificações</h3>
+              </div>
 
-                    </button>
+              <!-- LISTA -->
 
-
-                    <!-- PAINEL -->
-
-                    <div
-                        id="painelNotificacao"
-                        class="painel-notificacao"
-                    >
-
-
-                        <!-- CABEÇALHO DO PAINEL -->
-
-                        <div class="notificacao-header">
-
-                            <h3>
-                                Notificações
-                            </h3>
-
-                        </div>
-
-
-                        <!-- LISTA -->
-
-                        <div id="listaNotificacoes">
-
-                            <!--
+              <div id="listaNotificacoes">
+                <!--
                                 Notificações inseridas
                                 pelo JavaScript
                             -->
+              </div>
+            </div>
+          </div>
+        </header>
 
-                        </div>
-
-
-                    </div>
-
-
-                </div>
-
-
-            </header>
-
-
-            <!-- ========================================
+        <!-- ========================================
                  CONTEÚDO DO DASHBOARD
             ========================================= -->
 
-            <main>
-
-
-                <!-- ========================================
+        <main>
+          <!-- ========================================
                      CARDS DE RESUMO
                 ========================================= -->
 
-                <section
-                    class="cards-dashboard"
-                    aria-label="Resumo do almoxarifado"
-                >
-
-
-                    <!-- ==================================
+          <section class="cards-dashboard" aria-label="Resumo do almoxarifado">
+            <!-- ==================================
                          COLABORADORES
                     ================================== -->
 
-                    <article class="card">
+            <article class="card">
+              <h3>
+                <i class="fa-solid fa-users"></i>
 
-                        <h3>
+                <span> Colaboradores </span>
+              </h3>
 
-                            <i class="fa-solid fa-users"></i>
+              <span id="colaboradores"> 0 </span>
+            </article>
 
-                            <span>
-                                Colaboradores
-                            </span>
-
-                        </h3>
-
-                        <span id="colaboradores">
-                            0
-                        </span>
-
-                    </article>
-
-
-                    <!-- ==================================
+            <!-- ==================================
                          FERRAMENTAS
                     ================================== -->
 
-                    <article class="card">
+            <article class="card">
+              <h3>
+                <i class="fa-solid fa-wrench"></i>
 
-                        <h3>
+                <span> Ferramentas </span>
+              </h3>
 
-                            <i class="fa-solid fa-wrench"></i>
+              <span id="ferramentas"> 0 </span>
+            </article>
 
-                            <span>
-                                Ferramentas
-                            </span>
-
-                        </h3>
-
-                        <span id="ferramentas">
-                            0
-                        </span>
-
-                    </article>
-
-
-                    <!-- ==================================
+            <!-- ==================================
                          DISPONÍVEIS
                     ================================== -->
 
-                    <article class="card disponivel">
+            <article class="card disponivel">
+              <h3>
+                <i class="fa-solid fa-circle-check"></i>
 
-                        <h3>
+                <span> Disponível </span>
+              </h3>
 
-                            <i class="fa-solid fa-circle-check"></i>
+              <span id="disponivel"> 0 </span>
+            </article>
 
-                            <span>
-                                Disponível
-                            </span>
-
-                        </h3>
-
-                        <span id="disponivel">
-                            0
-                        </span>
-
-                    </article>
-
-
-                    <!-- ==================================
+            <!-- ==================================
                          EM USO
                     ================================== -->
 
-                    <article class="card uso">
+            <article class="card uso">
+              <h3>
+                <i class="fa-solid fa-clock"></i>
 
-                        <h3>
+                <span> Em uso </span>
+              </h3>
 
-                            <i class="fa-solid fa-clock"></i>
+              <span id="uso"> 0 </span>
+            </article>
 
-                            <span>
-                                Em uso
-                            </span>
-
-                        </h3>
-
-                        <span id="uso">
-                            0
-                        </span>
-
-                    </article>
-
-
-                    <!-- ==================================
+            <!-- ==================================
                          MANUTENÇÃO
                     ================================== -->
 
-                    <article class="card manutencao">
+            <article class="card manutencao">
+              <h3>
+                <i class="fa-solid fa-triangle-exclamation"></i>
 
-                        <h3>
+                <span> Manutenção </span>
+              </h3>
 
-                            <i class="fa-solid fa-triangle-exclamation"></i>
+              <span id="manutencao"> 0 </span>
+            </article>
+          </section>
 
-                            <span>
-                                Manutenção
-                            </span>
-
-                        </h3>
-
-                        <span id="manutencao">
-                            0
-                        </span>
-
-                    </article>
-
-
-                </section>
-
-
-                <!-- ========================================
+          <!-- ========================================
                      ÚLTIMAS MOVIMENTAÇÕES
                 ========================================= -->
 
-                <section class="movimentacoes">
+          <section class="movimentacoes">
+            <!-- CABEÇALHO -->
 
+            <div class="movimentacoes-header">
+              <div>
+                <h2>Últimas movimentações</h2>
 
-                    <!-- CABEÇALHO -->
+                <p>Acompanhe as movimentações recentes</p>
+              </div>
 
-                    <div class="movimentacoes-header">
+              <button type="button" id="btnVerMovimentacoes">
+                <span> Ver todos </span>
 
-                        <div>
+                <i class="fa-solid fa-arrow-right"></i>
+              </button>
+            </div>
 
-                            <h2>
-                                Últimas movimentações
-                            </h2>
+            <!-- LISTA -->
 
-                            <p>
-                                Acompanhe as movimentações recentes
-                            </p>
-
-                        </div>
-
-
-                        <button
-                            type="button"
-                            id="btnVerMovimentacoes"
-                        >
-
-                            <span>
-                                Ver todos
-                            </span>
-
-                            <i class="fa-solid fa-arrow-right"></i>
-
-                        </button>
-
-                    </div>
-
-
-                    <!-- LISTA -->
-
-                    <div id="listaUltimasMovimentacoes">
-
-                        <!--
+            <div id="listaUltimasMovimentacoes">
+              <!--
                             Movimentações inseridas
                             pelo JavaScript
                         -->
-
-                    </div>
-
-
-                </section>
-
-
-            </main>
-
-
-        </div>
-
-
+            </div>
+          </section>
+        </main>
+      </div>
     </div>
-
 
     <!-- ========================================
          JAVASCRIPT
@@ -516,8 +319,5 @@
     <script src="js/notificacoes.js"></script>
 
     <script src="js/dashboard.js"></script>
-
-
-</body>
-
+  </body>
 </html>
