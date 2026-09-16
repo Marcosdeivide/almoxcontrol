@@ -1,610 +1,537 @@
-<!doctype html>
-<html lang="pt-br">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <title>Insumos | AlmoxControl</title>
 
     <!-- Google Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
     <link
-      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
-      rel="stylesheet"
-    />
+        href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet"
+    >
 
     <!-- Font Awesome -->
     <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
-    />
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+    >
 
     <!-- CSS -->
-    <link rel="stylesheet" href="css/style.css" />
-    <link rel="stylesheet" href="css/sidebar.css" />
-    <link rel="stylesheet" href="css/almoxarifado.css" />
-  </head>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/sidebar.css">
+    <link rel="stylesheet" href="css/almoxarifado.css">
+</head>
 
-  <body>
+<body>
+
     <div class="container">
-      <!-- =========================
+
+        <!-- =====================================================
              SIDEBAR
-        ========================== -->
+        ====================================================== -->
 
-      <nav class="nav-container">
-        <!-- LOGO -->
+        <nav class="nav-container">
 
-        <div class="sidebar-header">
-          <i class="fa-solid fa-toolbox"></i>
+            <div class="sidebar-header">
 
-          <div>
-            <h1>AlmoxControl</h1>
-            <span>Sistema ERP</span>
-          </div>
-        </div>
+                <i class="fa-solid fa-toolbox"></i>
 
-        <!-- MENU -->
+                <div>
+                    <h1>AlmoxControl</h1>
+                    <span>Sistema ERP</span>
+                </div>
 
-        <ul class="menu">
-          <!-- DASHBOARD -->
+            </div>
 
-          <li>
-            <a href="index.html">
-              <i class="fa-solid fa-house"></i>
-              <span>Dashboard</span>
-            </a>
-          </li>
+            <ul class="menu">
 
-          <!-- FERRAMENTAS -->
+                <li>
+                    <a href="index.html">
+                        <i class="fa-solid fa-house"></i>
+                        <span>Dashboard</span>
+                    </a>
+                </li>
 
-          <li>
-            <a href="ferramentas.html">
-              <i class="fa-solid fa-wrench"></i>
-              <span>Ferramentas</span>
-            </a>
-          </li>
+                <li>
+                    <a href="ferramentas.html">
+                        <i class="fa-solid fa-wrench"></i>
+                        <span>Ferramentas</span>
+                    </a>
+                </li>
 
-          <!-- MOVIMENTAÇÕES -->
+                <li>
+                    <a href="movimentacao.html">
+                        <i class="fa-solid fa-arrow-right-arrow-left"></i>
+                        <span>Movimentações</span>
+                    </a>
+                </li>
 
-          <li>
-            <a href="movimentacao.html">
-              <i class="fa-solid fa-arrow-right-arrow-left"></i>
-              <span>Movimentações</span>
-            </a>
-          </li>
+                <li>
+                    <a href="colaboradores.html">
+                        <i class="fa-solid fa-user-group"></i>
+                        <span>Colaboradores</span>
+                    </a>
+                </li>
 
-          <!-- COLABORADORES -->
+                <li>
+                    <a class="active" href="almoxarifado.html">
+                        <i class="fa-solid fa-boxes-stacked"></i>
+                        <span>Insumos</span>
+                    </a>
+                </li>
 
-          <li>
-            <a href="colaboradores.html">
-              <i class="fa-solid fa-user-group"></i>
-              <span>Colaboradores</span>
-            </a>
-          </li>
+            </ul>
 
-          <!-- INSUMOS -->
+        </nav>
 
-          <li>
-            <a class="active" href="almoxarifado.html">
-              <i class="fa-solid fa-boxes-stacked"></i>
-              <span>Insumos</span>
-            </a>
-          </li>
-        </ul>
-      </nav>
 
-      <!-- =========================
+        <!-- =====================================================
              CONTEÚDO PRINCIPAL
-        ========================== -->
+        ====================================================== -->
 
-      <main>
-        <!-- =========================
-                 CABEÇALHO
-            ========================== -->
+        <main>
 
-        <header class="page-header">
-          <div class="page-title">
-            <h2>Insumos</h2>
+            <!-- CABEÇALHO -->
 
-            <p>Controle e gerenciamento dos materiais consumíveis.</p>
-          </div>
+            <header class="page-header">
 
-          <button class="btn-primary">
-            <i class="fa-solid fa-plus"></i>
+                <div class="page-title">
 
-            Novo insumo
-          </button>
-        </header>
+                    <h2>Insumos</h2>
 
-        <!-- =========================
+                    <p>
+                        Controle e gerenciamento dos materiais consumíveis.
+                    </p>
+
+                </div>
+
+                <button
+                    type="button"
+                    class="btn-primary"
+                    id="btnNovoInsumo"
+                >
+                    <i class="fa-solid fa-plus"></i>
+                    Novo insumo
+                </button>
+
+            </header>
+
+
+            <!-- =================================================
                  CARDS
-            ========================== -->
+            ================================================== -->
 
-        <section class="insumos-cards">
-          <!-- TOTAL DE INSUMOS -->
+            <section class="insumos-cards">
 
-          <div class="insumo-card">
-            <div class="card-icon">
-              <i class="fa-solid fa-boxes-stacked"></i>
-            </div>
+                <div class="insumo-card">
 
-            <h3>Total de insumos</h3>
+                    <div class="card-icon">
+                        <i class="fa-solid fa-boxes-stacked"></i>
+                    </div>
 
-            <strong>128</strong>
-          </div>
+                    <h3>Total de insumos</h3>
 
-          <!-- ESTOQUE BAIXO -->
+                    <strong id="totalInsumos">
+                        0
+                    </strong>
 
-          <div class="insumo-card">
-            <div class="card-icon">
-              <i class="fa-solid fa-triangle-exclamation"></i>
-            </div>
+                </div>
 
-            <h3>Estoque baixo</h3>
 
-            <strong>12</strong>
-          </div>
+                <div class="insumo-card">
 
-          <!-- SEM ESTOQUE -->
+                    <div class="card-icon">
+                        <i class="fa-solid fa-triangle-exclamation"></i>
+                    </div>
 
-          <div class="insumo-card">
-            <div class="card-icon">
-              <i class="fa-solid fa-box-open"></i>
-            </div>
+                    <h3>Estoque baixo</h3>
 
-            <h3>Sem estoque</h3>
+                    <strong id="estoqueBaixo">
+                        0
+                    </strong>
 
-            <strong>4</strong>
-          </div>
+                </div>
 
-          <!-- VALOR DO ESTOQUE -->
 
-          <div class="insumo-card">
-            <div class="card-icon">
-              <i class="fa-solid fa-dollar-sign"></i>
-            </div>
+                <div class="insumo-card">
 
-            <h3>Valor em estoque</h3>
+                    <div class="card-icon">
+                        <i class="fa-solid fa-box-open"></i>
+                    </div>
 
-            <strong>R$ 18.450</strong>
-          </div>
-        </section>
+                    <h3>Sem estoque</h3>
 
-        <!-- =========================
-                 BUSCA E FILTRO
-            ========================== -->
+                    <strong id="semEstoque">
+                        0
+                    </strong>
 
-        <section class="toolbar">
-          <!-- PESQUISA -->
+                </div>
 
-          <div class="search-box">
-            <i class="fa-solid fa-magnifying-glass"></i>
 
-            <input type="text" placeholder="Buscar insumo..." />
-          </div>
+                <div class="insumo-card">
 
-          <!-- FILTRO -->
+                    <div class="card-icon">
+                        <i class="fa-solid fa-dollar-sign"></i>
+                    </div>
 
-          <button class="btn-filter" type="button" title="Filtrar insumos">
-            <i class="fa-solid fa-filter"></i>
-          </button>
-        </section>
+                    <h3>Valor em estoque</h3>
 
-        <!-- =========================
+                    <strong id="valorEstoque">
+                        R$ 0,00
+                    </strong>
+
+                </div>
+
+            </section>
+
+
+            <!-- =================================================
+                 BUSCA E FILTROS
+            ================================================== -->
+
+            <section class="toolbar">
+
+                <div class="search-box">
+
+                    <i class="fa-solid fa-magnifying-glass"></i>
+
+                    <input
+                        type="text"
+                        id="campoBusca"
+                        placeholder="Buscar por código, nome, categoria..."
+                        autocomplete="off"
+                    >
+
+                </div>
+
+
+                <button
+                    type="button"
+                    class="btn-filter"
+                    id="btnFiltros"
+                    title="Filtrar insumos"
+                >
+                    <i class="fa-solid fa-filter"></i>
+                </button>
+
+            </section>
+
+
+            <!-- =================================================
                  TABELA
-            ========================== -->
+            ================================================== -->
 
-        <section class="table-container">
-          <table class="insumos-table">
-            <thead>
-              <tr>
-                <th>Código</th>
-                <th>Insumo</th>
-                <th>Categoria</th>
-                <th>Estoque</th>
-                <th>Mínimo</th>
-                <th>Unidade</th>
-                <th>Localização</th>
-                <th>Status</th>
-                <th>Ações</th>
-              </tr>
-            </thead>
+            <section class="table-container">
 
-            <tbody>
-              <!-- =========================
-                             INSUMO 01
-                        ========================== -->
+                <table class="insumos-table">
 
-              <tr>
-                <td>INS001</td>
+                    <thead>
 
-                <td>Óleo 15W40</td>
+                        <tr>
+                            <th>Código</th>
+                            <th>Insumo</th>
+                            <th>Categoria</th>
+                            <th>Estoque</th>
+                            <th>Mínimo</th>
+                            <th>Unidade</th>
+                            <th>Localização</th>
+                            <th>Status</th>
+                            <th>Ações</th>
+                        </tr>
 
-                <td>Óleos</td>
+                    </thead>
 
-                <td>25</td>
+                    <tbody id="tabelaInsumosBody">
+                        <!-- Preenchido pelo JavaScript -->
+                    </tbody>
 
-                <td>10</td>
+                </table>
 
-                <td>Litros</td>
+            </section>
 
-                <td>Container 2</td>
+        </main>
 
-                <td>
-                  <span class="status status-ok"> Em estoque </span>
-                </td>
+    </div>
 
-                <td>
-                  <div class="table-actions">
-                    <button type="button" title="Visualizar">
-                      <i class="fa-solid fa-eye"></i>
-                    </button>
 
-                    <button type="button" title="Editar">
-                      <i class="fa-solid fa-pen"></i>
-                    </button>
+    <!-- =========================================================
+         MODAL - NOVO INSUMO
+    ========================================================== -->
 
-                    <button type="button" title="Movimentar">
-                      <i class="fa-solid fa-arrow-right-arrow-left"></i>
-                    </button>
-                  </div>
-                </td>
-              </tr>
+    <div
+        class="modal-overlay"
+        id="modalInsumo"
+    >
 
-              <!-- =========================
-                             INSUMO 02
-                        ========================== -->
+        <div class="modal">
 
-              <tr>
-                <td>INS002</td>
+            <div class="modal-header">
 
-                <td>Óleo 5W30</td>
+                <div>
+                    <h3>Novo insumo</h3>
 
-                <td>Óleos</td>
+                    <p>
+                        Cadastre um novo material no estoque.
+                    </p>
+                </div>
 
-                <td>8</td>
+                <button
+                    type="button"
+                    class="modal-close"
+                    data-fechar-modal="modalInsumo"
+                    title="Fechar"
+                >
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
 
-                <td>10</td>
-
-                <td>Litros</td>
-
-                <td>Container 2</td>
-
-                <td>
-                  <span class="status status-warning"> Estoque baixo </span>
-                </td>
-
-                <td>
-                  <div class="table-actions">
-                    <button type="button" title="Visualizar">
-                      <i class="fa-solid fa-eye"></i>
-                    </button>
-
-                    <button type="button" title="Editar">
-                      <i class="fa-solid fa-pen"></i>
-                    </button>
-
-                    <button type="button" title="Movimentar">
-                      <i class="fa-solid fa-arrow-right-arrow-left"></i>
-                    </button>
-                  </div>
-                </td>
-              </tr>
-
-              <!-- =========================
-                             INSUMO 03
-                        ========================== -->
-
-              <tr>
-                <td>INS003</td>
-
-                <td>Parafuso 10mm</td>
-
-                <td>Fixadores</td>
-
-                <td>350</td>
-
-                <td>100</td>
-
-                <td>Unidades</td>
-
-                <td>Container 2</td>
-
-                <td>
-                  <span class="status status-ok"> Em estoque </span>
-                </td>
-
-                <td>
-                  <div class="table-actions">
-                    <button type="button" title="Visualizar">
-                      <i class="fa-solid fa-eye"></i>
-                    </button>
-
-                    <button type="button" title="Editar">
-                      <i class="fa-solid fa-pen"></i>
-                    </button>
-
-                    <button type="button" title="Movimentar">
-                      <i class="fa-solid fa-arrow-right-arrow-left"></i>
-                    </button>
-                  </div>
-                </td>
-              </tr>
-
-              <!-- =========================
-                             INSUMO 04
-                        ========================== -->
-
-              <tr>
-                <td>INS004</td>
-
-                <td>Graxa Azul</td>
-
-                <td>Lubrificantes</td>
-
-                <td>0</td>
-
-                <td>5</td>
-
-                <td>Kg</td>
-
-                <td>Container 2</td>
-
-                <td>
-                  <span class="status status-danger"> Sem estoque </span>
-                </td>
-
-                <td>
-                  <div class="table-actions">
-                    <button type="button" title="Visualizar">
-                      <i class="fa-solid fa-eye"></i>
-                    </button>
-
-                    <button type="button" title="Editar">
-                      <i class="fa-solid fa-pen"></i>
-                    </button>
-
-                    <button type="button" title="Movimentar">
-                      <i class="fa-solid fa-arrow-right-arrow-left"></i>
-                    </button>
-                  </div>
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </section>
-      </main>
-      <!-- =========================================
-     MODAL - NOVO INSUMO
-========================================= -->
-
-<div class="modal-overlay" id="modalInsumo">
-
-    <div class="modal">
-
-        <!-- CABEÇALHO -->
-
-        <div class="modal-header">
-
-            <div>
-                <h3>Novo insumo</h3>
-
-                <p>
-                    Cadastre um novo material no estoque.
-                </p>
             </div>
 
-            <button
-                type="button"
-                class="modal-close"
-                id="fecharModal"
-                title="Fechar"
-            >
-                <i class="fa-solid fa-xmark"></i>
-            </button>
 
-        </div>
+            <form id="formInsumo">
 
+                <div class="form-grid">
 
-        <!-- FORMULÁRIO -->
+                    <!-- CÓDIGO -->
 
-        <form id="formInsumo">
+                    <div class="form-group">
 
-            <div class="form-grid">
+                        <label for="codigoInsumo">
+                            Código
+                        </label>
 
+                        <input
+                            type="text"
+                            id="codigoInsumo"
+                            placeholder="Ex: INS005"
+                            maxlength="30"
+                            required
+                        >
 
-                <!-- CÓDIGO -->
-
-                <div class="form-group">
-
-                    <label for="codigoInsumo">
-                        Código
-                    </label>
-
-                    <input
-                        type="text"
-                        id="codigoInsumo"
-                        placeholder="Ex: INS005"
-                        required
-                    >
-
-                </div>
+                    </div>
 
 
-                <!-- NOME -->
+                    <!-- NOME -->
 
-                <div class="form-group">
+                    <div class="form-group">
 
-                    <label for="nomeInsumo">
-                        Nome do insumo
-                    </label>
+                        <label for="nomeInsumo">
+                            Nome do insumo
+                        </label>
 
-                    <input
-                        type="text"
-                        id="nomeInsumo"
-                        placeholder="Ex: Óleo 15W40"
-                        required
-                    >
+                        <input
+                            type="text"
+                            id="nomeInsumo"
+                            placeholder="Ex: Óleo 15W40"
+                            maxlength="100"
+                            required
+                        >
 
-                </div>
-
-
-                <!-- CATEGORIA -->
-
-                <div class="form-group">
-
-                    <label for="categoriaInsumo">
-                        Categoria
-                    </label>
-
-                    <select
-                        id="categoriaInsumo"
-                        required
-                    >
-
-                        <option value="">
-                            Selecione uma categoria
-                        </option>
-
-                        <option value="Óleos">
-                            Óleos
-                        </option>
-
-                        <option value="Lubrificantes">
-                            Lubrificantes
-                        </option>
-
-                        <option value="Fixadores">
-                            Fixadores
-                        </option>
-
-                        <option value="Filtros">
-                            Filtros
-                        </option>
-
-                        <option value="Elétrica">
-                            Elétrica
-                        </option>
-
-                        <option value="Limpeza">
-                            Limpeza
-                        </option>
-
-                        <option value="Outros">
-                            Outros
-                        </option>
-
-                    </select>
-
-                </div>
+                    </div>
 
 
-                <!-- UNIDADE -->
+                    <!-- CATEGORIA -->
 
-                <div class="form-group">
+                    <div class="form-group">
 
-                    <label for="unidadeInsumo">
-                        Unidade
-                    </label>
+                        <label for="categoriaInsumo">
+                            Categoria
+                        </label>
 
-                    <select
-                        id="unidadeInsumo"
-                        required
-                    >
+                        <select
+                            id="categoriaInsumo"
+                            required
+                        >
 
-                        <option value="">
-                            Selecione
-                        </option>
+                            <option value="">
+                                Selecione uma categoria
+                            </option>
 
-                        <option value="Unidade">
+                            <option value="Óleos">
+                                Óleos
+                            </option>
+
+                            <option value="Lubrificantes">
+                                Lubrificantes
+                            </option>
+
+                            <option value="Fixadores">
+                                Fixadores
+                            </option>
+
+                            <option value="Filtros">
+                                Filtros
+                            </option>
+
+                            <option value="Elétrica">
+                                Elétrica
+                            </option>
+
+                            <option value="Limpeza">
+                                Limpeza
+                            </option>
+
+                            <option value="Outros">
+                                Outros
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+                    <!-- UNIDADE -->
+
+                    <div class="form-group">
+
+                        <label for="unidadeInsumo">
                             Unidade
-                        </option>
+                        </label>
 
-                        <option value="Litros">
-                            Litros
-                        </option>
+                        <select
+                            id="unidadeInsumo"
+                            required
+                        >
 
-                        <option value="Kg">
-                            Kg
-                        </option>
+                            <option value="">
+                                Selecione
+                            </option>
 
-                        <option value="Metros">
-                            Metros
-                        </option>
+                            <option value="Unidade">
+                                Unidade
+                            </option>
 
-                        <option value="Caixa">
-                            Caixa
-                        </option>
+                            <option value="Litros">
+                                Litros
+                            </option>
 
-                        <option value="Pacote">
-                            Pacote
-                        </option>
+                            <option value="Kg">
+                                Kg
+                            </option>
 
-                    </select>
+                            <option value="Metros">
+                                Metros
+                            </option>
 
-                </div>
+                            <option value="Caixa">
+                                Caixa
+                            </option>
 
+                            <option value="Pacote">
+                                Pacote
+                            </option>
 
-                <!-- ESTOQUE INICIAL -->
+                        </select>
 
-                <div class="form-group">
-
-                    <label for="estoqueInsumo">
-                        Estoque inicial
-                    </label>
-
-                    <input
-                        type="number"
-                        id="estoqueInsumo"
-                        min="0"
-                        step="0.01"
-                        placeholder="0"
-                        required
-                    >
-
-                </div>
+                    </div>
 
 
-                <!-- ESTOQUE MÍNIMO -->
+                    <!-- ESTOQUE INICIAL -->
 
-                <div class="form-group">
+                    <div class="form-group">
 
-                    <label for="estoqueMinimoInsumo">
-                        Estoque mínimo
-                    </label>
-
-                    <input
-                        type="number"
-                        id="estoqueMinimoInsumo"
-                        min="0"
-                        step="0.01"
-                        placeholder="0"
-                        required
-                    >
-
-                </div>
-
-
-                <!-- VALOR UNITÁRIO -->
-
-                <div class="form-group">
-
-                    <label for="valorInsumo">
-                        Valor unitário
-                    </label>
-
-                    <div class="input-money">
-
-                        <span>R$</span>
+                        <label for="estoqueInsumo">
+                            Estoque inicial
+                        </label>
 
                         <input
                             type="number"
-                            id="valorInsumo"
+                            id="estoqueInsumo"
                             min="0"
                             step="0.01"
-                            placeholder="0,00"
+                            placeholder="0"
+                            required
+                        >
+
+                        <small>
+                            O estoque inicial será registrado como entrada.
+                        </small>
+
+                    </div>
+
+
+                    <!-- ESTOQUE MÍNIMO -->
+
+                    <div class="form-group">
+
+                        <label for="estoqueMinimoInsumo">
+                            Estoque mínimo
+                        </label>
+
+                        <input
+                            type="number"
+                            id="estoqueMinimoInsumo"
+                            min="0"
+                            step="0.01"
+                            placeholder="0"
+                            required
+                        >
+
+                    </div>
+
+
+                    <!-- VALOR -->
+
+                    <div class="form-group">
+
+                        <label for="valorInsumo">
+                            Valor unitário
+                        </label>
+
+                        <div class="input-money">
+
+                            <span>R$</span>
+
+                            <input
+                                type="number"
+                                id="valorInsumo"
+                                min="0"
+                                step="0.01"
+                                placeholder="0,00"
+                            >
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- LOCALIZAÇÃO -->
+
+                    <div class="form-group">
+
+                        <label for="localizacaoInsumo">
+                            Localização
+                        </label>
+
+                        <input
+                            type="text"
+                            id="localizacaoInsumo"
+                            placeholder="Ex: Container 2"
+                            maxlength="100"
+                            required
+                        >
+
+                    </div>
+
+
+                    <!-- FORNECEDOR -->
+
+                    <div class="form-group form-full">
+
+                        <label for="fornecedorInsumo">
+                            Fornecedor
+                        </label>
+
+                        <input
+                            type="text"
+                            id="fornecedorInsumo"
+                            placeholder="Nome do fornecedor"
+                            maxlength="100"
                         >
 
                     </div>
@@ -612,72 +539,670 @@
                 </div>
 
 
-                <!-- LOCALIZAÇÃO -->
+                <div class="modal-footer">
+
+                    <button
+                        type="button"
+                        class="btn-secondary"
+                        data-fechar-modal="modalInsumo"
+                    >
+                        Cancelar
+                    </button>
+
+                    <button
+                        type="submit"
+                        class="btn-primary"
+                    >
+
+                        <i class="fa-solid fa-check"></i>
+
+                        Cadastrar insumo
+
+                    </button>
+
+                </div>
+
+            </form>
+
+        </div>
+
+    </div>
+
+
+    <!-- =========================================================
+         MODAL - EDITAR INSUMO
+    ========================================================== -->
+
+    <div
+        class="modal-overlay"
+        id="modalEditar"
+    >
+
+        <div class="modal">
+
+            <div class="modal-header">
+
+                <div>
+
+                    <h3>Editar insumo</h3>
+
+                    <p>
+                        Atualize as informações do material.
+                    </p>
+
+                </div>
+
+                <button
+                    type="button"
+                    class="modal-close"
+                    data-fechar-modal="modalEditar"
+                >
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+
+            </div>
+
+
+            <form id="formEditar">
+
+                <input
+                    type="hidden"
+                    id="editarId"
+                >
+
+                <div class="form-grid">
+
+                    <div class="form-group">
+
+                        <label>
+                            Código
+                        </label>
+
+                        <input
+                            type="text"
+                            id="editarCodigo"
+                            disabled
+                        >
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label for="editarNome">
+                            Nome do insumo
+                        </label>
+
+                        <input
+                            type="text"
+                            id="editarNome"
+                            maxlength="100"
+                            required
+                        >
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label for="editarCategoria">
+                            Categoria
+                        </label>
+
+                        <select
+                            id="editarCategoria"
+                            required
+                        >
+
+                            <option value="Óleos">Óleos</option>
+                            <option value="Lubrificantes">Lubrificantes</option>
+                            <option value="Fixadores">Fixadores</option>
+                            <option value="Filtros">Filtros</option>
+                            <option value="Elétrica">Elétrica</option>
+                            <option value="Limpeza">Limpeza</option>
+                            <option value="Outros">Outros</option>
+
+                        </select>
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label for="editarUnidade">
+                            Unidade
+                        </label>
+
+                        <select
+                            id="editarUnidade"
+                            required
+                        >
+
+                            <option value="Unidade">Unidade</option>
+                            <option value="Litros">Litros</option>
+                            <option value="Kg">Kg</option>
+                            <option value="Metros">Metros</option>
+                            <option value="Caixa">Caixa</option>
+                            <option value="Pacote">Pacote</option>
+
+                        </select>
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label for="editarMinimo">
+                            Estoque mínimo
+                        </label>
+
+                        <input
+                            type="number"
+                            id="editarMinimo"
+                            min="0"
+                            step="0.01"
+                            required
+                        >
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label for="editarValor">
+                            Valor unitário
+                        </label>
+
+                        <div class="input-money">
+
+                            <span>R$</span>
+
+                            <input
+                                type="number"
+                                id="editarValor"
+                                min="0"
+                                step="0.01"
+                            >
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label for="editarLocalizacao">
+                            Localização
+                        </label>
+
+                        <input
+                            type="text"
+                            id="editarLocalizacao"
+                            maxlength="100"
+                            required
+                        >
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label for="editarFornecedor">
+                            Fornecedor
+                        </label>
+
+                        <input
+                            type="text"
+                            id="editarFornecedor"
+                            maxlength="100"
+                        >
+
+                    </div>
+
+                </div>
+
+
+                <div class="modal-footer">
+
+                    <button
+                        type="button"
+                        class="btn-secondary"
+                        data-fechar-modal="modalEditar"
+                    >
+                        Cancelar
+                    </button>
+
+                    <button
+                        type="submit"
+                        class="btn-primary"
+                    >
+
+                        <i class="fa-solid fa-floppy-disk"></i>
+
+                        Salvar alterações
+
+                    </button>
+
+                </div>
+
+            </form>
+
+        </div>
+
+    </div>
+
+
+    <!-- =========================================================
+         MODAL - MOVIMENTAÇÃO
+    ========================================================== -->
+
+    <div
+        class="modal-overlay"
+        id="modalMovimentacao"
+    >
+
+        <div class="modal modal-small">
+
+            <div class="modal-header">
+
+                <div>
+
+                    <h3>Movimentar estoque</h3>
+
+                    <p id="movimentacaoDescricao">
+                        Registre uma entrada ou consumo.
+                    </p>
+
+                </div>
+
+                <button
+                    type="button"
+                    class="modal-close"
+                    data-fechar-modal="modalMovimentacao"
+                >
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+
+            </div>
+
+
+            <form id="formMovimentacao">
+
+                <input
+                    type="hidden"
+                    id="movimentacaoId"
+                >
+
+
+                <div class="movement-item">
+
+                    <span class="movement-item-label">
+                        Insumo
+                    </span>
+
+                    <strong id="movimentacaoNome">
+                        -
+                    </strong>
+
+                    <small id="movimentacaoEstoqueAtual">
+                        Estoque atual: 0
+                    </small>
+
+                </div>
+
 
                 <div class="form-group">
 
-                    <label for="localizacaoInsumo">
-                        Localização
+                    <label for="tipoMovimentacao">
+                        Tipo de movimentação
+                    </label>
+
+                    <select id="tipoMovimentacao" required>
+
+                        <option value="entrada">
+                            Entrada
+                        </option>
+
+                        <option value="consumo">
+                            Consumo
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label for="quantidadeMovimentacao">
+                        Quantidade
                     </label>
 
                     <input
-                        type="text"
-                        id="localizacaoInsumo"
-                        placeholder="Ex: Container 2"
+                        type="number"
+                        id="quantidadeMovimentacao"
+                        min="0.01"
+                        step="0.01"
+                        placeholder="Informe a quantidade"
                         required
                     >
 
                 </div>
 
 
-                <!-- FORNECEDOR -->
+                <div class="form-group">
 
-                <div class="form-group form-full">
-
-                    <label for="fornecedorInsumo">
-                        Fornecedor
+                    <label for="observacaoMovimentacao">
+                        Observação
                     </label>
 
-                    <input
-                        type="text"
-                        id="fornecedorInsumo"
-                        placeholder="Nome do fornecedor"
+                    <textarea
+                        id="observacaoMovimentacao"
+                        rows="4"
+                        maxlength="300"
+                        placeholder="Ex: Compra para reposição do estoque."
+                    ></textarea>
+
+                </div>
+
+
+                <div class="modal-footer">
+
+                    <button
+                        type="button"
+                        class="btn-secondary"
+                        data-fechar-modal="modalMovimentacao"
                     >
+                        Cancelar
+                    </button>
+
+                    <button
+                        type="submit"
+                        class="btn-primary"
+                    >
+
+                        <i class="fa-solid fa-check"></i>
+
+                        Confirmar movimentação
+
+                    </button>
+
+                </div>
+
+            </form>
+
+        </div>
+
+    </div>
+
+
+    <!-- =========================================================
+         MODAL - VISUALIZAÇÃO
+    ========================================================== -->
+
+    <div
+        class="modal-overlay"
+        id="modalVisualizar"
+    >
+
+        <div class="modal modal-view">
+
+            <div class="modal-header">
+
+                <div>
+
+                    <h3 id="visualizarNome">
+                        Insumo
+                    </h3>
+
+                    <p id="visualizarCodigo">
+                        -
+                    </p>
+
+                </div>
+
+                <button
+                    type="button"
+                    class="modal-close"
+                    data-fechar-modal="modalVisualizar"
+                >
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+
+            </div>
+
+
+            <div class="view-content">
+
+                <div class="view-grid">
+
+                    <div class="view-item">
+                        <span>Categoria</span>
+                        <strong id="visualizarCategoria">-</strong>
+                    </div>
+
+                    <div class="view-item">
+                        <span>Status</span>
+                        <strong id="visualizarStatus">-</strong>
+                    </div>
+
+                    <div class="view-item">
+                        <span>Estoque atual</span>
+                        <strong id="visualizarEstoque">-</strong>
+                    </div>
+
+                    <div class="view-item">
+                        <span>Estoque mínimo</span>
+                        <strong id="visualizarMinimo">-</strong>
+                    </div>
+
+                    <div class="view-item">
+                        <span>Unidade</span>
+                        <strong id="visualizarUnidade">-</strong>
+                    </div>
+
+                    <div class="view-item">
+                        <span>Valor unitário</span>
+                        <strong id="visualizarValor">-</strong>
+                    </div>
+
+                    <div class="view-item">
+                        <span>Localização</span>
+                        <strong id="visualizarLocalizacao">-</strong>
+                    </div>
+
+                    <div class="view-item">
+                        <span>Fornecedor</span>
+                        <strong id="visualizarFornecedor">-</strong>
+                    </div>
+
+                </div>
+
+
+                <div class="history-section">
+
+                    <div class="section-title">
+
+                        <h4>
+                            <i class="fa-solid fa-clock-rotate-left"></i>
+                            Últimas movimentações
+                        </h4>
+
+                    </div>
+
+                    <div
+                        class="history-list"
+                        id="historicoInsumo"
+                    >
+                        <!-- Histórico preenchido pelo JS -->
+                    </div>
 
                 </div>
 
             </div>
 
+        </div>
 
-            <!-- RODAPÉ -->
+    </div>
 
-            <div class="modal-footer">
+
+    <!-- =========================================================
+         MODAL - FILTROS
+    ========================================================== -->
+
+    <div
+        class="modal-overlay"
+        id="modalFiltros"
+    >
+
+        <div class="modal modal-small">
+
+            <div class="modal-header">
+
+                <div>
+
+                    <h3>Filtrar insumos</h3>
+
+                    <p>
+                        Refine os resultados da tabela.
+                    </p>
+
+                </div>
 
                 <button
                     type="button"
-                    class="btn-secondary"
-                    id="cancelarModal"
+                    class="modal-close"
+                    data-fechar-modal="modalFiltros"
                 >
-                    Cancelar
-                </button>
-
-                <button
-                    type="submit"
-                    class="btn-primary"
-                >
-                    <i class="fa-solid fa-check"></i>
-
-                    Cadastrar insumo
+                    <i class="fa-solid fa-xmark"></i>
                 </button>
 
             </div>
 
-        </form>
+
+            <form id="formFiltros">
+
+                <div class="form-group">
+
+                    <label for="filtroCategoria">
+                        Categoria
+                    </label>
+
+                    <select id="filtroCategoria">
+
+                        <option value="">
+                            Todas as categorias
+                        </option>
+
+                        <option value="Óleos">Óleos</option>
+                        <option value="Lubrificantes">Lubrificantes</option>
+                        <option value="Fixadores">Fixadores</option>
+                        <option value="Filtros">Filtros</option>
+                        <option value="Elétrica">Elétrica</option>
+                        <option value="Limpeza">Limpeza</option>
+                        <option value="Outros">Outros</option>
+
+                    </select>
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label for="filtroStatus">
+                        Status
+                    </label>
+
+                    <select id="filtroStatus">
+
+                        <option value="">
+                            Todos os status
+                        </option>
+
+                        <option value="Em estoque">
+                            Em estoque
+                        </option>
+
+                        <option value="Estoque baixo">
+                            Estoque baixo
+                        </option>
+
+                        <option value="Sem estoque">
+                            Sem estoque
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label for="filtroLocalizacao">
+                        Localização
+                    </label>
+
+                    <input
+                        type="text"
+                        id="filtroLocalizacao"
+                        placeholder="Ex: Container 2"
+                    >
+
+                </div>
+
+
+                <div class="modal-footer">
+
+                    <button
+                        type="button"
+                        class="btn-secondary"
+                        id="limparFiltros"
+                    >
+                        Limpar filtros
+                    </button>
+
+                    <button
+                        type="submit"
+                        class="btn-primary"
+                    >
+
+                        <i class="fa-solid fa-filter"></i>
+
+                        Aplicar filtros
+
+                    </button>
+
+                </div>
+
+            </form>
+
+        </div>
 
     </div>
 
-</div>
+
+    <!-- =========================================================
+         TOAST
+    ========================================================== -->
+
+    <div
+        class="toast"
+        id="toast"
+    >
+
+        <i class="fa-solid fa-circle-check"></i>
+
+        <span id="toastMensagem">
+            Operação realizada.
+        </span>
+
     </div>
+
+
+    <!-- JAVASCRIPT -->
+
     <script src="js/almoxarifado.js"></script>
-  </body>
+
+</body>
+
 </html>

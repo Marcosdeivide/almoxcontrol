@@ -1,60 +1,51 @@
 /* =========================================================
    ALMOXCONTROL
-   MÓDULO: INSUMOS
-
-   Responsabilidades:
-   - Carregar insumos
-   - Salvar insumos
-   - Renderizar tabela
-   - Atualizar indicadores
-   - Pesquisar
-   - Cadastrar pelo modal
-   - Editar
-   - Excluir
-   - Visualizar
-   - Preparar movimentações
-   - Preparar integração com outros módulos
+   MÓDULO DE INSUMOS
 ========================================================= */
 
 
 /* =========================================================
-   STORAGE
+   CONFIGURAÇÕES
 ========================================================= */
 
 const STORAGE_INSUMOS = "insumos";
 const STORAGE_MOVIMENTACOES = "movimentacoes";
-const STORAGE_COLABORADORES = "colaboradores";
-const STORAGE_FERRAMENTAS = "ferramentas";
+
+const RESPONSAVEL_PADRAO = "Administrador";
+
+
+/* =========================================================
+   ELEMENTOS PRINCIPAIS
+========================================================= */
+
+const tabelaInsumosBody = document.getElementById("tabelaInsumosBody");
+
+const btnNovoInsumo = document.getElementById("btnNovoInsumo");
+const btnFiltros = document.getElementById("btnFiltros");
+
+const campoBusca = document.getElementById("campoBusca");
+
+const formInsumo = document.getElementById("formInsumo");
+const formEditar = document.getElementById("formEditar");
+const formMovimentacao = document.getElementById("formMovimentacao");
+const formFiltros = document.getElementById("formFiltros");
+
+const modalInsumo = document.getElementById("modalInsumo");
+const modalEditar = document.getElementById("modalEditar");
+const modalMovimentacao = document.getElementById("modalMovimentacao");
+const modalVisualizar = document.getElementById("modalVisualizar");
+const modalFiltros = document.getElementById("modalFiltros");
 
 
 /* =========================================================
    ESTADO
 ========================================================= */
 
-let insumos = [];
-
-let filtroAtual = "";
-
-
-/* =========================================================
-   ELEMENTOS DO HTML
-========================================================= */
-
-const tabela = document.querySelector(".insumos-table tbody");
-
-const campoBusca = document.querySelector(".search-box input");
-
-const botaoNovoInsumo = document.querySelector(".btn-primary");
-
-const botaoFiltro = document.querySelector(".btn-filter");
-
-const modalInsumo = document.querySelector("#modalInsumo");
-
-const fecharModal = document.querySelector("#fecharModal");
-
-const cancelarModal = document.querySelector("#cancelarModal");
-
-const formInsumo = document.querySelector("#formInsumo");
+let filtrosAtuais = {
+    categoria: "",
+    status: "",
+    localizacao: ""
+};
 
 
 /* =========================================================
@@ -63,53 +54,193 @@ const formInsumo = document.querySelector("#formInsumo");
 
 document.addEventListener("DOMContentLoaded", () => {
 
-    carregarInsumos();
+    inicializarDados();
+
+    configurarEventos();
 
     renderizarInsumos();
 
     atualizarDashboard();
 
-    configurarEventos();
-
 });
 
 
 /* =========================================================
-   CARREGAR INSUMOS
+   INICIALIZAÇÃO DOS DADOS
 ========================================================= */
 
-function carregarInsumos() {
+function inicializarDados() {
 
-    const dados = localStorage.getItem(STORAGE_INSUMOS);
-
-
-    if (!dados) {
-
-        insumos = [];
-
-        return;
-
+    if (!localStorage.getItem(STORAGE_INSUMOS)) {
+        localStorage.setItem(
+            STORAGE_INSUMOS,
+            JSON.stringify([])
+        );
     }
 
+    if (!localStorage.getItem(STORAGE_MOVIMENTACOES)) {
+        localStorage.setItem(
+            STORAGE_MOVIMENTACOES,
+            JSON.stringify([])
+        );
+    }
+
+}
+
+
+/* =========================================================
+   EVENTOS
+========================================================= */
+
+function configurarEventos() {
+
+    /* Novo insumo */
+
+    btnNovoInsumo.addEventListener("click", () => {
+
+        limparFormularioNovoInsumo();
+
+        abrirModal(modalInsumo);
+
+    });
+
+
+    /* Busca */
+
+    campoBusca.addEventListener("input", () => {
+
+        renderizarInsumos();
+
+    });
+
+
+    /* Filtros */
+
+    btnFiltros.addEventListener("click", () => {
+
+        preencherFiltros();
+
+        abrirModal(modalFiltros);
+
+    });
+
+
+    /* Cadastro */
+
+    formInsumo.addEventListener(
+        "submit",
+        cadastrarInsumo
+    );
+
+
+    /* Edição */
+
+    formEditar.addEventListener(
+        "submit",
+        salvarEdicao
+    );
+
+
+    /* Movimentação */
+
+    formMovimentacao.addEventListener(
+        "submit",
+        registrarMovimentacao
+    );
+
+
+    /* Filtros */
+
+    formFiltros.addEventListener(
+        "submit",
+        aplicarFiltros
+    );
+
+
+    /* Limpar filtros */
+
+    document
+        .getElementById("limparFiltros")
+        .addEventListener("click", limparFiltros);
+
+
+    /* Fechar modais */
+
+    document
+        .querySelectorAll("[data-fechar-modal]")
+        .forEach(botao => {
+
+            botao.addEventListener("click", () => {
+
+                const modalId =
+                    botao.dataset.fecharModal;
+
+                fecharModal(
+                    document.getElementById(modalId)
+                );
+
+            });
+
+        });
+
+
+    /* Clique fora do modal */
+
+    document
+        .querySelectorAll(".modal-overlay")
+        .forEach(modal => {
+
+            modal.addEventListener("click", event => {
+
+                if (event.target === modal) {
+                    fecharModal(modal);
+                }
+
+            });
+
+        });
+
+
+    /* ESC */
+
+    document.addEventListener("keydown", event => {
+
+        if (event.key !== "Escape") {
+            return;
+        }
+
+        document
+            .querySelectorAll(".modal-overlay.active")
+            .forEach(modal => {
+
+                fecharModal(modal);
+
+            });
+
+    });
+
+
+    /* Ações da tabela */
+
+    tabelaInsumosBody.addEventListener(
+        "click",
+        tratarAcaoTabela
+    );
+
+}
+
+
+/* =========================================================
+   LOCAL STORAGE
+========================================================= */
+
+function obterInsumos() {
 
     try {
 
-        const dadosConvertidos = JSON.parse(dados);
-
-
-        if (Array.isArray(dadosConvertidos)) {
-
-            insumos = dadosConvertidos;
-
-        } else {
-
-            console.warn(
-                "O storage de insumos não possui um array válido."
-            );
-
-            insumos = [];
-
-        }
+        return JSON.parse(
+            localStorage.getItem(STORAGE_INSUMOS)
+        ) || [];
 
     } catch (erro) {
 
@@ -118,18 +249,14 @@ function carregarInsumos() {
             erro
         );
 
-        insumos = [];
+        return [];
 
     }
 
 }
 
 
-/* =========================================================
-   SALVAR INSUMOS
-========================================================= */
-
-function salvarInsumos() {
+function salvarInsumos(insumos) {
 
     localStorage.setItem(
         STORAGE_INSUMOS,
@@ -139,280 +266,34 @@ function salvarInsumos() {
 }
 
 
-/* =========================================================
-   CONFIGURAR EVENTOS
-========================================================= */
+function obterMovimentacoes() {
 
-function configurarEventos() {
+    try {
 
+        return JSON.parse(
+            localStorage.getItem(STORAGE_MOVIMENTACOES)
+        ) || [];
 
-    /* =========================================
-       NOVO INSUMO
-    ========================================= */
+    } catch (erro) {
 
-    if (botaoNovoInsumo) {
-
-        botaoNovoInsumo.addEventListener(
-            "click",
-            abrirModalInsumo
+        console.error(
+            "Erro ao carregar movimentações:",
+            erro
         );
+
+        return [];
 
     }
 
-
-    /* =========================================
-       FECHAR MODAL
-    ========================================= */
-
-    if (fecharModal) {
-
-        fecharModal.addEventListener(
-            "click",
-            fecharModalInsumo
-        );
-
-    }
+}
 
 
-    /* =========================================
-       CANCELAR
-    ========================================= */
+function salvarMovimentacoes(movimentacoes) {
 
-    if (cancelarModal) {
-
-        cancelarModal.addEventListener(
-            "click",
-            fecharModalInsumo
-        );
-
-    }
-
-
-    /* =========================================
-       FORMULÁRIO
-    ========================================= */
-
-    if (formInsumo) {
-
-        formInsumo.addEventListener(
-            "submit",
-            cadastrarInsumo
-        );
-
-    }
-
-
-    /* =========================================
-       CLICAR FORA DO MODAL
-    ========================================= */
-
-    if (modalInsumo) {
-
-        modalInsumo.addEventListener(
-            "click",
-            (evento) => {
-
-                if (
-                    evento.target === modalInsumo
-                ) {
-
-                    fecharModalInsumo();
-
-                }
-
-            }
-        );
-
-    }
-
-
-    /* =========================================
-       ESC PARA FECHAR
-    ========================================= */
-
-    document.addEventListener(
-        "keydown",
-        (evento) => {
-
-            if (
-                evento.key === "Escape" &&
-                modalInsumo?.classList.contains("active")
-            ) {
-
-                fecharModalInsumo();
-
-            }
-
-        }
+    localStorage.setItem(
+        STORAGE_MOVIMENTACOES,
+        JSON.stringify(movimentacoes)
     );
-
-
-    /* =========================================
-       PESQUISA
-    ========================================= */
-
-    if (campoBusca) {
-
-        campoBusca.addEventListener(
-            "input",
-            (evento) => {
-
-                filtroAtual = evento.target.value
-                    .trim()
-                    .toLowerCase();
-
-                renderizarInsumos();
-
-            }
-        );
-
-    }
-
-
-    /* =========================================
-       FILTRO
-    ========================================= */
-
-    if (botaoFiltro) {
-
-        botaoFiltro.addEventListener(
-            "click",
-            abrirFiltros
-        );
-
-    }
-
-
-    /* =========================================
-       AÇÕES DA TABELA
-    ========================================= */
-
-    if (tabela) {
-
-        tabela.addEventListener(
-            "click",
-            (evento) => {
-
-                const botao =
-                    evento.target.closest("button");
-
-
-                if (!botao) {
-                    return;
-                }
-
-
-                const linha =
-                    botao.closest("tr");
-
-
-                if (!linha) {
-                    return;
-                }
-
-
-                const codigo =
-                    linha.dataset.codigo;
-
-
-                const acao =
-                    botao.dataset.acao;
-
-
-                if (!codigo || !acao) {
-                    return;
-                }
-
-
-                switch (acao) {
-
-                    case "visualizar":
-
-                        visualizarInsumo(codigo);
-
-                        break;
-
-
-                    case "editar":
-
-                        editarInsumo(codigo);
-
-                        break;
-
-
-                    case "movimentar":
-
-                        movimentarInsumo(codigo);
-
-                        break;
-
-
-                    case "excluir":
-
-                        excluirInsumo(codigo);
-
-                        break;
-
-                }
-
-            }
-        );
-
-    }
-
-}
-
-
-/* =========================================================
-   ABRIR MODAL
-========================================================= */
-
-function abrirModalInsumo() {
-
-    if (!modalInsumo) {
-        return;
-    }
-
-
-    modalInsumo.classList.add("active");
-
-
-    const campoCodigo =
-        document.querySelector("#codigoInsumo");
-
-
-    if (campoCodigo) {
-
-        setTimeout(() => {
-
-            campoCodigo.focus();
-
-        }, 100);
-
-    }
-
-}
-
-
-/* =========================================================
-   FECHAR MODAL
-========================================================= */
-
-function fecharModalInsumo() {
-
-    if (!modalInsumo) {
-        return;
-    }
-
-
-    modalInsumo.classList.remove("active");
-
-
-    if (formInsumo) {
-
-        formInsumo.reset();
-
-    }
 
 }
 
@@ -421,122 +302,81 @@ function fecharModalInsumo() {
    CADASTRAR INSUMO
 ========================================================= */
 
-function cadastrarInsumo(evento) {
+function cadastrarInsumo(event) {
 
-    evento.preventDefault();
-
-
-    /* =========================================
-       PEGAR DADOS
-    ========================================= */
+    event.preventDefault();
 
     const codigo =
         document
-            .querySelector("#codigoInsumo")
+            .getElementById("codigoInsumo")
             .value
-            .trim();
-
+            .trim()
+            .toUpperCase();
 
     const nome =
         document
-            .querySelector("#nomeInsumo")
+            .getElementById("nomeInsumo")
             .value
             .trim();
 
-
     const categoria =
         document
-            .querySelector("#categoriaInsumo")
+            .getElementById("categoriaInsumo")
             .value;
-
 
     const unidade =
         document
-            .querySelector("#unidadeInsumo")
+            .getElementById("unidadeInsumo")
             .value;
 
-
-    const estoque =
+    const estoqueInicial =
         Number(
             document
-                .querySelector("#estoqueInsumo")
+                .getElementById("estoqueInsumo")
                 .value
         );
-
 
     const estoqueMinimo =
         Number(
             document
-                .querySelector("#estoqueMinimoInsumo")
+                .getElementById("estoqueMinimoInsumo")
                 .value
         );
 
-
-    const valorUnitario =
+    const valor =
         Number(
             document
-                .querySelector("#valorInsumo")
+                .getElementById("valorInsumo")
                 .value
         ) || 0;
 
-
     const localizacao =
         document
-            .querySelector("#localizacaoInsumo")
+            .getElementById("localizacaoInsumo")
             .value
             .trim();
-
 
     const fornecedor =
         document
-            .querySelector("#fornecedorInsumo")
+            .getElementById("fornecedorInsumo")
             .value
             .trim();
 
 
-    /* =========================================
-       VALIDAÇÕES
-    ========================================= */
+    /* Validação */
 
-    if (!codigo) {
+    if (
+        !codigo ||
+        !nome ||
+        !categoria ||
+        !unidade ||
+        !localizacao
+    ) {
 
-        alert("Informe o código do insumo.");
-
-        return;
-
-    }
-
-
-    if (!nome) {
-
-        alert("Informe o nome do insumo.");
-
-        return;
-
-    }
-
-
-    if (!categoria) {
-
-        alert("Selecione uma categoria.");
-
-        return;
-
-    }
-
-
-    if (!unidade) {
-
-        alert("Selecione uma unidade.");
-
-        return;
-
-    }
-
-
-    if (estoque < 0 || Number.isNaN(estoque)) {
-
-        alert("Informe um estoque inicial válido.");
+        mostrarToast(
+            "Preencha todos os campos obrigatórios.",
+            "erro"
+        );
 
         return;
 
@@ -544,38 +384,14 @@ function cadastrarInsumo(evento) {
 
 
     if (
+        estoqueInicial < 0 ||
         estoqueMinimo < 0 ||
-        Number.isNaN(estoqueMinimo)
+        valor < 0
     ) {
 
-        alert("Informe um estoque mínimo válido.");
-
-        return;
-
-    }
-
-
-    /* =========================================
-       CÓDIGO DUPLICADO
-    ========================================= */
-
-    const codigoExiste =
-        insumos.some((insumo) => {
-
-            return (
-                String(insumo.codigo)
-                    .toLowerCase()
-                    ===
-                codigo.toLowerCase()
-            );
-
-        });
-
-
-    if (codigoExiste) {
-
-        alert(
-            "Já existe um insumo com esse código."
+        mostrarToast(
+            "Os valores não podem ser negativos.",
+            "erro"
         );
 
         return;
@@ -583,154 +399,159 @@ function cadastrarInsumo(evento) {
     }
 
 
-    /* =========================================
-       CRIAR OBJETO
-    ========================================= */
+    const insumos = obterInsumos();
+
+
+    /* Código duplicado */
+
+    const codigoExiste = insumos.some(
+        insumo =>
+            insumo.codigo.toLowerCase() ===
+            codigo.toLowerCase()
+    );
+
+
+    if (codigoExiste) {
+
+        mostrarToast(
+            "Já existe um insumo com esse código.",
+            "erro"
+        );
+
+        return;
+
+    }
+
+
+    /* Criar insumo */
 
     const novoInsumo = {
 
-        id: gerarID(),
+        id: gerarId(),
 
-        codigo: codigo,
+        codigo,
+        nome,
+        categoria,
+        unidade,
 
-        nome: nome,
+        estoque: estoqueInicial,
 
-        categoria: categoria,
+        estoqueMinimo,
 
-        estoque: estoque,
+        valorUnitario: valor,
 
-        estoqueMinimo: estoqueMinimo,
+        localizacao,
 
-        unidade: unidade,
+        fornecedor,
 
-        localizacao:
-            localizacao ||
-            "Não informado",
+        criadoEm: new Date().toISOString(),
 
-        valorUnitario:
-            valorUnitario >= 0
-                ? valorUnitario
-                : 0,
-
-        fornecedor:
-            fornecedor ||
-            "Não informado",
-
-        criadoEm:
-            new Date().toISOString(),
-
-        atualizadoEm:
-            new Date().toISOString()
+        atualizadoEm: new Date().toISOString()
 
     };
 
 
-    /* =========================================
-       ADICIONAR
-    ========================================= */
-
     insumos.push(novoInsumo);
 
-
-    /* =========================================
-       SALVAR
-    ========================================= */
-
-    salvarInsumos();
+    salvarInsumos(insumos);
 
 
-    /* =========================================
-       ATUALIZAR INTERFACE
-    ========================================= */
+    /* Registrar estoque inicial */
+
+    if (estoqueInicial > 0) {
+
+        registrarMovimentacaoHistorico({
+
+            itemTipo: "insumo",
+
+            tipo: "entrada",
+
+            codigo: novoInsumo.codigo,
+
+            item: novoInsumo.nome,
+
+            quantidade: estoqueInicial,
+
+            unidade: novoInsumo.unidade,
+
+            estoqueAnterior: 0,
+
+            estoquePosterior: estoqueInicial,
+
+            responsavel: RESPONSAVEL_PADRAO,
+
+            observacao: "Estoque inicial",
+
+            data: new Date().toISOString()
+
+        });
+
+    }
+
 
     renderizarInsumos();
 
     atualizarDashboard();
 
+    fecharModal(modalInsumo);
 
-    /* =========================================
-       FECHAR
-    ========================================= */
-
-    fecharModalInsumo();
+    limparFormularioNovoInsumo();
 
 
-    /* =========================================
-       MENSAGEM
-    ========================================= */
-
-    alert(
-        `Insumo "${novoInsumo.nome}" cadastrado com sucesso!`
+    mostrarToast(
+        "Insumo cadastrado com sucesso."
     );
 
 }
 
 
 /* =========================================================
-   RENDERIZAR INSUMOS
+   RENDERIZAÇÃO
 ========================================================= */
 
 function renderizarInsumos() {
 
-    if (!tabela) {
-        return;
-    }
+    const insumos = obterInsumos();
+
+    const resultado = aplicarFiltrosInternos(insumos);
 
 
-    tabela.innerHTML = "";
+    if (resultado.length === 0) {
 
+        tabelaInsumosBody.innerHTML = `
 
-    const resultados =
-        insumos.filter((insumo) => {
+            <tr>
 
-            if (!filtroAtual) {
+                <td
+                    colspan="9"
+                    class="empty-state"
+                >
 
-                return true;
+                    <i class="fa-solid fa-box-open"></i>
 
-            }
+                    <strong>
+                        Nenhum insumo encontrado
+                    </strong>
 
+                    <span>
+                        Tente alterar a busca ou os filtros.
+                    </span>
 
-            const textoPesquisa = `
+                </td>
 
-                ${insumo.codigo || ""}
+            </tr>
 
-                ${insumo.nome || ""}
-
-                ${insumo.categoria || ""}
-
-                ${insumo.localizacao || ""}
-
-                ${insumo.unidade || ""}
-
-                ${insumo.fornecedor || ""}
-
-            `.toLowerCase();
-
-
-            return textoPesquisa
-                .includes(filtroAtual);
-
-        });
-
-
-    if (resultados.length === 0) {
-
-        mostrarTabelaVazia();
+        `;
 
         return;
 
     }
 
 
-    resultados.forEach((insumo) => {
-
-        const linha =
-            criarLinhaInsumo(insumo);
-
-
-        tabela.appendChild(linha);
-
-    });
+    tabelaInsumosBody.innerHTML =
+        resultado
+            .map(criarLinhaInsumo)
+            .join("");
 
 }
 
@@ -741,539 +562,95 @@ function renderizarInsumos() {
 
 function criarLinhaInsumo(insumo) {
 
-    const linha =
-        document.createElement("tr");
-
-
-    linha.dataset.codigo =
-        insumo.codigo;
-
-
     const status =
         calcularStatus(insumo);
 
-
-    linha.innerHTML = `
-
-        <td>
-            ${escaparHTML(insumo.codigo)}
-        </td>
-
-        <td>
-            ${escaparHTML(insumo.nome)}
-        </td>
-
-        <td>
-            ${escaparHTML(insumo.categoria)}
-        </td>
-
-        <td>
-            ${formatarNumero(insumo.estoque)}
-        </td>
-
-        <td>
-            ${formatarNumero(insumo.estoqueMinimo)}
-        </td>
-
-        <td>
-            ${escaparHTML(insumo.unidade)}
-        </td>
-
-        <td>
-            ${escaparHTML(insumo.localizacao)}
-        </td>
-
-        <td>
-
-            <span class="status ${status.classe}">
-                ${status.texto}
-            </span>
-
-        </td>
-
-        <td>
-
-            <div class="table-actions">
-
-                <button
-                    type="button"
-                    title="Visualizar"
-                    data-acao="visualizar"
-                >
-                    <i class="fa-solid fa-eye"></i>
-                </button>
-
-                <button
-                    type="button"
-                    title="Editar"
-                    data-acao="editar"
-                >
-                    <i class="fa-solid fa-pen"></i>
-                </button>
-
-                <button
-                    type="button"
-                    title="Movimentar"
-                    data-acao="movimentar"
-                >
-                    <i class="fa-solid fa-arrow-right-arrow-left"></i>
-                </button>
-
-            </div>
-
-        </td>
-
-    `;
-
-
-    return linha;
-
-}
-
-
-/* =========================================================
-   STATUS DO ESTOQUE
-========================================================= */
-
-function calcularStatus(insumo) {
-
-    const estoque =
-        Number(insumo.estoque) || 0;
-
-
-    const minimo =
-        Number(insumo.estoqueMinimo) || 0;
-
-
-    if (estoque <= 0) {
-
-        return {
-
-            texto: "Sem estoque",
-
-            classe: "status-danger"
-
-        };
-
-    }
-
-
-    if (estoque <= minimo) {
-
-        return {
-
-            texto: "Estoque baixo",
-
-            classe: "status-warning"
-
-        };
-
-    }
-
-
-    return {
-
-        texto: "Em estoque",
-
-        classe: "status-ok"
-
-    };
-
-}
-
-
-/* =========================================================
-   ATUALIZAR CARDS
-========================================================= */
-
-function atualizarDashboard() {
-
-
-    /* TOTAL */
-
-    const total =
-        insumos.length;
-
-
-    /* ESTOQUE BAIXO */
-
-    const estoqueBaixo =
-        insumos.filter((insumo) => {
-
-            const estoque =
-                Number(insumo.estoque) || 0;
-
-
-            const minimo =
-                Number(insumo.estoqueMinimo) || 0;
-
-
-            return (
-                estoque > 0 &&
-                estoque <= minimo
-            );
-
-        }).length;
-
-
-    /* SEM ESTOQUE */
-
-    const semEstoque =
-        insumos.filter((insumo) => {
-
-            return (
-                Number(insumo.estoque) <= 0
-            );
-
-        }).length;
-
-
-    /* VALOR TOTAL */
-
-    const valorEstoque =
-        insumos.reduce(
-            (total, insumo) => {
-
-                const quantidade =
-                    Number(insumo.estoque) || 0;
-
-
-                const valor =
-                    Number(insumo.valorUnitario) || 0;
-
-
-                return (
-                    total +
-                    quantidade * valor
-                );
-
-            },
-            0
-        );
-
-
-    const cards =
-        document.querySelectorAll(
-            ".insumo-card strong"
-        );
-
-
-    if (cards.length >= 4) {
-
-        cards[0].textContent =
-            formatarNumero(total);
-
-
-        cards[1].textContent =
-            formatarNumero(estoqueBaixo);
-
-
-        cards[2].textContent =
-            formatarNumero(semEstoque);
-
-
-        cards[3].textContent =
-            formatarMoeda(valorEstoque);
-
-    }
-
-}
-
-
-/* =========================================================
-   VISUALIZAR
-========================================================= */
-
-function visualizarInsumo(codigo) {
-
-    const insumo =
-        encontrarInsumo(codigo);
-
-
-    if (!insumo) {
-
-        alert("Insumo não encontrado.");
-
-        return;
-
-    }
-
-
-    alert(`
-
-Código: ${insumo.codigo}
-
-Nome: ${insumo.nome}
-
-Categoria: ${insumo.categoria}
-
-Estoque: ${insumo.estoque} ${insumo.unidade}
-
-Estoque mínimo: ${insumo.estoqueMinimo}
-
-Localização: ${insumo.localizacao}
-
-Fornecedor: ${insumo.fornecedor}
-
-Valor unitário: ${formatarMoeda(
-        insumo.valorUnitario
-    )}
-
-    `);
-
-}
-
-
-/* =========================================================
-   EDITAR
-========================================================= */
-
-function editarInsumo(codigo) {
-
-    const insumo =
-        encontrarInsumo(codigo);
-
-
-    if (!insumo) {
-
-        alert("Insumo não encontrado.");
-
-        return;
-
-    }
-
-
-    const novoNome =
-        prompt(
-            "Nome do insumo:",
-            insumo.nome
-        );
-
-
-    if (!novoNome) {
-        return;
-    }
-
-
-    const novaCategoria =
-        prompt(
-            "Categoria:",
-            insumo.categoria
-        );
-
-
-    if (!novaCategoria) {
-        return;
-    }
-
-
-    const novoMinimo =
-        Number(
-            prompt(
-                "Estoque mínimo:",
-                insumo.estoqueMinimo
-            )
-        );
-
-
-    const novaLocalizacao =
-        prompt(
-            "Localização:",
-            insumo.localizacao
-        );
-
-
-    insumo.nome =
-        novoNome.trim();
-
-
-    insumo.categoria =
-        novaCategoria.trim();
-
-
-    if (!Number.isNaN(novoMinimo)) {
-
-        insumo.estoqueMinimo =
-            Math.max(0, novoMinimo);
-
-    }
-
-
-    if (novaLocalizacao) {
-
-        insumo.localizacao =
-            novaLocalizacao.trim();
-
-    }
-
-
-    insumo.atualizadoEm =
-        new Date().toISOString();
-
-
-    salvarInsumos();
-
-    renderizarInsumos();
-
-    atualizarDashboard();
-
-
-    alert(
-        "Insumo atualizado com sucesso."
-    );
-
-}
-
-
-/* =========================================================
-   EXCLUIR
-========================================================= */
-
-function excluirInsumo(codigo) {
-
-    const insumo =
-        encontrarInsumo(codigo);
-
-
-    if (!insumo) {
-
-        alert("Insumo não encontrado.");
-
-        return;
-
-    }
-
-
-    const confirmar =
-        confirm(
-            `Deseja excluir o insumo "${insumo.nome}"?`
-        );
-
-
-    if (!confirmar) {
-        return;
-    }
-
-
-    insumos =
-        insumos.filter((item) => {
-
-            return item.codigo !== codigo;
-
-        });
-
-
-    salvarInsumos();
-
-    renderizarInsumos();
-
-    atualizarDashboard();
-
-}
-
-
-/* =========================================================
-   MOVIMENTAR
-========================================================= */
-
-function movimentarInsumo(codigo) {
-
-    const insumo =
-        encontrarInsumo(codigo);
-
-
-    if (!insumo) {
-
-        alert("Insumo não encontrado.");
-
-        return;
-
-    }
-
-
-    /*
-        FUTURA INTEGRAÇÃO
-
-        Aqui vamos trabalhar com:
-
-        localStorage["movimentacoes"]
-
-        Tipos:
-
-        - ENTRADA
-        - SAÍDA
-        - DEVOLUÇÃO
-        - AJUSTE
-
-        A movimentação irá atualizar
-        automaticamente o estoque.
-    */
-
-
-    alert(
-        `Movimentação de "${insumo.nome}" será implementada na próxima etapa.`
-    );
-
-}
-
-
-/* =========================================================
-   FILTRO
-========================================================= */
-
-function abrirFiltros() {
-
-    alert(
-        "Filtros avançados serão adicionados em uma próxima versão."
-    );
-
-}
-
-
-/* =========================================================
-   ENCONTRAR INSUMO
-========================================================= */
-
-function encontrarInsumo(codigo) {
-
-    return insumos.find((insumo) => {
-
-        return insumo.codigo === codigo;
-
-    });
-
-}
-
-
-/* =========================================================
-   TABELA VAZIA
-========================================================= */
-
-function mostrarTabelaVazia() {
-
-    tabela.innerHTML = `
-
-        <tr>
-
-            <td
-                colspan="9"
-                style="
-                    text-align: center;
-                    padding: 40px;
-                    color: #9ca3af;
-                "
-            >
-
-                <i
-                    class="fa-solid fa-box-open"
-                    style="
-                        font-size: 28px;
-                        margin-bottom: 10px;
-                        display: block;
-                    "
-                ></i>
-
-                Nenhum insumo encontrado.
+    const classeStatus =
+        obterClasseStatus(status);
+
+
+    return `
+
+        <tr data-id="${escapeHTML(insumo.id)}">
+
+            <td>
+                ${escapeHTML(insumo.codigo)}
+            </td>
+
+            <td>
+                ${escapeHTML(insumo.nome)}
+            </td>
+
+            <td>
+                ${escapeHTML(insumo.categoria)}
+            </td>
+
+            <td>
+                ${formatarNumero(insumo.estoque)}
+            </td>
+
+            <td>
+                ${formatarNumero(insumo.estoqueMinimo)}
+            </td>
+
+            <td>
+                ${escapeHTML(insumo.unidade)}
+            </td>
+
+            <td>
+                ${escapeHTML(insumo.localizacao)}
+            </td>
+
+            <td>
+
+                <span class="status ${classeStatus}">
+                    ${status}
+                </span>
+
+            </td>
+
+            <td>
+
+                <div class="table-actions">
+
+                    <button
+                        type="button"
+                        data-acao="visualizar"
+                        data-id="${escapeHTML(insumo.id)}"
+                        title="Visualizar"
+                    >
+                        <i class="fa-solid fa-eye"></i>
+                    </button>
+
+                    <button
+                        type="button"
+                        data-acao="editar"
+                        data-id="${escapeHTML(insumo.id)}"
+                        title="Editar"
+                    >
+                        <i class="fa-solid fa-pen"></i>
+                    </button>
+
+                    <button
+                        type="button"
+                        data-acao="movimentar"
+                        data-id="${escapeHTML(insumo.id)}"
+                        title="Movimentar"
+                    >
+                        <i class="fa-solid fa-arrow-right-arrow-left"></i>
+                    </button>
+
+                    <button
+                        type="button"
+                        class="danger"
+                        data-acao="excluir"
+                        data-id="${escapeHTML(insumo.id)}"
+                        title="Excluir"
+                    >
+                        <i class="fa-solid fa-trash"></i>
+                    </button>
+
+                </div>
 
             </td>
 
@@ -1285,122 +662,1296 @@ function mostrarTabelaVazia() {
 
 
 /* =========================================================
-   FORMATAR MOEDA
+   AÇÕES DA TABELA
 ========================================================= */
 
-function formatarMoeda(valor) {
+function tratarAcaoTabela(event) {
 
-    return Number(valor || 0).toLocaleString(
-        "pt-BR",
-        {
-            style: "currency",
-            currency: "BRL"
-        }
-    );
+    const botao =
+        event.target.closest("button[data-acao]");
+
+
+    if (!botao) {
+        return;
+    }
+
+
+    const acao =
+        botao.dataset.acao;
+
+    const id =
+        botao.dataset.id;
+
+
+    switch (acao) {
+
+        case "visualizar":
+            visualizarInsumo(id);
+            break;
+
+        case "editar":
+            editarInsumo(id);
+            break;
+
+        case "movimentar":
+            abrirMovimentacao(id);
+            break;
+
+        case "excluir":
+            excluirInsumo(id);
+            break;
+
+    }
 
 }
 
 
 /* =========================================================
-   FORMATAR NÚMERO
+   VISUALIZAR
 ========================================================= */
 
-function formatarNumero(valor) {
+function visualizarInsumo(id) {
 
-    return Number(valor || 0).toLocaleString(
-        "pt-BR"
-    );
+    const insumo =
+        encontrarInsumo(id);
+
+
+    if (!insumo) {
+        return;
+    }
+
+
+    const status =
+        calcularStatus(insumo);
+
+
+    document.getElementById(
+        "visualizarNome"
+    ).textContent = insumo.nome;
+
+
+    document.getElementById(
+        "visualizarCodigo"
+    ).textContent =
+        `Código: ${insumo.codigo}`;
+
+
+    document.getElementById(
+        "visualizarCategoria"
+    ).textContent =
+        insumo.categoria;
+
+
+    document.getElementById(
+        "visualizarStatus"
+    ).innerHTML = `
+
+        <span class="status ${obterClasseStatus(status)}">
+            ${status}
+        </span>
+
+    `;
+
+
+    document.getElementById(
+        "visualizarEstoque"
+    ).textContent =
+        `${formatarNumero(insumo.estoque)} ${insumo.unidade}`;
+
+
+    document.getElementById(
+        "visualizarMinimo"
+    ).textContent =
+        `${formatarNumero(insumo.estoqueMinimo)} ${insumo.unidade}`;
+
+
+    document.getElementById(
+        "visualizarUnidade"
+    ).textContent =
+        insumo.unidade;
+
+
+    document.getElementById(
+        "visualizarValor"
+    ).textContent =
+        formatarMoeda(insumo.valorUnitario);
+
+
+    document.getElementById(
+        "visualizarLocalizacao"
+    ).textContent =
+        insumo.localizacao;
+
+
+    document.getElementById(
+        "visualizarFornecedor"
+    ).textContent =
+        insumo.fornecedor || "Não informado";
+
+
+    renderizarHistorico(insumo);
+
+
+    abrirModal(modalVisualizar);
 
 }
 
 
 /* =========================================================
-   ESCAPAR HTML
+   HISTÓRICO
 ========================================================= */
 
-function escaparHTML(valor) {
+function renderizarHistorico(insumo) {
 
-    if (
-        valor === null ||
-        valor === undefined
-    ) {
+    const container =
+        document.getElementById(
+            "historicoInsumo"
+        );
 
-        return "";
+
+    const movimentacoes =
+        obterMovimentacoes()
+            .filter(mov =>
+                mov.itemTipo === "insumo" &&
+                mov.codigo === insumo.codigo
+            )
+            .sort(
+                (a, b) =>
+                    new Date(b.data) -
+                    new Date(a.data)
+            )
+            .slice(0, 5);
+
+
+    if (movimentacoes.length === 0) {
+
+        container.innerHTML = `
+
+            <div class="history-empty">
+                Nenhuma movimentação registrada.
+            </div>
+
+        `;
+
+        return;
 
     }
 
 
-    return String(valor)
+    container.innerHTML =
+        movimentacoes
+            .map(mov => {
 
-        .replace(
-            /&/g,
-            "&amp;"
+                const entrada =
+                    mov.tipo === "entrada";
+
+                const classe =
+                    entrada
+                        ? "entrada"
+                        : "consumo";
+
+                const icone =
+                    entrada
+                        ? "fa-arrow-down"
+                        : "fa-arrow-up";
+
+                const texto =
+                    entrada
+                        ? "Entrada"
+                        : "Consumo";
+
+
+                return `
+
+                    <div class="history-item">
+
+                        <div class="history-info">
+
+                            <div class="history-type ${classe}">
+
+                                <i class="fa-solid ${icone}"></i>
+
+                                ${texto}
+
+                            </div>
+
+                            <small>
+                                ${formatarData(mov.data)}
+
+                                ${mov.observacao
+                                    ? ` • ${escapeHTML(mov.observacao)}`
+                                    : ""
+                                }
+                            </small>
+
+                        </div>
+
+                        <div class="history-quantity">
+
+                            ${entrada ? "+" : "-"}
+
+                            ${formatarNumero(mov.quantidade)}
+
+                            ${escapeHTML(mov.unidade)}
+
+                        </div>
+
+                    </div>
+
+                `;
+
+            })
+            .join("");
+
+}
+
+
+/* =========================================================
+   EDITAR
+========================================================= */
+
+function editarInsumo(id) {
+
+    const insumo =
+        encontrarInsumo(id);
+
+
+    if (!insumo) {
+        return;
+    }
+
+
+    document.getElementById(
+        "editarId"
+    ).value = insumo.id;
+
+
+    document.getElementById(
+        "editarCodigo"
+    ).value = insumo.codigo;
+
+
+    document.getElementById(
+        "editarNome"
+    ).value = insumo.nome;
+
+
+    document.getElementById(
+        "editarCategoria"
+    ).value = insumo.categoria;
+
+
+    document.getElementById(
+        "editarUnidade"
+    ).value = insumo.unidade;
+
+
+    document.getElementById(
+        "editarMinimo"
+    ).value = insumo.estoqueMinimo;
+
+
+    document.getElementById(
+        "editarValor"
+    ).value = insumo.valorUnitario;
+
+
+    document.getElementById(
+        "editarLocalizacao"
+    ).value = insumo.localizacao;
+
+
+    document.getElementById(
+        "editarFornecedor"
+    ).value = insumo.fornecedor || "";
+
+
+    abrirModal(modalEditar);
+
+}
+
+
+/* =========================================================
+   SALVAR EDIÇÃO
+========================================================= */
+
+function salvarEdicao(event) {
+
+    event.preventDefault();
+
+
+    const id =
+        document.getElementById(
+            "editarId"
+        ).value;
+
+
+    const insumos =
+        obterInsumos();
+
+
+    const index =
+        insumos.findIndex(
+            insumo => insumo.id === id
+        );
+
+
+    if (index === -1) {
+
+        mostrarToast(
+            "Insumo não encontrado.",
+            "erro"
+        );
+
+        return;
+
+    }
+
+
+    const nome =
+        document.getElementById(
+            "editarNome"
+        ).value.trim();
+
+
+    const categoria =
+        document.getElementById(
+            "editarCategoria"
+        ).value;
+
+
+    const unidade =
+        document.getElementById(
+            "editarUnidade"
+        ).value;
+
+
+    const minimo =
+        Number(
+            document.getElementById(
+                "editarMinimo"
+            ).value
+        );
+
+
+    const valor =
+        Number(
+            document.getElementById(
+                "editarValor"
+            ).value
+        ) || 0;
+
+
+    const localizacao =
+        document.getElementById(
+            "editarLocalizacao"
+        ).value.trim();
+
+
+    const fornecedor =
+        document.getElementById(
+            "editarFornecedor"
+        ).value.trim();
+
+
+    if (
+        !nome ||
+        !categoria ||
+        !unidade ||
+        !localizacao
+    ) {
+
+        mostrarToast(
+            "Preencha todos os campos obrigatórios.",
+            "erro"
+        );
+
+        return;
+
+    }
+
+
+    if (minimo < 0 || valor < 0) {
+
+        mostrarToast(
+            "Os valores não podem ser negativos.",
+            "erro"
+        );
+
+        return;
+
+    }
+
+
+    insumos[index] = {
+
+        ...insumos[index],
+
+        nome,
+        categoria,
+        unidade,
+
+        estoqueMinimo: minimo,
+
+        valorUnitario: valor,
+
+        localizacao,
+
+        fornecedor,
+
+        atualizadoEm:
+            new Date().toISOString()
+
+    };
+
+
+    salvarInsumos(insumos);
+
+    renderizarInsumos();
+
+    atualizarDashboard();
+
+    fecharModal(modalEditar);
+
+
+    mostrarToast(
+        "Insumo atualizado com sucesso."
+    );
+
+}
+
+
+/* =========================================================
+   ABRIR MOVIMENTAÇÃO
+========================================================= */
+
+function abrirMovimentacao(id) {
+
+    const insumo =
+        encontrarInsumo(id);
+
+
+    if (!insumo) {
+        return;
+    }
+
+
+    document.getElementById(
+        "movimentacaoId"
+    ).value = insumo.id;
+
+
+    document.getElementById(
+        "movimentacaoNome"
+    ).textContent =
+        insumo.nome;
+
+
+    document.getElementById(
+        "movimentacaoEstoqueAtual"
+    ).textContent =
+        `Estoque atual: ${formatarNumero(insumo.estoque)} ${insumo.unidade}`;
+
+
+    document.getElementById(
+        "movimentacaoDescricao"
+    ).textContent =
+        `Registre uma entrada ou consumo de ${insumo.nome}.`;
+
+
+    document.getElementById(
+        "tipoMovimentacao"
+    ).value = "entrada";
+
+
+    document.getElementById(
+        "quantidadeMovimentacao"
+    ).value = "";
+
+
+    document.getElementById(
+        "observacaoMovimentacao"
+    ).value = "";
+
+
+    abrirModal(modalMovimentacao);
+
+}
+
+
+/* =========================================================
+   REGISTRAR MOVIMENTAÇÃO
+========================================================= */
+
+function registrarMovimentacao(event) {
+
+    event.preventDefault();
+
+
+    const id =
+        document.getElementById(
+            "movimentacaoId"
+        ).value;
+
+
+    const tipo =
+        document.getElementById(
+            "tipoMovimentacao"
+        ).value;
+
+
+    const quantidade =
+        Number(
+            document.getElementById(
+                "quantidadeMovimentacao"
+            ).value
+        );
+
+
+    const observacao =
+        document.getElementById(
+            "observacaoMovimentacao"
+        ).value.trim();
+
+
+    if (!quantidade || quantidade <= 0) {
+
+        mostrarToast(
+            "Informe uma quantidade válida.",
+            "erro"
+        );
+
+        return;
+
+    }
+
+
+    const insumos =
+        obterInsumos();
+
+
+    const index =
+        insumos.findIndex(
+            insumo => insumo.id === id
+        );
+
+
+    if (index === -1) {
+
+        mostrarToast(
+            "Insumo não encontrado.",
+            "erro"
+        );
+
+        return;
+
+    }
+
+
+    const insumo =
+        insumos[index];
+
+
+    const estoqueAnterior =
+        Number(insumo.estoque);
+
+
+    let estoquePosterior;
+
+
+    /* ENTRADA */
+
+    if (tipo === "entrada") {
+
+        estoquePosterior =
+            estoqueAnterior + quantidade;
+
+    }
+
+
+    /* CONSUMO */
+
+    else {
+
+        if (quantidade > estoqueAnterior) {
+
+            mostrarToast(
+                "O consumo não pode ser maior que o estoque atual.",
+                "erro"
+            );
+
+            return;
+
+        }
+
+
+        estoquePosterior =
+            estoqueAnterior - quantidade;
+
+    }
+
+
+    /* Atualizar estoque */
+
+    insumo.estoque =
+        estoquePosterior;
+
+
+    insumo.atualizadoEm =
+        new Date().toISOString();
+
+
+    insumos[index] =
+        insumo;
+
+
+    salvarInsumos(insumos);
+
+
+    /* Histórico */
+
+    registrarMovimentacaoHistorico({
+
+        itemTipo: "insumo",
+
+        tipo,
+
+        codigo: insumo.codigo,
+
+        item: insumo.nome,
+
+        quantidade,
+
+        unidade: insumo.unidade,
+
+        estoqueAnterior,
+
+        estoquePosterior,
+
+        responsavel: RESPONSAVEL_PADRAO,
+
+        observacao:
+            observacao ||
+            (tipo === "entrada"
+                ? "Entrada de estoque"
+                : "Consumo de estoque"),
+
+        data: new Date().toISOString()
+
+    });
+
+
+    renderizarInsumos();
+
+    atualizarDashboard();
+
+    fecharModal(modalMovimentacao);
+
+
+    mostrarToast(
+        tipo === "entrada"
+            ? "Entrada registrada com sucesso."
+            : "Consumo registrado com sucesso."
+    );
+
+}
+
+
+/* =========================================================
+   HISTÓRICO DE MOVIMENTAÇÕES
+========================================================= */
+
+function registrarMovimentacaoHistorico(movimentacao) {
+
+    const movimentacoes =
+        obterMovimentacoes();
+
+
+    movimentacoes.push({
+
+        id: gerarId(),
+
+        ...movimentacao
+
+    });
+
+
+    salvarMovimentacoes(
+        movimentacoes
+    );
+
+}
+
+
+/* =========================================================
+   EXCLUIR
+========================================================= */
+
+function excluirInsumo(id) {
+
+    const insumo =
+        encontrarInsumo(id);
+
+
+    if (!insumo) {
+        return;
+    }
+
+
+    const confirmou =
+        confirm(
+            `Deseja realmente excluir o insumo "${insumo.nome}"?`
+        );
+
+
+    if (!confirmou) {
+        return;
+    }
+
+
+    const insumos =
+        obterInsumos()
+            .filter(
+                item => item.id !== id
+            );
+
+
+    salvarInsumos(insumos);
+
+
+    renderizarInsumos();
+
+    atualizarDashboard();
+
+
+    mostrarToast(
+        "Insumo excluído com sucesso."
+    );
+
+}
+
+
+/* =========================================================
+   DASHBOARD
+========================================================= */
+
+function atualizarDashboard() {
+
+    const insumos =
+        obterInsumos();
+
+
+    let estoqueBaixo = 0;
+    let semEstoque = 0;
+    let valorTotal = 0;
+
+
+    insumos.forEach(insumo => {
+
+        const estoque =
+            Number(insumo.estoque) || 0;
+
+        const minimo =
+            Number(insumo.estoqueMinimo) || 0;
+
+        const valor =
+            Number(insumo.valorUnitario) || 0;
+
+
+        if (estoque <= 0) {
+
+            semEstoque++;
+
+        } else if (estoque <= minimo) {
+
+            estoqueBaixo++;
+
+        }
+
+
+        valorTotal +=
+            estoque * valor;
+
+    });
+
+
+    document.getElementById(
+        "totalInsumos"
+    ).textContent =
+        insumos.length;
+
+
+    document.getElementById(
+        "estoqueBaixo"
+    ).textContent =
+        estoqueBaixo;
+
+
+    document.getElementById(
+        "semEstoque"
+    ).textContent =
+        semEstoque;
+
+
+    document.getElementById(
+        "valorEstoque"
+    ).textContent =
+        formatarMoeda(valorTotal);
+
+}
+
+
+/* =========================================================
+   STATUS
+========================================================= */
+
+function calcularStatus(insumo) {
+
+    const estoque =
+        Number(insumo.estoque) || 0;
+
+    const minimo =
+        Number(insumo.estoqueMinimo) || 0;
+
+
+    if (estoque <= 0) {
+        return "Sem estoque";
+    }
+
+
+    if (estoque <= minimo) {
+        return "Estoque baixo";
+    }
+
+
+    return "Em estoque";
+
+}
+
+
+function obterClasseStatus(status) {
+
+    if (status === "Sem estoque") {
+        return "status-danger";
+    }
+
+
+    if (status === "Estoque baixo") {
+        return "status-warning";
+    }
+
+
+    return "status-ok";
+
+}
+
+
+/* =========================================================
+   BUSCA + FILTROS
+========================================================= */
+
+function aplicarFiltrosInternos(insumos) {
+
+    const busca =
+        campoBusca.value
+            .trim()
+            .toLowerCase();
+
+
+    return insumos.filter(insumo => {
+
+        const correspondeBusca =
+            !busca ||
+            insumo.codigo
+                .toLowerCase()
+                .includes(busca) ||
+
+            insumo.nome
+                .toLowerCase()
+                .includes(busca) ||
+
+            insumo.categoria
+                .toLowerCase()
+                .includes(busca) ||
+
+            insumo.localizacao
+                .toLowerCase()
+                .includes(busca);
+
+
+        const correspondeCategoria =
+            !filtrosAtuais.categoria ||
+            insumo.categoria ===
+            filtrosAtuais.categoria;
+
+
+        const correspondeStatus =
+            !filtrosAtuais.status ||
+            calcularStatus(insumo) ===
+            filtrosAtuais.status;
+
+
+        const correspondeLocalizacao =
+            !filtrosAtuais.localizacao ||
+            insumo.localizacao
+                .toLowerCase()
+                .includes(
+                    filtrosAtuais.localizacao
+                        .toLowerCase()
+                );
+
+
+        return (
+            correspondeBusca &&
+            correspondeCategoria &&
+            correspondeStatus &&
+            correspondeLocalizacao
+        );
+
+    });
+
+}
+
+
+/* =========================================================
+   FILTROS
+========================================================= */
+
+function preencherFiltros() {
+
+    document.getElementById(
+        "filtroCategoria"
+    ).value =
+        filtrosAtuais.categoria;
+
+
+    document.getElementById(
+        "filtroStatus"
+    ).value =
+        filtrosAtuais.status;
+
+
+    document.getElementById(
+        "filtroLocalizacao"
+    ).value =
+        filtrosAtuais.localizacao;
+
+}
+
+
+function aplicarFiltros(event) {
+
+    event.preventDefault();
+
+
+    filtrosAtuais = {
+
+        categoria:
+            document.getElementById(
+                "filtroCategoria"
+            ).value,
+
+        status:
+            document.getElementById(
+                "filtroStatus"
+            ).value,
+
+        localizacao:
+            document.getElementById(
+                "filtroLocalizacao"
+            ).value.trim()
+
+    };
+
+
+    renderizarInsumos();
+
+    atualizarEstadoBotaoFiltro();
+
+    fecharModal(modalFiltros);
+
+}
+
+
+function limparFiltros() {
+
+    filtrosAtuais = {
+
+        categoria: "",
+        status: "",
+        localizacao: ""
+
+    };
+
+
+    document.getElementById(
+        "filtroCategoria"
+    ).value = "";
+
+
+    document.getElementById(
+        "filtroStatus"
+    ).value = "";
+
+
+    document.getElementById(
+        "filtroLocalizacao"
+    ).value = "";
+
+
+    renderizarInsumos();
+
+    atualizarEstadoBotaoFiltro();
+
+}
+
+
+function atualizarEstadoBotaoFiltro() {
+
+    const possuiFiltro =
+        filtrosAtuais.categoria ||
+        filtrosAtuais.status ||
+        filtrosAtuais.localizacao;
+
+
+    btnFiltros.classList.toggle(
+        "active",
+        Boolean(possuiFiltro)
+    );
+
+}
+
+
+/* =========================================================
+   MODAIS
+========================================================= */
+
+function abrirModal(modal) {
+
+    if (!modal) {
+        return;
+    }
+
+
+    modal.classList.add("active");
+
+    document.body.classList.add("modal-open");
+
+}
+
+
+function fecharModal(modal) {
+
+    if (!modal) {
+        return;
+    }
+
+
+    modal.classList.remove("active");
+
+
+    if (
+        !document.querySelector(
+            ".modal-overlay.active"
         )
+    ) {
 
-        .replace(
-            /</g,
-            "&lt;"
-        )
+        document.body.classList.remove(
+            "modal-open"
+        );
 
-        .replace(
-            />/g,
-            "&gt;"
-        )
+    }
 
-        .replace(
-            /"/g,
-            "&quot;"
-        )
+}
 
-        .replace(
-            /'/g,
-            "&#039;"
+
+/* =========================================================
+   LIMPAR FORMULÁRIO
+========================================================= */
+
+function limparFormularioNovoInsumo() {
+
+    formInsumo.reset();
+
+}
+
+
+/* =========================================================
+   ENCONTRAR INSUMO
+========================================================= */
+
+function encontrarInsumo(id) {
+
+    return obterInsumos()
+        .find(
+            insumo => insumo.id === id
         );
 
 }
 
 
 /* =========================================================
-   GERAR ID
+   UTILITÁRIOS
 ========================================================= */
 
-function gerarID() {
+function gerarId() {
 
     return (
         Date.now().toString(36) +
         Math.random()
             .toString(36)
-            .substring(2, 9)
+            .substring(2, 8)
     );
 
 }
 
 
-/* =========================================================
-   FUNÇÕES PÚBLICAS
-   PREPARADAS PARA FUTURA INTEGRAÇÃO
-========================================================= */
+function formatarNumero(valor) {
 
-/*
-    Outros módulos poderão utilizar essas funções
-    futuramente para consultar os insumos.
-*/
-
-
-function obterInsumos() {
-
-    return [...insumos];
+    return Number(valor || 0)
+        .toLocaleString(
+            "pt-BR",
+            {
+                minimumFractionDigits: 0,
+                maximumFractionDigits: 2
+            }
+        );
 
 }
 
 
-function obterInsumoPorCodigo(codigo) {
+function formatarMoeda(valor) {
 
-    return encontrarInsumo(codigo);
+    return Number(valor || 0)
+        .toLocaleString(
+            "pt-BR",
+            {
+                style: "currency",
+                currency: "BRL"
+            }
+        );
+
+}
+
+
+function formatarData(data) {
+
+    if (!data) {
+        return "-";
+    }
+
+
+    const dataObj =
+        new Date(data);
+
+
+    return dataObj.toLocaleString(
+        "pt-BR",
+        {
+            dateStyle: "short",
+            timeStyle: "short"
+        }
+    );
+
+}
+
+
+function escapeHTML(valor) {
+
+    return String(valor ?? "")
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
 
 }
 
 
 /* =========================================================
-   FIM DO MÓDULO
+   TOAST
 ========================================================= */
+
+let toastTimeout;
+
+
+function mostrarToast(
+    mensagem,
+    tipo = "sucesso"
+) {
+
+    const toast =
+        document.getElementById("toast");
+
+    const toastMensagem =
+        document.getElementById(
+            "toastMensagem"
+        );
+
+
+    toastMensagem.textContent =
+        mensagem;
+
+
+    const icone =
+        toast.querySelector("i");
+
+
+    if (tipo === "erro") {
+
+        toast.style.borderLeftColor =
+            "#ef4444";
+
+        icone.className =
+            "fa-solid fa-circle-exclamation";
+
+        icone.style.color =
+            "#f87171";
+
+    } else {
+
+        toast.style.borderLeftColor =
+            "#4ade80";
+
+        icone.className =
+            "fa-solid fa-circle-check";
+
+        icone.style.color =
+            "#4ade80";
+
+    }
+
+
+    toast.classList.add("active");
+
+
+    clearTimeout(toastTimeout);
+
+
+    toastTimeout =
+        setTimeout(() => {
+
+            toast.classList.remove(
+                "active"
+            );
+
+        }, 3000);
+
+}
+
+
+/* =========================================================
+   DISPONIBILIZAR DADOS PARA DEBUG
+========================================================= */
+
+window.almoxControlInsumos = {
+
+    obterInsumos,
+
+    obterMovimentacoes,
+
+    atualizarDashboard,
+
+    renderizarInsumos
+
+};
