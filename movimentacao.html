@@ -3,194 +3,206 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
     <title>Movimentações | AlmoxControl</title>
-
+    <!-- CSS -->
     <link rel="stylesheet" href="css/style.css" />
     <link rel="stylesheet" href="css/sidebar.css" />
     <link rel="stylesheet" href="css/movimentacao.css" />
-
+    <!-- Font Awesome -->
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
     />
-
+    <!-- Poppins -->
     <link
       href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
       rel="stylesheet"
     />
   </head>
-
   <body>
     <div class="container">
-      <!-- SIDEBAR -->
-
+      <!-- ===================================================== SIDEBAR ====================================================== -->
       <nav class="nav-container">
         <div class="sidebar-header">
           <i class="fa-solid fa-toolbox"></i>
-
           <div>
             <h1>AlmoxControl</h1>
             <span>Sistema ERP</span>
           </div>
         </div>
-
         <ul class="menu">
           <li>
             <a href="index.html">
-              <i class="fa-solid fa-house"></i>
-              Dashboard
+              <i class="fa-solid fa-house"></i> Dashboard
             </a>
           </li>
-
           <li>
             <a href="ferramentas.html">
-              <i class="fa-solid fa-wrench"></i>
-              Ferramentas
+              <i class="fa-solid fa-wrench"></i> Ferramentas
             </a>
           </li>
-
           <li>
             <a class="active" href="movimentacao.html">
-              <i class="fa-solid fa-arrow-right-arrow-left"></i>
-              Movimentações
+              <i class="fa-solid fa-arrow-right-arrow-left"></i> Movimentações
             </a>
           </li>
           <li>
-            <a  href="colaboradores.html">
-
-                    <i class="fa-solid fa-user-group"></i>
-
-                    Colaboradores
-
-                </a>
+            <a href="colaboradores.html">
+              <i class="fa-solid fa-user-group"></i> Colaboradores
+            </a>
           </li>
           <li>
             <a href="almoxarifado.html">
-              <i class="fa-solid fa-boxes-stacked"></i>
-              <span>Insumos</span>
+              <i class="fa-solid fa-boxes-stacked"></i> <span>Insumos</span>
             </a>
           </li>
-           <li>
-                <a href="os.html">
-                    <i class="fa-solid fa-clipboard-list"></i>
-                    <span>Ordens de Serviço</span>
-                </a>
-            </li>
+          <li>
+            <a href="os.html">
+              <i class="fa-solid fa-clipboard-list"></i>
+              <span>Ordens de Serviço</span>
+            </a>
+          </li>
         </ul>
-
         <div class="sidebar-footer">
           <div class="avatar">M</div>
-
-          <div>
-            <strong>Marcos</strong>
-            <span>Administrador</span>
-          </div>
+          <div><strong>Marcos</strong> <span>Administrador</span></div>
         </div>
       </nav>
-
-      <!-- CONTEÚDO -->
-
+      <!-- ===================================================== CONTEÚDO ====================================================== -->
       <div class="content">
+        <!-- CABEÇALHO -->
         <header class="topo-movimentacao">
           <div>
             <h2>Movimentações</h2>
-
             <p class="subtitulo">
-              Histórico de empréstimos e devoluções de ferramentas.
+              Controle de entradas, saídas e movimentações do almoxarifado.
             </p>
           </div>
-
           <button id="btnNovaMovimentacao" class="btn-nova">
-            <i class="fa-solid fa-plus"></i>
-
-            Nova movimentação
+            <i class="fa-solid fa-plus"></i> Nova movimentação
           </button>
         </header>
-
+        <!-- ================================================= TABELA ================================================== -->
         <section class="card-tabela">
+          <!-- BARRA SUPERIOR -->
           <div class="barra-superior">
+            <!-- PESQUISA -->
             <div class="pesquisa">
               <i class="fa-solid fa-magnifying-glass"></i>
-
               <input
                 id="pesquisaMovimentacao"
                 type="text"
-                placeholder="Pesquisar ferramenta ou colaborador..."
+                placeholder="Pesquisar item ou colaborador..."
               />
             </div>
-
+            <!-- FILTROS -->
             <div class="filtros">
               <select id="filtroMovimentacao">
-                <option>Todos</option>
-                <option>Empréstimos</option>
-                <option>Devoluções</option>
+                <option value="todos">Todos</option>
+                <option value="ferramentas">Ferramentas</option>
+                <option value="insumos">Insumos</option>
+                <option value="emprestimos">Empréstimos</option>
+                <option value="devolucoes">Devoluções</option>
+                <option value="saidas">Saídas</option>
               </select>
-
               <span class="contador">
-                Total:
-                <strong id="totalMovimentacoes">0</strong>
+                Total: <strong id="totalMovimentacoes"> 0 </strong>
               </span>
             </div>
           </div>
-
+          <!-- TABELA -->
           <div class="table-responsive">
             <table id="tabelaMovimentacoes">
               <thead>
                 <tr>
                   <th>Data / hora</th>
-                  <th>Ferramenta</th>
-                  <th>Colaborador</th>
+                  <th>Item</th>
                   <th>Tipo</th>
-                  <th>Devolução</th>
+                  <th>Operação</th>
+                  <th>Quantidade</th>
+                  <th>Colaborador</th>
+                  <th>OS</th>
                   <th>Status</th>
                   <th>Ações</th>
                 </tr>
               </thead>
-
-              <tbody id="listaMovimentacoes"></tbody>
+              <tbody id="listaMovimentacoes">
+                <!-- preenchido pelo JavaScript -->
+              </tbody>
             </table>
           </div>
         </section>
-        <!-- MODAL NOVA MOVIMENTAÇÃO -->
-
+        <!-- ================================================= MODAL NOVA MOVIMENTAÇÃO ================================================== -->
         <div id="modalMovimentacao" class="modal">
           <div class="modal-content">
+            <!-- TÍTULO -->
             <h2>Nova Movimentação</h2>
-
             <form id="formMovimentacao">
-              <label>Ferramenta</label>
-
-              <select id="ferramentaMovimentacao"></select>
-
-              <label>Colaborador</label>
-
-             <select id="colaboradorMovimentacao"></select>
-
-              <label>Tipo</label>
-
-              <select id="tipoMovimentacao">
-                <option value="emprestimo">Empréstimo</option>
-
-                <option value="devolucao">Devolução</option>
+              <!-- ================================================= TIPO DE ITEM ================================================== -->
+              <label for="tipoItemMovimentacao"> Tipo de item </label>
+              <select id="tipoItemMovimentacao">
+                <option value="insumo">Insumo</option>
+                <option value="ferramenta">Ferramenta</option>
               </select>
-
-              <label>Data de devolução</label>
-
-              <input id="dataDevolucao" type="date" />
-
-              <label>Observação</label>
-
+              <!-- ================================================= ÁREA DE INSUMO ================================================== -->
+              <div id="camposInsumo">
+                <label for="insumoMovimentacao"> Insumo </label>
+                <select id="insumoMovimentacao">
+                  <!-- preenchido pelo JavaScript -->
+                </select>
+                <label for="quantidadeMovimentacao"> Quantidade </label>
+                <input
+                  id="quantidadeMovimentacao"
+                  type="number"
+                  min="1"
+                  step="1"
+                  placeholder="Quantidade de saída"
+                />
+                <label for="osMovimentacao"> Vincular à OS? </label>
+                <select id="vincularOSMovimentacao">
+                  <option value="nao">Não</option>
+                  <option value="sim">Sim</option>
+                </select>
+                <!-- OS -->
+                <div id="campoOSMovimentacao">
+                  <label for="ordemServicoMovimentacao">
+                    Ordem de Serviço
+                  </label>
+                  <select id="ordemServicoMovimentacao">
+                    <!-- preenchido pelo JavaScript -->
+                  </select>
+                  <small> A OS receberá o custo desse material. </small>
+                </div>
+              </div>
+              <!-- ================================================= ÁREA DE FERRAMENTA ================================================== -->
+              <div id="camposFerramenta">
+                <label for="ferramentaMovimentacao"> Ferramenta </label>
+                <select id="ferramentaMovimentacao">
+                  <!-- preenchido pelo JavaScript -->
+                </select>
+                <label for="colaboradorMovimentacao"> Colaborador </label>
+                <select id="colaboradorMovimentacao">
+                  <!-- preenchido pelo JavaScript -->
+                </select>
+                <label for="tipoMovimentacao"> Operação </label>
+                <select id="tipoMovimentacao">
+                  <option value="emprestimo">Empréstimo</option>
+                  <option value="devolucao">Devolução</option>
+                </select>
+                <label for="dataDevolucao"> Data de devolução </label>
+                <input id="dataDevolucao" type="date" />
+              </div>
+              <!-- ================================================= OBSERVAÇÃO ================================================== -->
+              <label for="observacaoMovimentacao"> Observação </label>
               <textarea
                 id="observacaoMovimentacao"
                 placeholder="Observação..."
               ></textarea>
-
+              <!-- ================================================= BOTÕES ================================================== -->
               <div class="botoes-modal">
                 <button type="button" id="fecharModalMovimentacao">
                   Cancelar
                 </button>
-
                 <button type="submit">Salvar</button>
               </div>
             </form>
@@ -198,6 +210,7 @@
         </div>
       </div>
     </div>
+    <!-- ===================================================== JAVASCRIPT ====================================================== -->
     <script src="js/config.js"></script>
     <script src="js/storage.js"></script>
     <script src="js/utils.js"></script>

@@ -1,567 +1,769 @@
+/* =========================================================
+   ALMOXCONTROL - MOVIMENTAÇÕES
+   ========================================================= */
+
+/* =========================
+   PÁGINA
+   ========================= */
+
+.content {
+    flex: 1;
+    min-width: 0;
+    min-height: 100vh;
+    padding: 30px;
+    background: #0f172a;
+}
+
+
 /* =========================
    CABEÇALHO
-========================= */
+   ========================= */
 
 .topo-movimentacao {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-
-  margin-bottom: 25px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    margin-bottom: 25px;
 }
 
 .topo-movimentacao h2 {
-  color: white;
-  font-size: 28px;
+    margin: 0;
+    color: #f8fafc;
+    font-size: 27px;
+    font-weight: 600;
 }
 
-.subtitulo {
-  color: #9ca3af;
-
-  font-size: 14px;
-
-  margin-top: 5px;
+.topo-movimentacao .subtitulo {
+    margin: 6px 0 0;
+    color: #94a3b8;
+    font-size: 13px;
 }
+
 
 /* =========================
    BOTÃO NOVA MOVIMENTAÇÃO
-========================= */
+   ========================= */
 
 .btn-nova {
-  display: flex;
+    height: 42px;
+    padding: 0 17px;
 
-  align-items: center;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
 
-  gap: 10px;
+    border: none;
+    border-radius: 7px;
 
-  padding: 12px 18px;
+    background: #f97316;
+    color: #ffffff;
 
-  background: var(--orange);
+    font-family: "Poppins", sans-serif;
+    font-size: 13px;
+    font-weight: 600;
 
-  color: white;
-
-  border: none;
-
-  border-radius: 10px;
-
-  font-weight: 600;
-
-  cursor: pointer;
-
-  transition: 0.3s;
+    cursor: pointer;
+    transition: 0.2s ease;
 }
 
 .btn-nova:hover {
-  background: var(--orange-dark);
-
-  transform: translateY(-3px);
+    background: #ea580c;
 }
+
 
 /* =========================
    CARD DA TABELA
-========================= */
+   ========================= */
 
 .card-tabela {
-  background: var(--card);
+    width: 100%;
 
-  border-radius: 12px;
+    background: #1f2937;
+    border: 1px solid #374151;
+    border-radius: 10px;
 
-  padding: 20px;
+    overflow: hidden;
 }
+
 
 /* =========================
    BARRA SUPERIOR
-========================= */
+   ========================= */
 
 .barra-superior {
-  display: flex;
+    width: 100%;
+    min-height: 72px;
 
-  justify-content: space-between;
+    padding: 15px 18px;
 
-  align-items: center;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
 
-  margin-bottom: 20px;
+    gap: 20px;
+
+    border-bottom: 1px solid #374151;
 }
+
 
 /* =========================
    PESQUISA
-========================= */
+   ========================= */
 
 .pesquisa {
-  display: flex;
+    width: 350px;
+    height: 40px;
 
-  align-items: center;
+    display: flex;
+    align-items: center;
 
-  width: 350px;
-
-  height: 45px;
-
-  background: #111827;
-
-  border: 1px solid #374151;
-
-  border-radius: 10px;
-
-  padding: 0 15px;
+    background: #111827;
+    border: 1px solid #374151;
+    border-radius: 7px;
 }
 
 .pesquisa i {
-  color: var(--orange);
+    margin-left: 13px;
+    margin-right: 9px;
 
-  margin-right: 10px;
+    color: #64748b;
+    font-size: 13px;
 }
 
 .pesquisa input {
-  width: 100%;
+    width: 100%;
+    height: 100%;
 
-  background: transparent;
+    padding: 0 10px 0 0;
 
-  border: none;
+    border: none;
+    outline: none;
 
-  outline: none;
+    background: transparent;
+    color: #e5e7eb;
 
-  color: white;
-
-  font-family: inherit;
+    font-family: "Poppins", sans-serif;
+    font-size: 12px;
 }
 
 .pesquisa input::placeholder {
-  color: #9ca3af;
+    color: #64748b;
 }
+
 
 /* =========================
    FILTROS
-========================= */
+   ========================= */
 
 .filtros {
-  display: flex;
-
-  align-items: center;
-
-  gap: 15px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
 }
 
 .filtros select {
-  background: #111827;
+    width: 155px;
+    height: 40px;
 
-  color: white;
-
-  border: 1px solid #374151;
-
-  padding: 10px 15px;
-
-  border-radius: 8px;
-
-  outline: none;
-}
-
-/* =========================
-   CONTADOR
-========================= */
-
-.contador {
-  color: #d1d5db;
-}
-
-.contador strong {
-  color: var(--orange);
-}
-
-/* =========================
-   TABELA
-========================= */
-
-.table-responsive {
-  width: 100%;
-
-  overflow-x: auto;
-}
-
-table {
-  width: 100%;
-
-  border-collapse: collapse;
-
-  background: #1f2937;
-
-  border-radius: 10px;
-
-  overflow: hidden;
-}
-
-thead {
-  background: #111827;
-}
-
-thead th {
-  color: white;
-
-  padding: 16px;
-
-  text-align: left;
-
-  font-size: 14px;
-}
-
-tbody td {
-  color: #e5e7eb;
-
-  padding: 15px;
-
-  border-bottom: 1px solid #374151;
-}
-
-tbody tr:hover {
-  background: #293548;
-}
-
-/* =========================
-   TIPO MOVIMENTAÇÃO
-========================= */
-
-.tipo {
-  display: inline-flex;
-
-  align-items: center;
-
-  justify-content: center;
-
-  padding: 6px 14px;
-
-  border-radius: 999px;
-
-  font-size: 13px;
-
-  font-weight: 600;
-}
-
-.emprestimo {
-  background: rgba(59, 130, 246, 0.15);
-
-  color: #60a5fa;
-}
-
-.devolucao {
-  background: rgba(34, 197, 94, 0.15);
-
-  color: #4ade80;
-}
-
-/* =========================
-   AÇÕES
-========================= */
-
-.acoes {
-  display: flex;
-
-  gap: 15px;
-}
-
-.acoes button {
-  background: none;
-
-  border: none;
-
-  color: white;
-
-  cursor: pointer;
-
-  font-size: 16px;
-
-  transition: 0.3s;
-}
-
-.acoes button:first-child {
-  color: #60a5fa;
-}
-
-.acoes button:last-child {
-  color: #f87171;
-}
-
-.acoes button:hover {
-  transform: scale(1.2);
-}
-
-/* =========================
-   MODAL MOVIMENTAÇÃO
-========================= */
-
-.modal {
-
-    display: none;
-
-    position: fixed;
-
-    inset: 0;
-
-    background: rgba(0,0,0,0.65);
-
-    backdrop-filter: blur(5px);
-
-    align-items: center;
-
-    justify-content: center;
-
-    z-index: 999;
-
-}
-
-
-
-/* CAIXA DO MODAL */
-
-.modal-content {
-
-    background: #111827;
-
-    color: white;
-
-    width: 420px;
-
-    padding: 30px;
-
-    border-radius: 18px;
+    padding: 0 10px;
 
     border: 1px solid #374151;
-
-    box-shadow: 0 20px 50px rgba(0,0,0,.5);
-
-    animation: abrirModal .3s ease;
-
-}
-
-
-
-.modal-content h2 {
-
-    margin-bottom: 25px;
-
-    font-size: 22px;
-
-}
-
-
-
-/* LABEL */
-
-.modal-content label {
-
-    display: block;
-
-    margin-bottom: 6px;
-
-    color: #d1d5db;
-
-    font-size: 14px;
-
-}
-
-
-
-/* INPUTS */
-
-.modal-content input,
-.modal-content select,
-.modal-content textarea {
-
-
-    width: 100%;
-
-
-    padding: 12px;
-
-
-    margin-bottom: 18px;
-
-
-    background: #1f2937;
-
-
-    color: white;
-
-
-    border: 1px solid #374151;
-
-
-    border-radius: 10px;
-
+    border-radius: 7px;
 
     outline: none;
 
+    background: #111827;
+    color: #e5e7eb;
+
+    font-family: "Poppins", sans-serif;
+    font-size: 12px;
+
+    cursor: pointer;
+}
+
+.filtros select:focus {
+    border-color: #f97316;
+}
+
+.contador {
+    color: #94a3b8;
+    font-size: 12px;
+    white-space: nowrap;
+}
+
+.contador strong {
+    color: #f8fafc;
+}
+
+
+/* =========================================================
+   TABELA
+   ========================================================= */
+
+.table-responsive {
+    width: 100%;
+    overflow-x: auto;
+    overflow-y: hidden;
+}
+
+
+/* =========================
+   TABELA PRINCIPAL
+   ========================= */
+
+#tabelaMovimentacoes {
+    width: 100%;
+    min-width: 1050px;
+
+    margin: 0;
+    padding: 0;
+
+    border: none;
+    border-spacing: 0;
+    border-collapse: collapse;
+
+    table-layout: fixed;
+
+    background: transparent;
+
+    font-family: "Poppins", sans-serif;
+}
+
+
+/* =========================
+   CABEÇALHO
+   ========================= */
+
+#tabelaMovimentacoes thead {
+    background: #182334;
+}
+
+#tabelaMovimentacoes th {
+    height: 48px;
+
+    padding: 0 12px;
+
+    border: none;
+    border-bottom: 1px solid #374151;
+
+    color: #94a3b8;
+
+    font-family: "Poppins", sans-serif;
+    font-size: 10px;
+    font-weight: 600;
+
+    text-align: left;
+    vertical-align: middle;
+
+    white-space: nowrap;
+}
+
+
+/* =========================
+   CÉLULAS
+   ========================= */
+
+#tabelaMovimentacoes td {
+    height: 58px;
+
+    padding: 0 12px;
+
+    border: none;
+    border-bottom: 1px solid #2f3a4a;
+
+    background: transparent;
+
+    color: #cbd5e1;
+
+    font-family: "Poppins", sans-serif;
+    font-size: 12px;
+    font-weight: 400;
+
+    text-align: left;
+    vertical-align: middle;
+
+    white-space: nowrap;
+
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+
+/* =========================
+   LARGURA DAS COLUNAS
+   ========================= */
+
+/*
+   Data       = 13%
+   Item       = 17%
+   Tipo       = 10%
+   Operação   = 11%
+   Quantidade = 10%
+   Colaborador= 14%
+   OS         = 7%
+   Status     = 9%
+   Ações      = 9%
+*/
+
+#tabelaMovimentacoes th:nth-child(1),
+#tabelaMovimentacoes td:nth-child(1) {
+    width: 13%;
+}
+
+#tabelaMovimentacoes th:nth-child(2),
+#tabelaMovimentacoes td:nth-child(2) {
+    width: 17%;
+}
+
+#tabelaMovimentacoes th:nth-child(3),
+#tabelaMovimentacoes td:nth-child(3) {
+    width: 10%;
+}
+
+#tabelaMovimentacoes th:nth-child(4),
+#tabelaMovimentacoes td:nth-child(4) {
+    width: 11%;
+}
+
+#tabelaMovimentacoes th:nth-child(5),
+#tabelaMovimentacoes td:nth-child(5) {
+    width: 10%;
+}
+
+#tabelaMovimentacoes th:nth-child(6),
+#tabelaMovimentacoes td:nth-child(6) {
+    width: 14%;
+}
+
+#tabelaMovimentacoes th:nth-child(7),
+#tabelaMovimentacoes td:nth-child(7) {
+    width: 7%;
+}
+
+#tabelaMovimentacoes th:nth-child(8),
+#tabelaMovimentacoes td:nth-child(8) {
+    width: 9%;
+}
+
+#tabelaMovimentacoes th:nth-child(9),
+#tabelaMovimentacoes td:nth-child(9) {
+    width: 9%;
+}
+
+
+/* =========================
+   ALINHAMENTO
+   ========================= */
+
+#tabelaMovimentacoes th:nth-child(5),
+#tabelaMovimentacoes td:nth-child(5),
+
+#tabelaMovimentacoes th:nth-child(7),
+#tabelaMovimentacoes td:nth-child(7),
+
+#tabelaMovimentacoes th:nth-child(8),
+#tabelaMovimentacoes td:nth-child(8),
+
+#tabelaMovimentacoes th:nth-child(9),
+#tabelaMovimentacoes td:nth-child(9) {
+    text-align: center;
+}
+
+
+/* =========================
+   ITEM
+   ========================= */
+
+#tabelaMovimentacoes td:nth-child(2) {
+    color: #f1f5f9;
+    font-weight: 500;
+}
+
+
+/* =========================
+   HOVER
+   ========================= */
+
+#tabelaMovimentacoes tbody tr:hover td {
+    background: #243142;
+}
+
+
+/* =========================
+   BADGES
+   ========================= */
+
+#tabelaMovimentacoes .tipo,
+#tabelaMovimentacoes .status {
+    display: inline-flex;
+
+    align-items: center;
+    justify-content: center;
+
+    min-width: 70px;
+    height: 25px;
+
+    padding: 0 8px;
+
+    border-radius: 5px;
+
+    font-family: "Poppins", sans-serif;
+    font-size: 10px;
+    font-weight: 600;
+
+    line-height: 1;
+}
+
+
+/* TIPO */
+
+#tabelaMovimentacoes .tipo {
+    background: #293548;
+    color: #cbd5e1;
+}
+
+#tabelaMovimentacoes .tipo.saida {
+    background: rgba(239, 68, 68, 0.12);
+    color: #fca5a5;
+}
+
+#tabelaMovimentacoes .tipo.emprestimo {
+    background: rgba(59, 130, 246, 0.12);
+    color: #93c5fd;
+}
+
+#tabelaMovimentacoes .tipo.devolucao {
+    background: rgba(34, 197, 94, 0.12);
+    color: #86efac;
+}
+
+
+/* STATUS */
+
+#tabelaMovimentacoes .status {
+    background: rgba(34, 197, 94, 0.12);
+    color: #86efac;
+}
+
+#tabelaMovimentacoes .status.uso {
+    background: rgba(59, 130, 246, 0.12);
+    color: #93c5fd;
+}
+
+
+/* =========================
+   AÇÕES
+   ========================= */
+
+#tabelaMovimentacoes td.acoes {
+    text-align: center;
+    white-space: nowrap;
+}
+
+#tabelaMovimentacoes td.acoes button {
+    width: 30px;
+    height: 30px;
+
+    margin: 0 2px;
+    padding: 0;
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    border: 1px solid #374151;
+    border-radius: 6px;
+
+    background: #111827;
+    color: #94a3b8;
 
     font-family: "Poppins", sans-serif;
 
+    cursor: pointer;
 }
 
-
-
-.modal-content input:focus,
-.modal-content select:focus,
-.modal-content textarea:focus {
-
-
-    border-color: #fb923c;
-
-
+#tabelaMovimentacoes td.acoes button:hover {
+    border-color: #f97316;
+    color: #fb923c;
 }
 
-
-
-/* TEXTAREA */
-
-.modal-content textarea {
-
-
-    height: 90px;
-
-    resize: none;
-
-}
-
-
-
-/* BOTÕES */
-
-.botoes-modal {
-
-
-    display:flex;
-
-
-    justify-content:flex-end;
-
-
-    gap:12px;
-
-
-    margin-top:10px;
-
-}
-
-
-
-.botoes-modal button {
-
-
-    padding:10px 20px;
-
-
-    border:none;
-
-
-    border-radius:10px;
-
-
-    cursor:pointer;
-
-
-    font-weight:500;
-
-
-    transition:.3s;
-
-}
-
-
-
-/* CANCELAR */
-
-#fecharModalMovimentacao {
-
-
-    background:#374151;
-
-
-    color:white;
-
-}
-
-
-
-#fecharModalMovimentacao:hover {
-
-
-    background:#4b5563;
-
-}
-
-
-
-/* SALVAR */
-
-.botoes-modal button[type="submit"] {
-
-
-    background:#fb923c;
-
-
-    color:white;
-
-}
-
-
-
-.botoes-modal button[type="submit"]:hover {
-
-
-    background:#ea580c;
-
-}
-
-
-
-/* ANIMAÇÃO */
-
-@keyframes abrirModal {
-
-
-    from {
-
-        opacity:0;
-
-        transform:translateY(-20px) scale(.95);
-
-    }
-
-
-    to {
-
-        opacity:1;
-
-        transform:translateY(0) scale(1);
-
-    }
-
-
-}
 
 /* =========================
-   RESPONSIVO
-========================= */
+   ESTADO VAZIO
+   ========================= */
 
-@media (max-width: 900px) {
-  .topo-movimentacao {
-    flex-direction: column;
+#tabelaMovimentacoes td[colspan="9"] {
+    height: 150px;
 
-    align-items: stretch;
+    text-align: center;
 
-    gap: 15px;
-  }
+    color: #64748b;
+    font-size: 13px;
+}
 
-  .barra-superior {
-    flex-direction: column;
 
-    align-items: stretch;
+/* =========================================================
+   MODAL
+   ========================================================= */
 
-    gap: 15px;
-  }
+.modal {
+    position: fixed;
+    inset: 0;
 
-  .pesquisa {
+    z-index: 9999;
+
+    display: none;
+
+    align-items: center;
+    justify-content: center;
+
+    padding: 20px;
+
+    background: rgba(2, 6, 23, 0.78);
+}
+
+.modal-content {
     width: 100%;
-  }
+    max-width: 560px;
 
-  .filtros {
-    justify-content: space-between;
-  }
+    max-height: calc(100vh - 40px);
+
+    overflow-y: auto;
+
+    padding: 27px;
+
+    background: #1f2937;
+
+    border: 1px solid #374151;
+    border-radius: 10px;
+
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.45);
+}
+
+.modal-content h2 {
+    margin: 0 0 20px;
+
+    color: #f8fafc;
+
+    font-size: 20px;
+    font-weight: 600;
+}
+
+
+/* =========================
+   FORMULÁRIO
+   ========================= */
+
+#formMovimentacao {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+#formMovimentacao label {
+    margin-top: 7px;
+
+    color: #cbd5e1;
+
+    font-size: 11px;
+    font-weight: 500;
+}
+
+#formMovimentacao input,
+#formMovimentacao select,
+#formMovimentacao textarea {
+    width: 100%;
+
+    border: 1px solid #374151;
+    border-radius: 6px;
+
+    outline: none;
+
+    background: #111827;
+    color: #e5e7eb;
+
+    font-family: "Poppins", sans-serif;
+    font-size: 12px;
+}
+
+#formMovimentacao input,
+#formMovimentacao select {
+    height: 40px;
+    padding: 0 11px;
+}
+
+#formMovimentacao textarea {
+    min-height: 85px;
+
+    padding: 10px 11px;
+
+    resize: vertical;
+}
+
+#formMovimentacao input:focus,
+#formMovimentacao select:focus,
+#formMovimentacao textarea:focus {
+    border-color: #f97316;
+}
+
+
+/* =========================
+   CAMPOS DE INSUMO/FERRAMENTA
+   ========================= */
+
+#camposInsumo,
+#camposFerramenta {
+    width: 100%;
+
+    display: flex;
+    flex-direction: column;
+
+    gap: 8px;
+}
+
+#camposInsumo[hidden],
+#camposFerramenta[hidden],
+#campoOSMovimentacao[hidden] {
+    display: none !important;
+}
+
+#campoOSMovimentacao {
+    width: 100%;
+
+    display: flex;
+    flex-direction: column;
+
+    gap: 8px;
+}
+
+#campoOSMovimentacao small {
+    color: #64748b;
+    font-size: 10px;
+}
+
+
+/* =========================
+   BOTÕES DO MODAL
+   ========================= */
+
+.botoes-modal {
+    width: 100%;
+
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+
+    gap: 10px;
+
+    margin-top: 18px;
+    padding-top: 17px;
+
+    border-top: 1px solid #374151;
+}
+
+.botoes-modal button {
+    height: 39px;
+
+    padding: 0 17px;
+
+    border: none;
+    border-radius: 6px;
+
+    font-family: "Poppins", sans-serif;
+    font-size: 12px;
+    font-weight: 600;
+
+    cursor: pointer;
+}
+
+#fecharModalMovimentacao {
+    background: #374151;
+    color: #d1d5db;
+}
+
+#fecharModalMovimentacao:hover {
+    background: #4b5563;
+}
+
+.botoes-modal button[type="submit"] {
+    background: #f97316;
+    color: #ffffff;
+}
+
+.botoes-modal button[type="submit"]:hover {
+    background: #ea580c;
+}
+
+
+/* =========================================================
+   RESPONSIVO
+   ========================================================= */
+
+@media (max-width: 1000px) {
+
+    .content {
+        padding: 22px;
+    }
+
+    .topo-movimentacao {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .btn-nova {
+        width: 100%;
+    }
+
+    .barra-superior {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .pesquisa {
+        width: 100%;
+    }
+
+    .filtros {
+        justify-content: space-between;
+    }
+}
+
+
+@media (max-width: 600px) {
+
+    .content {
+        padding: 15px;
+    }
+
+    .filtros {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .filtros select {
+        width: 100%;
+    }
+
+    .contador {
+        text-align: right;
+    }
+
+    .modal {
+        padding: 10px;
+    }
+
+    .modal-content {
+        padding: 20px;
+    }
+
+    .botoes-modal {
+        flex-direction: column-reverse;
+    }
+
+    .botoes-modal button {
+        width: 100%;
+    }
 }

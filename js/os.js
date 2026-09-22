@@ -4,6 +4,7 @@ ALMOXCONTROL
 ========================================================= */
 
 const STORAGE_KEY = "ordensServico";
+const MOVIMENTACOES_KEY = "movimentacoes";
 
 // =========================================================
 // ELEMENTOS
@@ -72,7 +73,12 @@ document.getElementById("descricaoOS");
 
 let ordensServico =
 JSON.parse(
-localStorage.getItem(STORAGE_KEY)
+    localStorage.getItem(STORAGE_KEY)
+) || [];
+
+let movimentacoes =
+JSON.parse(
+    localStorage.getItem(MOVIMENTACOES_KEY)
 ) || [];
 
 // =========================================================
@@ -90,7 +96,6 @@ document.addEventListener(
     atualizarCards();
 
 }
-
 );
 
 // =========================================================
@@ -137,7 +142,6 @@ btnNovaOS.addEventListener(
     numeroOS.focus();
 
 }
-
 );
 
 // =========================================================
@@ -175,7 +179,6 @@ modal.addEventListener(
     }
 
 }
-
 );
 
 // ESC
@@ -194,7 +197,6 @@ document.addEventListener(
     }
 
 }
-
 );
 
 // =========================================================
@@ -207,10 +209,8 @@ formOS.addEventListener(
 
     event.preventDefault();
 
-
     const idAtual =
         osId.value;
-
 
     const dadosOS = {
 
@@ -237,13 +237,12 @@ formOS.addEventListener(
             Number(valorOS.value) || 0,
 
         status:
-            statusOS.value,
+            statusOS.value.toLowerCase(),
 
         descricao:
             descricaoOS.value.trim()
 
     };
-
 
     // EDITAR
 
@@ -269,7 +268,6 @@ formOS.addEventListener(
 
     }
 
-
     // NOVA
 
     else {
@@ -280,7 +278,6 @@ formOS.addEventListener(
 
     }
 
-
     salvarDados();
 
     renderizarOS();
@@ -290,7 +287,6 @@ formOS.addEventListener(
     fecharModal();
 
 }
-
 );
 
 // =========================================================
@@ -309,10 +305,52 @@ localStorage.setItem(
 }
 
 // =========================================================
+// RECARREGAR MOVIMENTAÇÕES
+// =========================================================
+
+function recarregarMovimentacoes() {
+
+movimentacoes =
+    JSON.parse(
+        localStorage.getItem(
+            MOVIMENTACOES_KEY
+        )
+    ) || [];
+
+}
+
+// =========================================================
+// CALCULAR CUSTO DOS INSUMOS
+// =========================================================
+
+function calcularCustoInsumos(os) {
+
+return movimentacoes
+    .filter(
+        (mov) =>
+            mov.itemTipo === "insumo" &&
+            mov.tipo === "saida" &&
+            String(mov.osId) ===
+            String(os.id)
+    )
+    .reduce(
+        (total, mov) =>
+            total +
+            Number(
+                mov.valorTotal || 0
+            ),
+        0
+    );
+
+}
+
+// =========================================================
 // RENDERIZAR
 // =========================================================
 
 function renderizarOS() {
+
+recarregarMovimentacoes();
 
 const busca =
     campoBusca.value
@@ -320,8 +358,7 @@ const busca =
         .trim();
 
 const statusSelecionado =
-    filtroStatus.value;
-
+    filtroStatus.value.toLowerCase();
 
 const resultados =
     ordensServico.filter(
@@ -329,27 +366,33 @@ const resultados =
 
             const correspondeBusca =
 
-                os.numero
+                String(os.numero || "")
                     .toLowerCase()
                     .includes(busca)
 
                 ||
 
-                os.cliente
+                String(os.cliente || "")
                     .toLowerCase()
                     .includes(busca)
 
                 ||
 
-                os.veiculo
+                String(os.veiculo || "")
                     .toLowerCase()
                     .includes(busca)
 
                 ||
 
-                os.responsavel
+                String(os.responsavel || "")
                     .toLowerCase()
                     .includes(busca);
+
+
+            const statusOSNormalizado =
+                String(
+                    os.status || ""
+                ).toLowerCase();
 
 
             const correspondeStatus =
@@ -359,7 +402,7 @@ const resultados =
 
                 ||
 
-                os.status ===
+                statusOSNormalizado ===
                 statusSelecionado;
 
 
@@ -371,9 +414,7 @@ const resultados =
         }
     );
 
-
 listaOS.innerHTML = "";
-
 
 if (
     resultados.length === 0
@@ -387,11 +428,9 @@ if (
 
 }
 
-
 estadoVazio.classList.remove(
     "show"
 );
-
 
 resultados
     .sort(
@@ -405,7 +444,6 @@ resultados
                 document.createElement(
                     "tr"
                 );
-
 
             linha.innerHTML = `
 
@@ -436,6 +474,12 @@ resultados
                 </td>
 
                 <td>
+                    ${formatarMoeda(
+                        calcularCustoInsumos(os)
+                    )}
+                </td>
+
+                <td>
                     ${criarStatus(os.status)}
                 </td>
 
@@ -454,7 +498,6 @@ resultados
 
                         </button>
 
-
                         <button
                             type="button"
                             class="os-acao excluir"
@@ -472,7 +515,6 @@ resultados
 
             `;
 
-
             listaOS.appendChild(
                 linha
             );
@@ -487,6 +529,11 @@ resultados
 // =========================================================
 
 function criarStatus(status) {
+
+const statusNormalizado =
+    String(
+        status || ""
+    ).toLowerCase();
 
 const nomes = {
 
@@ -504,12 +551,11 @@ const nomes = {
 
 };
 
-
 return `
 
-    <span class="status status-${status}">
+    <span class="status status-${statusNormalizado}">
 
-        ${nomes[status] || status}
+        ${nomes[statusNormalizado] || status}
 
     </span>
 
@@ -529,17 +575,14 @@ const os =
             item.id === id
     );
 
-
 if (!os) {
 
     return;
 
 }
 
-
 tituloModal.textContent =
     "Editar Ordem de Serviço";
-
 
 osId.value =
     os.id;
@@ -563,11 +606,12 @@ valorOS.value =
     os.valor;
 
 statusOS.value =
-    os.status;
+    String(
+        os.status || "aberta"
+    ).toLowerCase();
 
 descricaoOS.value =
     os.descricao || "";
-
 
 modal.classList.add(
     "show"
@@ -587,19 +631,16 @@ const os =
             item.id === id
     );
 
-
 if (!os) {
 
     return;
 
 }
 
-
 const confirmar =
     confirm(
         `Deseja realmente excluir a OS ${os.numero}?`
     );
-
 
 if (!confirmar) {
 
@@ -607,13 +648,11 @@ if (!confirmar) {
 
 }
 
-
 ordensServico =
     ordensServico.filter(
         (item) =>
             item.id !== id
     );
-
 
 salvarDados();
 
@@ -629,45 +668,49 @@ atualizarCards();
 
 function atualizarCards() {
 
+recarregarMovimentacoes();
+
 const total =
     ordensServico.length;
-
 
 const abertas =
     ordensServico.filter(
         (os) =>
-            os.status === "aberta"
+            String(
+                os.status
+            ).toLowerCase() ===
+            "aberta"
     ).length;
-
 
 const andamento =
     ordensServico.filter(
         (os) =>
-            os.status === "andamento"
+            String(
+                os.status
+            ).toLowerCase() ===
+            "andamento"
     ).length;
-
 
 const concluidas =
     ordensServico.filter(
         (os) =>
-            os.status === "concluida"
+            String(
+                os.status
+            ).toLowerCase() ===
+            "concluida"
     ).length;
-
 
 document.getElementById(
     "totalOS"
 ).textContent = total;
 
-
 document.getElementById(
     "osAbertas"
 ).textContent = abertas;
 
-
 document.getElementById(
     "osAndamento"
 ).textContent = andamento;
-
 
 document.getElementById(
     "osConcluidas"
@@ -704,10 +747,8 @@ if (!data) {
 
 }
 
-
 const partes =
     data.split("-");
-
 
 if (
     partes.length !== 3
@@ -716,7 +757,6 @@ if (
     return data;
 
 }
-
 
 return `
     ${partes[2]}/${partes[1]}/${partes[0]}
